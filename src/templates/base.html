@@ -1,0 +1,31 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'css/master.css' %}">
+        <link rel="stylesheet"
+              href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/user-profile.css' %}">
+        <link rel="stylesheet" href="{% static 'css/forum.css' %}">
+        <script src="{% static 'jquery/jquery3.2.1.min.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+        {% block css %}{% endblock %}
+    </head>
+    <body>
+        {% include 'navbar.html' with user=user %}
+        <div class="container-fluid">
+            {% block content %}{% endblock %}
+        </div>
+        <footer>
+            <div class="container">
+                <div class="footer-info text-center">
+                    Hanoi University of Science and Technology 2017
+                </div>
+            </div>
+        </footer>
+    </body>
+    <script src="{% static 'js/user-edit.js' %}"></script>
+    {% block script %}{% endblock %}
+</html>

@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ user.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="container" xmlns="http://www.w3.org/1999/html">
+        <div class="row">
+            <div
+                class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ user.name }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4" align="center">
+                                <img
+                                    alt="User Pic"
+                                    src="{{ user.profile_pic.url }}"
+                                    width="300px"
+                                    height="300px"
+                                    class="img-circle img-responsive">
+                                {% if is_edit %}
+                                    <form
+                                        id="form-image"
+                                        enctype="multipart/form-data"
+                                        data="{{ user.get_absolute_url }}"
+                                        data-href="{{ user.get_image_upload_url }}">
+                                        {% csrf_token %}
+                                        <input
+                                            id="input-image"
+                                            type="file"
+                                            class="file btn btn-info"
+                                            data-show-preview="false"
+                                            style="margin-top: 20px;width: 150px">
+                                        <button class="btn btn-primary" style="margin-top: 20px" type="submit">Upload</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                            <div class=" col-md-8 col-lg-8 ">
+                                <form
+                                    id="user-edit-form"
+                                    data="{{ user.get_absolute_url }}"
+                                    data-href="{{ user.get_update_url }}">
+                                    <table
+                                        class="table table-user-information">
+                                        {% csrf_token %}
+                                        <tbody>
+                                            <tr>
+                                                <td>Student Id</td>
+                                                <td>{{ user.student_id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Status</td>
+                                                <td>{{ user.get_status_display }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Joined date</td>
+                                                <td>{{ user.joined_time }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Date of Birth</td>
+                                                <td>{{ user.date_of_birth }}</td>
+                                            </tr>
+                                            <tr>
+                                            <tr>
+                                                <td>Gender</td>
+                                                <td>{{ user.get_gender }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Home Address</td>
+                                                {% if is_edit %}
+                                                    <td><input
+                                                        id="input-address"
+                                                        type="text"
+                                                        class="form-control"
+                                                        value="{{ user.home_address }}">
+                                                    </td>
+                                                {% else %}
+                                                    <td>{{ user.home_address }}</td>
+                                                {% endif %}
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td>{{ user.email }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Private Email</td>
+                                                {% if is_edit %}
+                                                    <td><input
+                                                        id="input-email"
+                                                        type="text"
+                                                        class="form-control"
+                                                        value="{{ user.private_email }}">
+                                                    </td>
+                                                {% else %}
+                                                    <td>{{ user.private_email }}</td>
+                                                {% endif %}
+                                            </tr>
+                                            <tr>
+                                                <td>Phone Number</td>
+                                                {% if is_edit %}
+                                                    <td><input
+                                                        id="input-phone"
+                                                        type="text"
+                                                        class="form-control"
+                                                        value="{{ user.mobile_phone }}">
+                                                    </td>
+                                                {% else %}
+                                                    <td>{{ user.mobile_phone }}</td>
+                                                {% endif %}
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="col-lg-3 col-md-3"
+                                         style="text-align: center">
+                                        {% if is_edit %}
+                                            <button type="submit"
+                                                    class=" btn btn-primary">
+                                                Save
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a data-original-title="Broadcast Message"
+                           data-toggle="tooltip" type="button"
+                           class="btn btn-sm btn-primary"><i
+                            class="glyphicon glyphicon-envelope"></i></a>
+                        <span class="pull-right">
+                            {% if user.student_id == this_student_id and not is_edit %}
+                                <a href="{% url 'accounts:profile-edit' student_id=user.student_id %}"
+                                   data-original-title="Edit this user"
+                                   data-toggle="tooltip" type="button"
+                                   class="btn btn-sm btn-warning"><i
+                                    class="glyphicon glyphicon-edit"></i></a>
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+<nav class="navbar navbar-default">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <ul class="nav navbar-nav">
+            <li><a class="navbar-brand" href="{% url 'home' %}">Homepage</a>
+            </li>
+            <li><a class="navbar-link" href="{% url 'forum:list' %}">Forum</a>
+            </li>
+            {% if user.is_authenticated %}
+                <li><a class="navbar-link"
+                       href="{% url 'home' %}">Transcript</a></li>
+            {% endif %}
+        </ul>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        {% include 'search_form.html' %}
+        <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+                <li><a
+                    href="{% url 'accounts:profile' student_id=user.student_id %}">Welcome {{ user.name }}</a>
+                </li>
+                <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
+            {% else %}
+                <li><a href="{% url 'accounts:login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+    </div><!-- /.container-fluid -->
+</nav>
+
