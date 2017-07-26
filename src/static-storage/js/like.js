@@ -6,6 +6,30 @@ function updateText(btn, newCount, verb) {
     countText.text(newCount);
     btn.text(verb)
 }
+
+$(document).ready(function () {
+    var likeBtn = $('#like-btn');
+    var checkLikeUrl = likeBtn.attr('check-like-url');
+    $.ajax({
+        url: checkLikeUrl,
+        method: 'GET',
+        data: {},
+        success: function (data) {
+            var likeCount = parseInt(data.likeCount);
+            if (data.is_liked) {
+                updateText(likeBtn, likeCount, 'Unlike');
+                likeBtn.removeClass('glyphicon-thumbs-up').addClass('glyphicon-thumbs-down');
+            } else {
+                updateText(likeBtn, likeCount, 'Like');
+                likeBtn.removeClass('glyphicon-thumbs-down').addClass('glyphicon-thumbs-up');
+            }
+        },
+        error: function (error) {
+            console.log('error');
+        }
+    });
+});
+
 $('#like-btn').click(function (event) {
     event.preventDefault();
     var this_ = $(this);

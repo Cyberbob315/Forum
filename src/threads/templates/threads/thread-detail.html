@@ -26,21 +26,13 @@
                             <span class="glyphicon glyphicon-heart"></span>
                             <span
                                 id="like-counter">{{ thread.likes.count }}</span>
-                            {% if is_liked %}
-                                <button
-                                    class="btn btn-info glyphicon glyphicon-thumbs-down"
-                                    id="like-btn"
-                                    data-href="{{ thread.get_like_url }}">
-                                    Like
-                                </button>
-                            {% else %}
-                                <button
-                                    class="btn btn-info glyphicon glyphicon-thumbs-up"
-                                    id="like-btn"
-                                    data-href="{{ thread.get_like_url }}">
-                                    Unlike
-                                </button>
-                            {% endif %}
+                            <button
+                                class="btn btn-info glyphicon glyphicon-thumbs-down"
+                                id="like-btn"
+                                check-like-url="{{ thread.get_check_like_url }}"
+                                data-href="{{ thread.get_like_url }}">
+                                Like
+                            </button>
                         </div>
                         <hr>
                         <p class="text-justify">{{ thread.content | linebreaksbr }}</p>

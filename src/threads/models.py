@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.urlresolvers import reverse
-import misaka
 from subforums.models import Subforum
 from accounts.models import StudentProfile
 
@@ -25,6 +24,9 @@ class Thread(models.Model):
 
     def get_like_url(self):
         return reverse('threads:like', kwargs={'pk': self.pk})
+
+    def get_check_like_url(self):
+        return reverse('threads:check-like', kwargs={'pk': self.pk})
 
     def save(self, *args,**kwargs):
         self.content_html = misaka.html(self.content)

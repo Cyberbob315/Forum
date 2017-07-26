@@ -55,7 +55,7 @@ class StudentProfile(AbstractBaseUser, PermissionsMixin):
     student_id = models.CharField(max_length=8, unique=True)
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, blank=True)
-    private_email = models.EmailField(max_length=255, default='None',
+    private_email = models.EmailField(max_length=255, default='',
                                       null=True, blank=True)
     profile_pic = models.ImageField(upload_to='profile_pics/',
                                     default='images/user-default.jpg')
@@ -68,8 +68,10 @@ class StudentProfile(AbstractBaseUser, PermissionsMixin):
     graduated_year = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    home_address = models.CharField(max_length=256, null=True, blank=True)
-    mobile_phone = models.CharField(max_length=12, null=True, blank=True)
+    home_address = models.CharField(max_length=256, null=True, blank=True,
+                                    default='')
+    mobile_phone = models.CharField(max_length=12, null=True, blank=True,
+                                    default='')
     objects = StudentProfileManager()
 
     USERNAME_FIELD = 'student_id'
