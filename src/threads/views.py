@@ -11,7 +11,9 @@ class ThreadDetailView(DetailView):
 
 def thread_detail_view(request, pk):
     thread = get_object_or_404(Thread, pk=pk)
-    context_dict = {'thread': thread,
-                    'is_liked':thread.likes.filter(student_id__exact=request.user.id).count() > 0
-                    }
+    is_liked = thread.likes.filter(student_id=request.user.student_id).exists()
+    context_dict = {
+        'thread': thread,
+        'is_liked': is_liked
+    }
     return render(request, 'threads/thread-detail.html', context_dict)

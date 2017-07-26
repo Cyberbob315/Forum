@@ -32,6 +32,7 @@ $('#user-edit-form').submit(function (event) {
             window.location.href = redirectUrl;
         },
         error: function (data) {
+            alert('Email is not valid,please enter right email')
         }
     })
 

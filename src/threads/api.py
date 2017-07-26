@@ -15,16 +15,15 @@ class PostLikeToggleApi(APIView):
         user = self.request.user
         updated = False
         liked = False
-        if not user.is_authenticated():
-            return HttpResponse('You dont have permission to do this')
-        if thread.likes.filter(
-                student_id__iexact=request.user.id).count > 0:
+        has_liked = thread.likes.filter(
+            student_id=request.user.student_id).exists()
+        if has_liked:
             liked = False
             thread.likes.remove(user)
         else:
             liked = True
             thread.likes.add(user)
-            updated = True
+        updated = True
         like_count = thread.likes.count()
         data = {
             'updated': updated,

@@ -31,8 +31,10 @@ class StudentProfileManager(BaseUserManager):
 
 
 def convert_student_id(id):
-    return '{}{}'.format(datetime.datetime.now().year,
-                         '{0:0{width}}'.format(int(id), width=4))
+    # student_id first part is current year,last part is user id with 4 number formatted
+    student_id_first_part = datetime.datetime.now().year
+    student_id_last_part = '{0:0{width}}'.format(int(id), width=4)
+    return '{}{}'.format(student_id_first_part, student_id_last_part)
 
 
 def create_student_email(id):
@@ -53,7 +55,8 @@ class StudentProfile(AbstractBaseUser, PermissionsMixin):
     student_id = models.CharField(max_length=8, unique=True)
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, blank=True)
-    private_email = models.EmailField(max_length=255, default='None',null=True,blank=True)
+    private_email = models.EmailField(max_length=255, default='None',
+                                      null=True, blank=True)
     profile_pic = models.ImageField(upload_to='profile_pics/',
                                     default='images/user-default.jpg')
     status = models.CharField(max_length=2, choices=STATUS_CHOICES,
@@ -65,8 +68,8 @@ class StudentProfile(AbstractBaseUser, PermissionsMixin):
     graduated_year = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    home_address = models.CharField(max_length=256,null=True,blank=True)
-    mobile_phone = models.CharField(max_length=12, null=True,blank=True)
+    home_address = models.CharField(max_length=256, null=True, blank=True)
+    mobile_phone = models.CharField(max_length=12, null=True, blank=True)
     objects = StudentProfileManager()
 
     USERNAME_FIELD = 'student_id'
