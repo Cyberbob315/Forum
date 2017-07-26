@@ -7,11 +7,14 @@ class Subject(models.Model):
     title = models.CharField(max_length=255)
     credit = models.IntegerField()
     subject_id = models.CharField(max_length=8)
+    short_name = models.CharField(max_length=20)
 
     def save(self, *args, **kwargs):
+        # Auto create a subforum for this subject
         super(Subject, self).save(*args, **kwargs)
-        subforum = forum_models.Subforum(subject=self,
-                                         title=(self.title + ' forum'))
+        subforum = forum_models.Subforum.objects.get_or_create(subject=self)[0]
+        subforum.title = self.title
+        subforum.short_name = self.short_name
         subforum.save()
 
     class Meta:

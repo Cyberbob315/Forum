@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^$', views.home_page, name='home'),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^forum/', include('subforums.urls', namespace='forum')),
+    url(r'^threads/', include('threads.urls', namespace='threads')),
 ]
 
 if settings.DEBUG:

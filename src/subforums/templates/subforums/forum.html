@@ -4,14 +4,6 @@
     Forum
 {% endblock %}
 
-{% block css %}
-    <style>
-        .td-forum-list {
-            vertical-align: middle;
-        }
-    </style>
-{% endblock %}
-
 {% block content %}
     <div class="container">
         <div class="row">
@@ -22,20 +14,20 @@
                             <th>Subforum</th>
                             <th>Last Post</th>
                             <th>Threads</th>
-                            <th>Posts</th>
+                            <th>Comments</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for subforum in subforum_list %}
                             <tr class="alert-info">
                                 <td class="td-forum-list"><br/>
-                                    <a href="https://aws.passkey.com/g/42238120"
+                                    <a href="{{ subforum.get_detail_link }}"
                                        target="_blank">{{ subforum.title }}
                                     </a><br/><br>
                                 </td>
                                 <td class="td-forum-list">{{ subforum.get_last_post }}</td>
-                                <td class="td-forum-list">{{ subforum.count_threads }}</td>
-                                <td class="td-forum-list">200</td>
+                                <td class="td-forum-list td-forum-text">{{ subforum.count_threads }}</td>
+                                <td class="td-forum-list td-forum-text">{{ subforum.count_comments }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

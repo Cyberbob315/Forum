@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ thread.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="well" style="margin: 20px">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3 col-xs-12 thumb-contenido">
+                        <img class="thumbnail center-block img-responsive"
+                             src='{{ thread.author.profile_pic.url }}'
+                             style="width: 200px;height: 200px"/>
+                        <hr>
+                        <div class="text-center">
+                            <small>{{ thread.created_date }}</small>
+                            <br>
+                            <small><strong>{{ thread.author }}</strong></small>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="">
+                            <h3 class="hidden-xs hidden-sm">{{ thread.title }}</h3>
+                            <span class="glyphicon glyphicon-heart"></span>
+                            <span
+                                id="like-counter">{{ thread.likes.count }}</span>
+                            {% if is_liked %}
+                                <button
+                                    class="btn btn-info glyphicon glyphicon-thumbs-down"
+                                    id="like-btn"
+                                    data-href="{{ thread.get_like_url }}">
+                                    Like
+                                </button>
+                            {% else %}
+                                <button
+                                    class="btn btn-info glyphicon glyphicon-thumbs-up"
+                                    id="like-btn"
+                                    data-href="{{ thread.get_like_url }}">
+                                    Unlike
+                                </button>
+                            {% endif %}
+                        </div>
+                        <hr>
+                        <p class="text-justify">{{ thread.content | linebreaksbr }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="pull-right">
+                        {% if user.is_superuser %}
+                            <a class="btn btn-danger btn-option btn-sm">Delete</a>
+                        {% endif %}
+                        {% if user == thread.author %}
+                            <a class="btn btn-warning btn-option btn-sm">Edit</a>
+                        {% endif %}
+                        <a class="btn btn-primary btn-option btn-sm">Reply</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="page-header">Comments</h2>
+                <section class="comment-list">
+                    <!-- First Comment -->
+                    {% for comment in thread.comments.all %}
+                        <article class="row">
+                            <div class="col-md-2 col-sm-2 hidden-xs">
+                                <figure class="thumbnail">
+                                    <img class="img-responsive"
+                                         src="{{ comment.author.profile_pic.url }}"/>
+                                    <figcaption
+                                        class="text-center">{{ comment.author }}
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-md-10 col-sm-10">
+                                <div class="panel panel-default arrow left">
+                                    <div class="panel-body">
+                                        <header class="text-left">
+                                            <div class="comment-user"><i
+                                                class="fa fa-user"></i> That
+                                                Guy
+                                            </div>
+                                            <time class="comment-date"
+                                                  datetime="16-12-2014 01:05">
+                                                <i
+                                                    class="fa fa-clock-o"></i>
+                                                {{ comment.created_date }}
+                                            </time>
+                                            <hr/>
+                                        </header>
+                                        <div class="comment-post">
+                                            <p>
+                                                {{ comment.content }}
+                                            </p>
+                                        </div>
+                                        {% if user.is_superuser %}
+                                            <p class="text-right"><a href="#"
+                                                                     class="btn btn-danger btn-sm"><i
+                                            class="fa fa-reply"></i> Delete</a>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        </section>
+                    {% empty %}
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

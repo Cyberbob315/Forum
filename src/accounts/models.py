@@ -47,13 +47,13 @@ class StudentProfile(AbstractBaseUser, PermissionsMixin):
     STATUS_CHOICES = (
         (STUDYING, 'Studying'),
         (GRADUATED, 'Graduated'),
-        (ADMIN, 'Admintrator')
+        (ADMIN, 'Administrator')
     )
 
     student_id = models.CharField(max_length=8, unique=True)
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, blank=True)
-    private_email = models.EmailField(max_length=255, default='None')
+    private_email = models.EmailField(max_length=255, default='None',null=True,blank=True)
     profile_pic = models.ImageField(upload_to='profile_pics/',
                                     default='images/user-default.jpg')
     status = models.CharField(max_length=2, choices=STATUS_CHOICES,
@@ -65,8 +65,8 @@ class StudentProfile(AbstractBaseUser, PermissionsMixin):
     graduated_year = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    home_address = models.CharField(max_length=256)
-    mobile_phone = models.CharField(max_length=12, null=True)
+    home_address = models.CharField(max_length=256,null=True,blank=True)
+    mobile_phone = models.CharField(max_length=12, null=True,blank=True)
     objects = StudentProfileManager()
 
     USERNAME_FIELD = 'student_id'

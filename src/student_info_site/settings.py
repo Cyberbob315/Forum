@@ -43,8 +43,9 @@ INSTALLED_APPS = [
     'subforums',
     'subjects',
     'comments',
-    'threads',
     'bootstrap3',
+    'threads',
+    'misaka',
 ]
 
 MIDDLEWARE = [
@@ -128,6 +129,8 @@ STATICFILES_DIRS = [
     # will not be served, long term storage
     STATIC_DIR,
 ]
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
 
 # will ber served
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static-serve')
