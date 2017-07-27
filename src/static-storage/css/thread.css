@@ -7,3 +7,16 @@
 .btn-option {
     width: 100px !important;
 }
+
+[hidden] {
+    display: none !important;
+}
+
+.btn-upload {
+    margin-top: 10px;
+}
+
+.img-user {
+    width: 250px;
+    height: 150px;
+}

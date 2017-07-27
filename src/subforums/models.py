@@ -32,6 +32,20 @@ class Subforum(models.Model):
             return thread_list[0]
         return 'There is no thread in this subforum'
 
+    def pending_thread_count(self):
+        return self.threads.filter(
+            published_date__isnull=True
+        ).order_by(
+            '-created_date'
+        ).count()
+
+    def published_thread_count(self):
+        return self.threads.filter(
+            published_date__isnull=False
+        ).order_by(
+            '-created_date'
+        ).count()
+
     def count_threads(self):
         return self.threads.filter(published_date__isnull=False).count()
 
@@ -40,6 +54,3 @@ class Subforum(models.Model):
 
     def __str__(self):
         return self.title
-
-
-

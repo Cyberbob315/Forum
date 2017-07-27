@@ -5,62 +5,14 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="well" style="margin: 20px">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-3 col-xs-12 thumb-contenido">
-                        <img class="thumbnail center-block img-responsive"
-                             src='{{ thread.author.profile_pic.url }}'
-                             style="width: 200px;height: 200px"/>
-                        <hr>
-                        <div class="text-center">
-                            <small>{{ thread.created_date }}</small>
-                            <br>
-                            <small><strong>{{ thread.author }}</strong></small>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="">
-                            <h3 class="hidden-xs hidden-sm">{{ thread.title }}</h3>
-                            <span class="glyphicon glyphicon-heart"></span>
-                            <span
-                                id="like-counter">{{ thread.likes.count }}</span>
-                            <button
-                                class="btn btn-info glyphicon glyphicon-thumbs-down"
-                                id="like-btn"
-                                check-like-url="{{ thread.get_check_like_url }}"
-                                data-href="{{ thread.get_like_url }}">
-                                Like
-                            </button>
-                        </div>
-                        <hr>
-                        <p class="text-justify">{{ thread.content | linebreaksbr }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-footer">
-                <div class="row">
-                    <div class="pull-right">
-                        {% if user.is_superuser %}
-                            <a class="btn btn-danger btn-option btn-sm">Delete</a>
-                        {% endif %}
-                        {% if user == thread.author %}
-                            <a class="btn btn-warning btn-option btn-sm">Edit</a>
-                        {% endif %}
-                        <a class="btn btn-primary btn-option btn-sm">Reply</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include 'threads/thread_detail_header.html' with thread=thread %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h2 class="page-header">Comments</h2>
                 <section class="comment-list">
                     <!-- First Comment -->
-                    {% for comment in thread.comments.all %}
+                    {% for comment in comment_list %}
                         <article class="row">
                             <div class="col-md-2 col-sm-2 hidden-xs">
                                 <figure class="thumbnail">
@@ -105,6 +57,36 @@
                         </section>
                     {% empty %}
                     {% endfor %}
+                <div class="row pull-right" style="margin-right: 24px;">
+                    {% if comment_list.has_other_pages %}
+                        <ul class="pagination">
+                            {% if comment_list.has_previous %}
+                                <li><a
+                                    href="?page={{ comment_list.previous_page_number }}">&laquo;</a>
+                                </li>
+                            {% else %}
+                                <li class="disabled"><span>&laquo;</span></li>
+                            {% endif %}
+                            {% for i in comment_list.paginator.page_range %}
+                                {% if comment_list.number == i %}
+                                    <li class="active"><span>{{ i }} <span
+                                        class="sr-only">(current)</span></span>
+                                    </li>
+                                {% else %}
+                                    <li><a href="?page={{ i }}">{{ i }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if comment_list.has_next %}
+                                <li><a
+                                    href="?page={{ comment_list.next_page_number }}">&raquo;</a>
+                                </li>
+                            {% else %}
+                                <li class="disabled"><span>&raquo;</span></li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
-from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Subforum
+
+THREADS_PER_PAGE = 7
 
 
 class SubforumListView(ListView):
@@ -17,8 +19,16 @@ def subforum_detail(request, slug):
     ).order_by(
         '-created_date'
     )
+    page = request.GET.get('page', 1)
+    paginator = Paginator(thread_list, THREADS_PER_PAGE)
+    try:
+        threads = paginator.page(page)
+    except PageNotAnInteger:
+        threads = paginator.page(1)
+    except EmptyPage:
+        threads = paginator.num_pages(paginator.num_pages)
     context_dict = {
         'subforum': subforum,
-        'thread_list': thread_list,
+        'thread_list': threads,
     }
     return render(request, 'subforums/subforum-detail.html', context_dict)

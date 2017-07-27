@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <div class="well" style="margin: 20px">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3 col-xs-12 thumb-contenido">
+                    <img class="thumbnail center-block img-responsive"
+                         src='{{ thread.author.profile_pic.url }}'
+                         style="width: 200px;height: 200px"/>
+                    <hr>
+                    <div class="text-center">
+                        <small>{{ thread.created_date }}</small>
+                        <br>
+                        <small><strong>{{ thread.author }}</strong></small>
+                    </div>
+                </div>
+                <div>
+                    <div class="">
+                        <h3 class="hidden-xs hidden-sm">{{ thread.title }}</h3>
+                        <span class="glyphicon glyphicon-heart"></span>
+                        <span
+                            id="like-counter">{{ thread.likes.count }}</span>
+                        <button
+                            class="btn btn-info glyphicon glyphicon-thumbs-up"
+                            id="like-btn"
+                            check-like-url="{{ thread.get_check_like_url }}"
+                            data-href="{{ thread.get_like_url }}">
+                            Like
+                        </button>
+                    </div>
+                    <hr>
+                    <p class="text-justify">{{ thread.content | linebreaksbr }}</p>
+                </div>
+            </div>
+        </div>
+        {% if thread.images.all %}
+            {% include 'threads/thread_images.html' with images=thread.images.all %}
+        {% endif %}
+        <div class="panel-footer">
+            <div class="row">
+                <div class="pull-right">
+                    {% if user.is_superuser %}
+                        <a class="btn btn-danger btn-option btn-sm">Delete</a>
+                    {% endif %}
+                    {% if user == thread.author %}
+                        <a class="btn btn-warning btn-option btn-sm">Edit</a>
+                    {% endif %}
+                    <a class="btn btn-primary btn-option btn-sm">Reply</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

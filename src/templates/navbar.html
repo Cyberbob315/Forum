@@ -15,8 +15,16 @@
         {% include 'search_form.html' %}
         <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-                <li><a
-                    href="{% url 'accounts:profile' student_id=user.student_id %}">Welcome {{ user.name }}</a>
+                <li>
+                    <a href="{% url 'accounts:profile' student_id=user.student_id %}">
+                        <img
+                            width="25px" height="25px"
+                            class="img-responsive img-circle"
+                            src="{{ user.profile_pic.url }}">
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'accounts:profile' student_id=user.student_id %}">{{ user.name }}</a>
                 </li>
                 <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
             {% else %}

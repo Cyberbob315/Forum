@@ -7,29 +7,36 @@
 {% block content %}
     <div class="container">
         <div class="page-header">
-            <h3><strong>{{ subforum.title }}</strong></h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <strong
+                        style="font-size: 1.5em">{{ subforum.title }}
+                    </strong>
+                </div>
+                <div class="pull-right" style="margin-right: 15px">
+                    <a class="btn btn-info" href="{% url 'threads:create' %}">
+                        Create new
+                    </a>
+                </div>
+            </div>
         </div>
         {% for thread in thread_list %}
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <article>
                         <div class="row">
-                            <div class="col-sm-6 col-md-4">
+                            <div class="col-sm-4 col-md-2">
                                 <figure>
                                     <img
-                                        src="http://usbcode.ir/wp-content/uploads/2017/03/bootstrap.jpg">
+                                        class="img-rounded img-responsive img-user"
+                                        src="{{ thread.author.profile_pic.url }}">
                                 </figure>
                             </div>
-                            <div class="col-sm-6 col-md-8">
+                            <div class="col-sm-8 col-md-10">
                             <span class="label label-default pull-right"><i
                                 class="glyphicon glyphicon-comment"></i>{{ thread.comments.count }}</span>
                                 <h4>{{ thread.title }}</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetuer
-                                    adipiscing elit, sed diam nonummy nibh
-                                    euismod
-                                    tincidunt ut laoreet dolore magna aliquam
-                                    erat
-                                    volutpat.</p>
+                                <p>{{ thread.summarize_content }}</p>
                                 <section>
                                     <i class="glyphicon glyphicon-folder-open"></i>
                                     <i class="glyphicon glyphicon-user"></i>{{ thread.author }}
@@ -46,7 +53,36 @@
                 </div>
             </div>
         {% empty %}
-            <h4>There are no threads in this forum</h4>
+            <h4>There are no thread_list in this forum</h4>
         {% endfor %}
+        <div class="row pull-right" style="margin-right: 24px;">
+            {% if thread_list.has_other_pages %}
+                <ul class="pagination">
+                    {% if thread_list.has_previous %}
+                        <li><a
+                            href="?page={{ thread_list.previous_page_number }}">&laquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in thread_list.paginator.page_range %}
+                        {% if thread_list.number == i %}
+                            <li class="active"><span>{{ i }} <span
+                                class="sr-only">(current)</span></span>
+                            </li>
+                        {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if thread_list.has_next %}
+                        <li><a
+                            href="?page={{ thread_list.next_page_number }}">&raquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

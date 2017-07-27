@@ -28,7 +28,7 @@ class PostLikeToggleApi(APIView):
         data = {
             'updated': updated,
             'liked': liked,
-            'likeCount': like_count,
+            'like_count': like_count,
         }
         return Response(data)
 
@@ -44,7 +44,7 @@ class CheckLikeApi(APIView):
 
         data = {
             'is_liked': has_liked,
-            'likeCount': like_count,
+            'like_count': like_count,
         }
 
         return Response(data,status=201)

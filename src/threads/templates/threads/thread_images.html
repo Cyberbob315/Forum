@@ -1,0 +1,41 @@
+{% load staticfiles %}
+<div class="row col-md-6 col-md-offset-3">
+    {% for image in images %}
+        <div class="column">
+            <img width="100px" height="100px" src="{{ image.image.url }}"
+                 onclick="openModal();currentSlide(1)"
+                 class="hover-shadow">
+        </div>
+    {% endfor %}
+</div>
+<div id="myModal" class="modal">
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+        {% for image in images %}
+            <div class="mySlides">
+                <div class="numbertext">1 / 4</div>
+                <img src="{{ image.image.url }}" style="width:100%">
+            </div>
+        {% endfor %}
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        <div class="caption-container">
+            <p id="caption"></p>
+        </div>
+        {% for image in images %}
+            <div class="column">
+                <img class="demo" width="100px" height="100px"
+                     src="{{ image.image.url }}" onclick="currentSlide(1)">
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    $(document).keydown(function (event) {
+        ESC_KEY_CODE = 27;
+        if (event.keyCode === ESC_KEY_CODE) {
+            document.getElementById('myModal').style.display = "none";
+        }
+    });
+</script>
+

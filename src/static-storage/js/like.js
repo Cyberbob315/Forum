@@ -15,7 +15,7 @@ $(document).ready(function () {
         method: 'GET',
         data: {},
         success: function (data) {
-            var likeCount = parseInt(data.likeCount);
+            var likeCount = parseInt(data.like_count);
             if (data.is_liked) {
                 updateText(likeBtn, likeCount, 'Unlike');
                 likeBtn.removeClass('glyphicon-thumbs-up').addClass('glyphicon-thumbs-down');
@@ -39,7 +39,7 @@ $('#like-btn').click(function (event) {
         method: 'GET',
         data: {},
         success: function (data) {
-            var likeCount = parseInt(data.likeCount);
+            var likeCount = parseInt(data.like_count);
             if (data.liked) {
                 updateText(this_, likeCount, 'Unlike');
                 this_.removeClass('glyphicon-thumbs-up').addClass('glyphicon-thumbs-down');
@@ -50,6 +50,7 @@ $('#like-btn').click(function (event) {
         },
         error: function (error) {
             console.log('error');
+            window.location.href = '/accounts/login-site';
         }
     });
-})
+});
