@@ -3,16 +3,37 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView, CreateView
+from django.views.generic import DetailView, CreateView, UpdateView
 from django.core.urlresolvers import reverse
 from .models import Thread, ThreadImages
 from . import forms
+from . import mixins
 
 
 class ThreadDetailView(DetailView):
     model = Thread
     context_object_name = 'thread'
     template_name = 'threads/thread-detail.html'
+
+
+class ThreadUpdateView(LoginRequiredMixin, mixins.UserOwnerMixin, UpdateView):
+    model = Thread
+    template_name = 'threads/thread-edit.html'
+    context_object_name = 'thread'
+    form_class = forms.ThreadForm
+
+    def form_valid(self, form):
+        if 'images' in self.request.FILES:
+            images = self.request.FILES.getlist('new-images')
+            threads = [ThreadImages(thread=self.object, image=image) for image
+                       in images]
+            ThreadImages.objects.bulk_create(threads)
+        images_to_delete = self.request.POST.getlist('image-to-delete')
+        ThreadImages.objects.filter(pk__in=images_to_delete).delete()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('threads:detail', kwargs={'pk': self.object.pk})
 
 
 def thread_detail_view(request, pk):
@@ -39,7 +60,7 @@ class ThreadCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'next'
     form_class = forms.ThreadForm
     model = Thread
-    template_name = 'threads/thread-form.html'
+    template_name = 'threads/thread-create.html'
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -63,10 +84,9 @@ def post_thread(request):
 
             if 'images' in request.FILES:
                 images = request.FILES.getlist('images')
-                ThreadImages.objects.bulk_create([
-                    ThreadImages(thread=thread, image=image) for image in
-                    images
-                ])
+                threads = [ThreadImages(thread=thread, image=image) for image
+                           in images]
+                ThreadImages.objects.bulk_create(threads)
             return HttpResponseRedirect('/')
-    return render(request, 'threads/thread-form.html',
+    return render(request, 'threads/thread-create.html',
                   {'thread_form': thread_form, })

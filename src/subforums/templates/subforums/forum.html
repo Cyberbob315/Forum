@@ -14,6 +14,9 @@
                             <th>Subforum</th>
                             <th>Last Post</th>
                             <th>Threads</th>
+                            {% if user.is_superuser %}
+                                <th>Drafts</th>
+                            {% endif %}
                             <th>Comments</th>
                         </tr>
                     </thead>
@@ -27,6 +30,9 @@
                                 </td>
                                 <td class="td-forum-list">{{ subforum.get_last_post }}</td>
                                 <td class="td-forum-list td-forum-text">{{ subforum.count_threads }}</td>
+                                {% if user.is_superuser %}
+                                    <td class="td-forum-list td-forum-text">{{ subforum.count_drafts }}</td>
+                                {% endif %}
                                 <td class="td-forum-list td-forum-text">{{ subforum.count_comments }}</td>
                             </tr>
                         {% endfor %}

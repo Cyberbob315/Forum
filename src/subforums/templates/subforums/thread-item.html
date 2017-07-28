@@ -1,0 +1,58 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <article>
+        <div class="row">
+            <div class="col-sm-4 col-md-2">
+                <figure>
+                    <img
+                        class="img-rounded img-responsive img-user"
+                        src="{{ thread.author.profile_pic.url }}">
+                </figure>
+            </div>
+            <div class="col-sm-8 col-md-10">
+                                <span class="label label-default pull-right">
+                                    <i class="glyphicon glyphicon-comment"></i>
+                                    {{ thread.comments.count }}
+                                </span>
+                {% if thread.is_pinned and not is_draft %}
+                    <span
+                        class="pinned glyphicon glyphicon-pushpin pull-right">
+                    </span>
+                {% endif %}
+                <h4>{{ thread.title }}</h4>
+                <p>{{ thread.content | truncatechars:30 }}</p>
+                <section>
+                    <i class="glyphicon glyphicon-folder-open"></i>
+                    <i class="glyphicon glyphicon-user"></i>{{ thread.author }}
+                    <i class="glyphicon glyphicon-calendar"></i>{{ thread.published_date }}
+                    <i class="glyphicon glyphicon-eye-open"></i>{{ thread.view_count }}
+                    <i class="glyphicon glyphicon-thumbs-up"></i>{{ thread.likes.count }}
+                    <span class="pull-right">
+                        {% if is_draft %}
+                            <span id="publish-area-{{ forloop.counter }}">
+                                <a
+                                    id="btn-publish-{{ forloop.counter }}"
+                                    publish-url="{{ thread.get_publish_url }}"
+                                    href="#"
+                                    class="btn btn-info btn-sm btn-publish">
+                                    Publish
+                                </a>
+                            </span>
+                            <span id="delete-area-{{ forloop.counter }}">
+                                <a
+                                    id="btn-delete-{{ forloop.counter }}"
+                                    delete-url="{{ thread.get_delete_api_url }}"
+                                    href="#"
+                                    class="btn btn-warning btn-sm btn-publish">
+                                    Delete
+                                </a>
+                            </span>
+                        {% endif %}
+                        <a href="{{ thread.get_detail_link }}"
+                           class="btn btn-default btn-sm">More
+                        ... </a>
+                    </span>
+                </section>
+            </div>
+        </div>
+    </article>
+</div>

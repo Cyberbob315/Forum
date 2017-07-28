@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}
     {{ subforum.title }}
@@ -14,46 +15,28 @@
                     </strong>
                 </div>
                 <div class="pull-right" style="margin-right: 15px">
-                    <a class="btn btn-info" href="{% url 'threads:create' %}">
-                        Create new
-                    </a>
+                    {% if subforum.count_drafts and user.is_superuser and not is_draft %}
+                        <a class="btn btn-default"
+                           href="{{ subforum.get_draft_list_link }}">
+                            Drafts list
+                        </a>
+                    {% endif %}
+                    {% if not is_draft %}
+                        <a class="btn btn-info"
+                           href="{% url 'threads:create' %}">
+                            Create new
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
+        <a id="thread_counter" data-href="{{ thread_list | length }}"></a>
         {% for thread in thread_list %}
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <article>
-                        <div class="row">
-                            <div class="col-sm-4 col-md-2">
-                                <figure>
-                                    <img
-                                        class="img-rounded img-responsive img-user"
-                                        src="{{ thread.author.profile_pic.url }}">
-                                </figure>
-                            </div>
-                            <div class="col-sm-8 col-md-10">
-                            <span class="label label-default pull-right"><i
-                                class="glyphicon glyphicon-comment"></i>{{ thread.comments.count }}</span>
-                                <h4>{{ thread.title }}</h4>
-                                <p>{{ thread.summarize_content }}</p>
-                                <section>
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                    <i class="glyphicon glyphicon-user"></i>{{ thread.author }}
-                                    <i class="glyphicon glyphicon-calendar"></i>{{ thread.published_date }}
-                                    <i class="glyphicon glyphicon-eye-open"></i>{{ thread.view_count }}
-                                    <i class="glyphicon glyphicon-thumbs-up"></i>{{ thread.likes.count }}
-                                    <a href="{{ thread.get_detail_link }}"
-                                       class="btn btn-default btn-sm pull-right">More
-                                        ... </a>
-                                </section>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+                {% include 'subforums/thread-item.html' with thread=thread is_draft=is_draft %}
             </div>
         {% empty %}
-            <h4>There are no thread_list in this forum</h4>
+            <h4>There are no thread</h4>
         {% endfor %}
         <div class="row pull-right" style="margin-right: 24px;">
             {% if thread_list.has_other_pages %}
@@ -85,4 +68,8 @@
             {% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/publish.js' %}"></script>
 {% endblock %}

@@ -22,12 +22,6 @@ class Thread(models.Model):
     class Meta:
         db_table = 'Threads'
 
-    def summarize_content(self):
-        if len(self.content) > 20:
-            return '{}...'.format(self.content[:20])
-        else:
-            return self.content
-
     def increase_view(self):
         self.view_count += 1
         self.save()
@@ -39,8 +33,14 @@ class Thread(models.Model):
         slug = slugify(self.title)
         return 'thread_images/{}-{}'.format(slug, filename)
 
+    def get_publish_url(self):
+        return reverse('threads:publish', kwargs={'pk': self.pk})
+
     def get_like_url(self):
         return reverse('threads:like', kwargs={'pk': self.pk})
+
+    def get_delete_api_url(self):
+        return reverse('threads:delete-api', kwargs={'pk': self.pk})
 
     def get_check_like_url(self):
         return reverse('threads:check-like', kwargs={'pk': self.pk})
@@ -52,6 +52,10 @@ class Thread(models.Model):
 class ThreadImages(models.Model):
     thread = models.ForeignKey(Thread, related_name='images')
     image = models.ImageField(upload_to='thread_images/', )
+
+    def delete(self, using=None, keep_parents=False):
+        self.image.delete()
+        super().delete(using=using, keep_parents=keep_parents)
 
     def __str__(self):
         return self.image.name

@@ -1,9 +1,9 @@
-<form class="navbar-form navbar-left" method="get" action="">
-    <div class="form-group form-group-sm">
-{#        <label for="search">Search</label>#}
-        <input class="text-info form-control" type="text" name="search"
-               placeholder="Search"
-               value="{{ request.GET.search }}">
-        <input class="btn btn-default btn-sm" type="submit" value="Search">
+<form id="custom-search-form"
+      class="navbar-left navbar-form">
+    <div class="input-append span12">
+        <input type="text" class="search-query" placeholder="Search">
+        <button type="submit" class="btn"><i
+            class="glyphicon glyphicon-search"></i>
+        </button>
     </div>
 </form>

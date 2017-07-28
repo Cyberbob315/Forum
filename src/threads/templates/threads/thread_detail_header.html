@@ -42,9 +42,13 @@
                         <a class="btn btn-danger btn-option btn-sm">Delete</a>
                     {% endif %}
                     {% if user == thread.author %}
-                        <a class="btn btn-warning btn-option btn-sm">Edit</a>
+                        <a href="{% url 'threads:edit' pk=thread.pk %}"
+                           class="btn btn-warning btn-option btn-sm">Edit</a>
                     {% endif %}
-                    <a class="btn btn-primary btn-option btn-sm">Reply</a>
+                    <a class="btn btn-primary btn-option btn-sm">Quick
+                        Reply</a>
+                    <a href="{% url 'threads:comments:post-comment' pk=thread.pk %}"
+                       class="btn btn-primary btn-option btn-sm">Reply</a>
                 </div>
             </div>
         </div>

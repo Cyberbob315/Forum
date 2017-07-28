@@ -22,6 +22,16 @@ class Subforum(models.Model):
     def get_detail_link(self):
         return reverse('forum:detail', kwargs={'slug': self.slug})
 
+    def get_draft_list_link(self):
+        return reverse('forum:drafts', kwargs={'slug': self.slug})
+
+    def count_drafts(self):
+        return self.threads.filter(
+            published_date__isnull=True
+        ).order_by(
+            '-created_date'
+        ).count()
+
     def get_last_post(self):
         thread_list = self.threads.filter(
             published_date__isnull=False
@@ -31,13 +41,6 @@ class Subforum(models.Model):
         if thread_list.count() > 0:
             return thread_list[0]
         return 'There is no thread in this subforum'
-
-    def pending_thread_count(self):
-        return self.threads.filter(
-            published_date__isnull=True
-        ).order_by(
-            '-created_date'
-        ).count()
 
     def published_thread_count(self):
         return self.threads.filter(
