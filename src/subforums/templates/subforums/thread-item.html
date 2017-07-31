@@ -23,9 +23,9 @@
                 <section>
                     <i class="glyphicon glyphicon-folder-open"></i>
                     <i class="glyphicon glyphicon-user"></i>{{ thread.author }}
-                    <i class="glyphicon glyphicon-calendar"></i> {{ thread.published_date }}
+                    <i class="glyphicon glyphicon-calendar"></i>{{ thread.published_date }}
                     <i class="glyphicon glyphicon-eye-open"></i>{{ thread.view_count }}
-                    <i class="glyphicon glyphicon-thumbs-up"></i> {{ thread.likes.count }}
+                    <i class="glyphicon glyphicon-thumbs-up"></i>{{ thread.likes.count }}
                     <span class="pull-right">
                         {% if is_draft %}
                             <span id="publish-area-{{ forloop.counter }}">

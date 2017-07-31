@@ -24,7 +24,8 @@
                         {% for subforum in subforum_list %}
                             <tr class="alert-info">
                                 <td class="td-forum-list"><br/>
-                                    <a href="{{ subforum.get_detail_link }}">{{ subforum.title }}
+                                    <a href="{{ subforum.get_detail_link }}"
+                                       target="_blank">{{ subforum.title }}
                                     </a><br/><br>
                                 </td>
                                 <td class="td-forum-list">{{ subforum.get_last_post }}</td>

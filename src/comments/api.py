@@ -4,14 +4,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import authentication, permissions
 from . import models
-from . import permissions as comment_permissions
+from threads import permissions as comment_permissions
 
 
 class DeleteCommentAPIView(APIView):
     authentication_classes = (authentication.SessionAuthentication,)
     permission_classes = (
         permissions.IsAuthenticated,
-        comment_permissions.DeleteOwnComment
+        comment_permissions.DeleteOwnThreadComment
     )
 
     def delete(self, request, pk):

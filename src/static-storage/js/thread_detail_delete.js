@@ -18,19 +18,18 @@ function commentDelete(event) {
         event.preventDefault();
         deleteUrl1 = $(btnDeleteId).attr('delete-url');
         csrfToken = $(btnDeleteId).attr('csrf-token');
-        console.log("DELETEURL 1", deleteUrl1);
         $.ajax({
             url: deleteUrl1,
             method: 'DELETE',
             dataType: 'json',
-            headers:{
+            headers: {
                 'X-CSRFToken': csrfToken
             },
             data: {},
             success: function (data) {
                 console.log('success');
                 console.log(data);
-                // location.href = location.href;
+                location.href = location.href;
                 deleteModal.modal('hide');
             },
             error: function (data) {
@@ -38,12 +37,8 @@ function commentDelete(event) {
             }
         });
     });
-
-
     deleteModal.on('hide.bs.modal', function () {
         $('#btnDelete').unbind();
         console.log('hide');
     });
-
-
 }

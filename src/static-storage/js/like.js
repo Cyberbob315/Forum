@@ -9,7 +9,7 @@ function updateText(btn, newCount, verb) {
 
 $(document).ready(function () {
     var likeBtn = $('#like-btn');
-    var checkLikeUrl = likeBtn.attr('check-like-deleteUrl');
+    var checkLikeUrl = likeBtn.attr('check-like-url');
     $.ajax({
         url: checkLikeUrl,
         method: 'GET',

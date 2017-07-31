@@ -47,16 +47,18 @@
                                                 {{ comment.content|safe|linebreaksbr }}
                                             </p>
                                         </div>
-                                        {% if user.is_superuser or comment.author == user %}
-                                            <p class="text-right">
-                                            <a
-                                                id="btnDeleteComment-{{ forloop.counter }}"
-                                                delete-url="{{ comment.get_delete_api_url }}"
-                                                csrf-token="{{ csrf_token }}"
-                                                href="#"
-                                                class="btn btn-danger btn-sm">
-                                                Delete
-                                            </a>
+                                        {% if user.is_superuser %}
+                                            {% if user.is_superuser or comment.author == user %}
+                                                <p class="text-right">
+                                                <a
+                                                    id="btnDeleteComment-{{ forloop.counter }}"
+                                                    delete-url="{{ comment.get_delete_api_url }}"
+                                                    csrf-token="{{ csrf_token }}"
+                                                    href="#"
+                                                    class="btn btn-danger btn-sm">
+                                                    Delete
+                                                </a>
+                                            {% endif %}
                                         {% endif %}
                                     </div>
                                 </div>
