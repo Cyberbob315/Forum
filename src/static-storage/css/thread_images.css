@@ -14,7 +14,7 @@
 }
 
 /* The Modal (background) */
-.modal {
+.modal-custom {
     display: none;
     position: fixed;
     z-index: 1;
@@ -28,7 +28,7 @@
 }
 
 /* Modal Content */
-.modal-content {
+.modal-content-custom {
     position: relative;
     background-color: #fefefe;
     margin: auto;

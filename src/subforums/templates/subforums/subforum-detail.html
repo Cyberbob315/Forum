@@ -68,8 +68,10 @@
             {% endif %}
         </div>
     </div>
+    {% include 'delete-confirm-modal.html' %}
+    {% include 'delete-confirm-modal.html' %}
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'js/publish.js' %}"></script>
+    <script src="{% static 'js/publish_delete_thread.js' %}"></script>
 {% endblock %}

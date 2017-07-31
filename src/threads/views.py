@@ -36,6 +36,7 @@ class ThreadUpdateView(LoginRequiredMixin, mixins.UserOwnerMixin, UpdateView):
         return reverse('threads:detail', kwargs={'pk': self.object.pk})
 
 
+
 def thread_detail_view(request, pk):
     thread = get_object_or_404(Thread, pk=pk)
     thread.increase_view()

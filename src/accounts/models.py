@@ -4,16 +4,14 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.urls import reverse
+from django.db.models.signals import post_save
 
 
 class StudentProfileManager(BaseUserManager):
     def create_user(self, name, password=None, **extra_fields):
         extra_fields.setdefault('is_superuser', False)
         user = self.model(name=name, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        user.student_id = convert_student_id(user.id)
-        user.email = create_student_email(user.id)
+        user.password = password
         user.save(using=self._db)
         return user
 
@@ -24,9 +22,6 @@ class StudentProfileManager(BaseUserManager):
                                 **extra_fields)
         user.is_superuser = True
         user.is_staff = True
-        user.save(using=self._db)
-        user.student_id = convert_student_id(user.id)
-        user.email = create_student_email(user.id)
         user.save(using=self._db)
 
 
@@ -105,3 +100,14 @@ class StudentProfile(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.name
+
+
+def post_save_student_receiver(sender, instance, created, *args, **kwargs):
+    if created:
+        instance.set_password(instance.password)
+        instance.student_id = convert_student_id(instance.id)
+        instance.email = create_student_email(instance.id)
+        instance.save()
+
+
+post_save.connect(post_save_student_receiver, sender=StudentProfile)

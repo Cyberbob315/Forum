@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from accounts.models import StudentProfile
 from threads.models import Thread
 
@@ -12,3 +13,5 @@ class Comment(models.Model):
     class Meta:
         db_table = 'Comments'
 
+    def get_delete_api_url(self):
+        return reverse('threads:comments:api-delete', kwargs={'pk': self.id})

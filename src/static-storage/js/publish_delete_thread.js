@@ -24,12 +24,14 @@ function showDeleteConfirm(event) {
         var deleteAreaId = '#delete-area-' + counter;
         var deleteArea = $(deleteAreaId);
         var deleteUrl = $(deleteId).attr('delete-url');
+        console.log(deleteId);
         console.log(deleteUrl);
         $.ajax({
             url: deleteUrl,
             method: 'GET',
-            data: {},
+            dataType: 'json',
             success: function (data) {
+                console.log('success');
                 if (data.success) {
                     deleteArea.html(deleteSuccess);
                     deleteModal.modal('hide');
@@ -55,7 +57,7 @@ function publish(event) {
     var counter = event.data.counter;
     var publishAreaId = '#publish-area-' + counter;
     var publishArea = $(publishAreaId);
-    var publishUrl = $(this).attr('publish-url');
+    var publishUrl = $(this).attr('publish-deleteUrl');
     $.ajax({
         url: publishUrl,
         method: 'GET',

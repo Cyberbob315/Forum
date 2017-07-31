@@ -53,10 +53,12 @@
                         <fieldset>
                             <div class="form-group">
                                     <textarea
-                                        class="form-control" rows="3"
+                                        class="editable medium-editor-textarea"
+                                        style="background-color: white;row-span: 50"
+                                        rows="30"
                                         placeholder="Enter text here"
                                         name="content"
-                                        autofocus="">
+                                        autofocus="autofocus">
                                     </textarea>
                             </div>
                             <button type="submit"
@@ -70,4 +72,10 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        var editor = new MediumEditor('.editable');
+    </script>
 {% endblock %}

@@ -38,14 +38,14 @@
         <div class="panel-footer">
             <div class="row">
                 <div class="pull-right">
-                    {% if user.is_superuser %}
-                        <a class="btn btn-danger btn-option btn-sm">Delete</a>
+                    {% if user.is_superuser or thread.author == user %}
+                        <a id="btnDeleteThread" class="btn btn-danger btn-option btn-sm">Delete</a>
                     {% endif %}
-                    {% if user == thread.author %}
+                    {% if user.is_superuser or user == thread.author %}
                         <a href="{% url 'threads:edit' pk=thread.pk %}"
                            class="btn btn-warning btn-option btn-sm">Edit</a>
                     {% endif %}
-                    <a class="btn btn-primary btn-option btn-sm">Quick
+                    <a id="btnQuickReply" class="btn btn-primary btn-option btn-sm">Quick
                         Reply</a>
                     <a href="{% url 'threads:comments:post-comment' pk=thread.pk %}"
                        class="btn btn-primary btn-option btn-sm">Reply</a>

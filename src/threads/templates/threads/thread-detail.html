@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}
     {{ thread.title }}
@@ -6,11 +7,14 @@
 
 {% block content %}
     {% include 'threads/thread_detail_header.html' with thread=thread %}
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h2 class="page-header">Comments</h2>
-                <section class="comment-list">
+                <section id="commentSection"
+                         total-comment="{{ comment_list | length }}"
+                         class="comment-list">
                     <!-- First Comment -->
                     {% for comment in comment_list %}
                         <article class="row">
@@ -28,8 +32,7 @@
                                     <div class="panel-body">
                                         <header class="text-left">
                                             <div class="comment-user"><i
-                                                class="fa fa-user"></i> That
-                                                Guy
+                                                class="fa fa-user"></i>
                                             </div>
                                             <time class="comment-date"
                                                   datetime="16-12-2014 01:05">
@@ -41,14 +44,19 @@
                                         </header>
                                         <div class="comment-post">
                                             <p>
-                                                {{ comment.content }}
+                                                {{ comment.content|safe|linebreaksbr }}
                                             </p>
                                         </div>
-                                        {% if user.is_superuser %}
-                                            <p class="text-right"><a href="#"
-                                                                     class="btn btn-danger btn-sm"><i
-                                            class="fa fa-reply"></i> Delete</a>
-
+                                        {% if user.is_superuser or comment.author == user %}
+                                            <p class="text-right">
+                                            <a
+                                                id="btnDeleteComment-{{ forloop.counter }}"
+                                                delete-url="{{ comment.get_delete_api_url }}"
+                                                csrf-token="{{ csrf_token }}"
+                                                href="#"
+                                                class="btn btn-danger btn-sm">
+                                                Delete
+                                            </a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -90,5 +98,12 @@
             </div>
         </div>
     </div>
+    {% include 'reply-thread-modal.html' with thread=thread %}
+    {% include 'delete-confirm-modal.html' %}
+{% endblock %}
 
+{% block script %}
+    <script src="{% static 'js/thread_detail_delete.js' %}"></script>
+    <script src="{% static 'js/thread_images.js' %}"></script>
+    <script src="{% static 'js/thread_reply.js' %}"></script>
 {% endblock %}
