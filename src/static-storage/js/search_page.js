@@ -1,7 +1,6 @@
 let subformSeleted = 'All';
 $(document).ready(function () {
 
-    hideLoader();
 
     getSubforumList();
 
@@ -20,19 +19,6 @@ $(document).ready(function () {
     })
 });
 
-function showLoader() {
-    // let loader = document.getElementById('loader');
-    // loader.style.display = 'block';
-    let loader = $('#loader');
-    loader.show();
-}
-
-function hideLoader() {
-    // let loader = document.getElementById('loader');
-    // loader.style.display = 'none';
-    let loader = $('#loader');
-    loader.hide();
-}
 
 function getSubforumList() {
     let subForumUL = $('#subForumList');
@@ -54,7 +40,9 @@ function searchThread(query) {
     let threadSearchUrl = '/api/thread/search';
     let resultsContainer = $('#resultContainer');
     resultsContainer.html('');
-    showLoader();
+    let delay = 50;
+    let loader = ` <div id="loader" class="loader"></div>`;
+
     $.ajax({
         url: threadSearchUrl,
         method: 'GET',
@@ -63,20 +51,25 @@ function searchThread(query) {
             'query': query,
             'subforum': subformSeleted
         },
+        beforeSend: function () {
+            resultsContainer.append(loader);
+        },
         success: function (data) {
             console.log('success');
-            if (data.results.length === 0) {
-                resultsContainer.append(`<h1>No results</h1>`);
-            }
-            for (let key in data.results) {
-                resultsContainer.append(genThreadItem(data.results[key]));
-            }
-            hideLoader();
+            setTimeout(function () {
+                resultsContainer.html('');
+                if (data.results.length === 0) {
+                    resultsContainer.append(`<h1>No results</h1>`);
+                }
+                for (let key in data.results) {
+                    resultsContainer.append(genThreadItem(data.results[key]));
+                }
+            }, delay);
+
         },
         error: function (data) {
             console.log('error');
             console.log(data);
-            hideLoader();
         }
     });
 }
