@@ -1,12 +1,12 @@
-var successText = `<span class="alert alert-success btn-sm"><strong>Published</strong></span>`;
-var failText = `<span class="alert alert-warning btn-sm"><strong>Error Occured!</strong></span>`;
-var deleteSuccess = `<span class="alert alert-success btn-sm"><strong>Deleted</strong></span>`;
-var totalThread = 0;
+let successText = `<span class="alert alert-success btn-sm"><strong>Published</strong></span>`;
+let failText = `<span class="alert alert-warning btn-sm"><strong>Error Occured!</strong></span>`;
+let deleteSuccess = `<span class="alert alert-success btn-sm"><strong>Deleted</strong></span>`;
+let totalThread = 0;
 $(document).ready(function () {
     totalThread = parseInt($('#thread_counter').attr('data-href'));
     for (i = 1; i <= totalThread; i++) {
-        var publishId = `#btn-publish-${i}`;
-        var deleteId = `#btn-delete-${i}`;
+        let publishId = `#btn-publish-${i}`;
+        let deleteId = `#btn-delete-${i}`;
         $(publishId).click({'counter': i}, publish);
         $(deleteId).click({'counter': i}, showDeleteConfirm);
     }
@@ -14,15 +14,15 @@ $(document).ready(function () {
 
 function showDeleteConfirm(event) {
     event.preventDefault();
-    var deleteModal = $('#deleteModal');
+    let deleteModal = $('#deleteModal');
     deleteModal.modal({});
-    var counter = event.data.counter;
+    let counter = event.data.counter;
     $('#btnDelete').click(function (event) {
         event.preventDefault();
-        var deleteId = `#btn-delete-${counter}`;
-        var deleteAreaId = `#delete-area-${counter}`;
-        var deleteArea = $(deleteAreaId);
-        var deleteUrl = $(deleteId).attr('delete-url');
+        let deleteId = `#btn-delete-${counter}`;
+        let deleteAreaId = `#delete-area-${counter}`;
+        let deleteArea = $(deleteAreaId);
+        let deleteUrl = $(deleteId).attr('delete-url');
         console.log(deleteUrl);
         $.ajax({
             url: deleteUrl,
@@ -51,10 +51,10 @@ function deleteThread(event) {
 
 function publish(event) {
     event.preventDefault();
-    var counter = event.data.counter;
-    var publishAreaId = '#publish-area-' + counter;
-    var publishArea = $(publishAreaId);
-    var publishUrl = $(this).attr('publish-url');
+    let counter = event.data.counter;
+    let publishAreaId = '#publish-area-' + counter;
+    let publishArea = $(publishAreaId);
+    let publishUrl = $(this).attr('publish-url');
     $.ajax({
         url: publishUrl,
         method: 'GET',

@@ -1,5 +1,7 @@
-var subformSeleted = 'All';
+let subformSeleted = 'All';
 $(document).ready(function () {
+
+    hideLoader();
 
     getSubforumList();
 
@@ -18,8 +20,22 @@ $(document).ready(function () {
     })
 });
 
+function showLoader() {
+    // let loader = document.getElementById('loader');
+    // loader.style.display = 'block';
+    let loader = $('#loader');
+    loader.show();
+}
+
+function hideLoader() {
+    // let loader = document.getElementById('loader');
+    // loader.style.display = 'none';
+    let loader = $('#loader');
+    loader.hide();
+}
+
 function getSubforumList() {
-    var subForumUL = $('#subForumList');
+    let subForumUL = $('#subForumList');
     $.ajax({
         url: '/api/subforum/list',
         method: 'GET',
@@ -38,6 +54,7 @@ function searchThread(query) {
     let threadSearchUrl = '/api/thread/search';
     let resultsContainer = $('#resultContainer');
     resultsContainer.html('');
+    showLoader();
     $.ajax({
         url: threadSearchUrl,
         method: 'GET',
@@ -54,10 +71,12 @@ function searchThread(query) {
             for (let key in data.results) {
                 resultsContainer.append(genThreadItem(data.results[key]));
             }
+            hideLoader();
         },
         error: function (data) {
             console.log('error');
             console.log(data);
+            hideLoader();
         }
     });
 }
@@ -91,14 +110,14 @@ $(document).on('click', '.btn-select', function (e) {
 });
 
 $(document).on('click', function (e) {
-    var target = $(e.target).closest(".btn-select");
+    let target = $(e.target).closest(".btn-select");
     if (!target.length) {
         $(".btn-select").removeClass("active").find("ul").hide();
     }
 });
 
 function genThreadItem(threadValue) {
-    var item = ` <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    let item = ` <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <article>
                                 <div class="row">
                                     <div class="col-sm-4 col-md-2">
