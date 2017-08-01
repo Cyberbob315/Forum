@@ -24,8 +24,6 @@ function showDeleteConfirm(event) {
         var deleteAreaId = '#delete-area-' + counter;
         var deleteArea = $(deleteAreaId);
         var deleteUrl = $(deleteId).attr('delete-url');
-        console.log(deleteId);
-        console.log(deleteUrl);
         $.ajax({
             url: deleteUrl,
             method: 'GET',

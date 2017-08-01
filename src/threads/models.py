@@ -26,6 +26,11 @@ class Thread(models.Model):
         self.view_count += 1
         self.save()
 
+    def summarize_content(self):
+        if len(self.content) > 30:
+            return '{}....'.format(self.content[:30])
+        return self.content
+
     def get_detail_link(self):
         return reverse('threads:detail', kwargs={'pk': self.pk})
 

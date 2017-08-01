@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from .views import post_thread, thread_detail_view, ThreadUpdateView
-from .api import PostLikeToggleApi, CheckLikeApi, PublishThreadApi, DeleteThreadApi
+from threads.api_temp import PostLikeToggleApi, CheckLikeApi, PublishThreadApi, DeleteThreadApi
 
 app_name = 'threads'
 

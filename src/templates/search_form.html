@@ -1,7 +1,9 @@
-<form id="custom-search-form"
-      class="navbar-left navbar-form">
+<form id="searchBar"
+      class="navbar-left navbar-form"
+      method="get"
+      action="{% url 'search' %}">
     <div class="input-append span12">
-        <input type="text" class="search-query" placeholder="Search">
+        <input id="inputSearch" type="text" class="search-query" placeholder="Search">
         <button type="submit" class="btn"><i
             class="glyphicon glyphicon-search"></i>
         </button>

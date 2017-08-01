@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/search_page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/drop_down_btn.css' %}">
+{% endblock %}
+
+{% block title %}
+    Search result
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row-fluid">
+            <div class="col-md-3 col-sm-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Filter
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <strong>Search in forum:</strong>
+                            <a class="btn btn-primary btn-select btn-select-light">
+                                <input type="hidden" class="btn-select-input"
+                                       id=""
+                                       name="" value=""/>
+                                <span
+                                    class="btn-select-value">Select an Item</span>
+                                <span
+                                    class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                                <ul id="subForumList">
+                                    <li class="selected">All</li>
+                                </ul>
+                            </a>
+{#                            <select class="selectpicker">#}
+{#                                <option>All</option>#}
+{#                                <option>Java</option>#}
+{#                            </select>#}
+                        </div>
+                        <div>
+                            <strong>Filter by like or view</strong>
+                            <a class="btn btn-primary btn-select btn-select-light">
+                                <input type="hidden" class="btn-select-input"
+                                       id=""
+                                       name="" value=""/>
+                                <span
+                                    class="btn-select-value">Select an Item</span>
+                                <span
+                                    class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                                <ul id="">
+                                    <li class="selected">None</li>
+                                    <li>Total likes descending</li>
+                                    <li>Total likes ascending</li>
+                                    <li>Total views descending</li>
+                                    <li>Total views ascending</li>
+                                </ul>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="" class="col-md-9 col-sm-9">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Results
+                    </div>
+                    <div class="panel-body">
+                        <div id="resultContainer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        function change_tab(id) {
+            document.getElementById("page_content").innerHTML = document.getElementById(id + "_desc").innerHTML;
+            document.getElementById("page1").className = "notselected";
+            document.getElementById("page2").className = "notselected";
+            document.getElementById("page3").className = "notselected";
+            document.getElementById(id).className = "selected";
+        }
+    </script>
+    <script src="{% static 'js/search_page.js' %}"></script>
+{% endblock %}
