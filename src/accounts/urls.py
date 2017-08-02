@@ -7,6 +7,7 @@ from .views import (
     update_image,
     user_login,
     change_password,
+    user_activity,
 )
 
 app_name = 'accounts'
@@ -17,6 +18,7 @@ urlpatterns = [
     url(r'(?P<student_id>\d+)/password-change/$', change_password,
         name='password-change'),
     url(r'(?P<student_id>\d+)/profile/$', user_profile, name='profile'),
+    url(r'(?P<student_id>\d+)/activity/$', user_activity, name='activity'),
     url(r'(?P<student_id>\d+)/profile/edit/$', user_profile_edit,
         name='profile-edit'),
     url(r'(?P<student_id>\d+)/profile/api/update-info/$', update_profile,

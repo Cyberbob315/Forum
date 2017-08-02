@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/user_page.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="">
+        <div class="row profile">
+            <div class="col-md-2">
+                <div class="profile-sidebar">
+                    <!-- SIDEBAR USERPIC -->
+                    <div class="profile-userpic">
+                        <img
+                            src="{{ student.profile_pic.url }}"
+                            class="img-responsive" alt="">
+                    </div>
+                    <!-- END SIDEBAR USERPIC -->
+                    <!-- SIDEBAR USER TITLE -->
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            {{ student.name }}
+                        </div>
+                        <div class="profile-usertitle-job">
+                            {{ student.get_status_display }}
+                        </div>
+                    </div>
+                    <!-- END SIDEBAR USER TITLE -->
+                    <!-- SIDEBAR MENU -->
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li class="{% if not is_info %}active{% endif %}">
+                                <a href="{{ student.get_activity_link }}">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                    Overview </a>
+                            </li>
+                            <li class="{% if is_info %}active{% endif %}">
+                                <a
+                                    href="{{ student.get_absolute_url }}">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                    Personal Infomation </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- END MENU -->
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="profile-content">
+                    {% block user_content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
+

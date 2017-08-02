@@ -5,3 +5,16 @@
 .td-forum-text {
     text-align: center;
 }
+
+tr:hover {
+    background-color: darkgrey;
+}
+
+.first-column {
+    color: #342fd0;
+    /*font-size: 1.5em;*/
+}
+
+td {
+    height: 70px;
+}

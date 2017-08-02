@@ -8,11 +8,12 @@ from django.http.response import (
     HttpResponseRedirect,
     HttpResponse
 )
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.core.urlresolvers import reverse, reverse_lazy
 from rest_framework import status
 from . import forms
+from . import models
 
 
 @login_required(login_url=reverse_lazy('accounts:login'))
@@ -37,22 +38,32 @@ def change_password(request, student_id):
 
 
 @login_required(login_url=reverse_lazy('accounts:login'))
+def user_activity(request, student_id):
+    student = get_object_or_404(models.StudentProfile, student_id=student_id)
+    return render(request, 'accounts/user_activity.html',
+                  {'student': student, 'is_edit': False, 'is_info': False})
+
+
+@login_required(login_url=reverse_lazy('accounts:login'))
 def user_profile(request, student_id):
-    return render(request, 'accounts/user-profile.html',
-                  {'student_id': student_id, 'is_edit': False})
+    student = get_object_or_404(models.StudentProfile, student_id=student_id)
+    return render(request, 'accounts/user_personal_info.html',
+                  {'student': student, 'is_edit': False, 'is_info': True})
 
 
 @login_required(login_url=reverse_lazy('accounts:login'))
 def user_profile_edit(request, student_id):
-    return render(request, 'accounts/user-profile.html',
-                  {'student_id': student_id, 'is_edit': True})
+    student = get_object_or_404(models.StudentProfile, student_id=student_id)
+    return render(request, 'accounts/user_personal_info.html',
+                  {'student': student, 'is_edit': True, 'is_info': True})
 
 
 def user_login(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('home'))
     if request.method != 'POST':
-        return render(request, 'accounts/login.html', {'is_error': False})
+        return render(request, 'accounts/login.html',
+                      {'is_error': False, 'next': request.GET.get('next')})
     student_id = request.POST.get('student_id')
     password = request.POST.get('password')
 
@@ -60,7 +71,7 @@ def user_login(request):
     if user is None:
         return render(request, 'accounts/login.html', {'is_error': True})
     login(request, user)
-    return HttpResponseRedirect(reverse('home'))
+    return HttpResponseRedirect(request.POST.get('next', reverse('home')))
 
 
 @require_http_methods(['POST'])

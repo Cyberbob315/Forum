@@ -7,15 +7,9 @@
         <link rel="stylesheet" href="{% static 'css/master.css' %}">
         <link rel="stylesheet"
               href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/user-profile.css' %}">
-        <link rel="stylesheet" href="{% static 'css/forum.css' %}">
+        <link rel="stylesheet" href="{% static 'css/search_bar.css' %}">
+
         <script src="{% static 'jquery/jquery3.2.1.min.js' %}"></script>
-        <link rel="stylesheet" href="{% static 'css/login.css' %}">
-        <link rel="stylesheet" href="{% static 'css/home.css' %}">
-        <link rel="stylesheet" href="{% static 'css/subforum-detail.css' %}">
-        <link rel="stylesheet" href="{% static 'css/thread.css' %}">
-        <link rel="stylesheet" href="{% static 'css/thread.css' %}">
-        <link rel="stylesheet" href="{% static 'css/thread_images.css' %}">
         <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
@@ -34,18 +28,18 @@
     </head>
     <body>
         {% include 'navbar.html' with user=user %}
-        <div class="container-fluid">
+        <div class="container-fluid" style="margin-top: 70px">
             {% block content %}{% endblock %}
         </div>
         <footer>
             <div class="container">
-                <div class="footer-info text-center">
+                <div class="text-center">
                     Hanoi University of Science and Technology 2017
                 </div>
             </div>
         </footer>
     </body>
-    <script src="{% static 'js/user-edit.js' %}"></script>
+
     <script src="{% static 'js/like.js' %}"></script>
     <script
         src="//cdn.jsdelivr.net/medium-editor/latest/js/medium-editor.min.js">

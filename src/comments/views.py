@@ -12,6 +12,8 @@ class CommentCreate(LoginRequiredMixin, generic.CreateView):
     model = Comment
     form_class = forms.CommentForm
 
+    login_url = '/accounts/login-site'
+
     def form_valid(self, form):
         comment = form.save(commit=False)
         thread_id = self.kwargs.get('pk')

@@ -11,7 +11,8 @@
 {% endblock %}
 
 {% block content %}
-
+    {# Hidden field to hold search query which entered by user in the previous page #}
+    <input id="queryHolder" type="hidden" query-data="{{ query }}"></input>
     <div class="container">
         <div class="row-fluid">
             <div class="col-md-3 col-sm-3">
@@ -22,7 +23,8 @@
                     <div class="panel-body">
                         <div>
                             <strong>Search in forum:</strong>
-                            <a class="btn btn-primary btn-select btn-select-light">
+                            <a id="subForumSelect"
+                               class="btn btn-primary btn-select btn-select-light">
                                 <input type="hidden" class="btn-select-input"
                                        id=""
                                        name="" value=""/>
@@ -37,7 +39,8 @@
                         </div>
                         <div>
                             <strong>Filter by like or view</strong>
-                            <a class="btn btn-primary btn-select btn-select-light">
+                            <a id="filterSelect"
+                               class="btn btn-primary btn-select btn-select-light">
                                 <input type="hidden" class="btn-select-input"
                                        id=""
                                        name="" value=""/>
@@ -62,9 +65,19 @@
                     <div class="panel-heading">
                         Results
                     </div>
-                    <div class="panel-body">
+                    <div id="resultPanelBody" class="panel-body">
+                        <div id="resultCounter" class="">
+                        </div>
+                        <div id="paginator" class=""
+                             style="">
+                            <ul class="pagination list-inline">
+                                <li id="btnPrev"><span>&laquo;</span></li>
+                                <li class="disabled"><span id="pageCounter">Pagecount</span>
+                                </li>
+                                <li id="btnNext"><span>&raquo;</span></li>
+                            </ul>
+                        </div>
                         <div id="resultContainer">
-                            <div id="loader" class="loader"></div>
                         </div>
                     </div>
                 </div>

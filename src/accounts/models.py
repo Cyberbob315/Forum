@@ -84,6 +84,10 @@ class StudentProfile(AbstractBaseUser, PermissionsMixin):
         return reverse('accounts:profile',
                        kwargs={'student_id': self.student_id})
 
+    def get_activity_link(self):
+        return reverse('accounts:activity',
+                       kwargs={'student_id': self.student_id})
+
     def get_update_url(self):
         return reverse('accounts:profile-update',
                        kwargs={'student_id': self.student_id})

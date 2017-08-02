@@ -15,4 +15,8 @@ class SearchView(ListView):
 
 
 def search(request):
-    return render(request, 'search_page.html', {})
+    return render(request, 'search_page.html',
+                  {'query': request.GET.get('query')})
+
+def user_page_demo(request):
+    return render(request, 'accounts/user_personal_info.html', {})

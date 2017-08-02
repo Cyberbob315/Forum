@@ -1,9 +1,28 @@
+const PAGINATOR_ELEMENT = ``;
+const SEARCH_URL = '/api/thread/search';
+const RESULT_PER_PAGE = 7;
+let totalPage;
+let currentPage = 1;
 let subformSeleted = 'All';
+let filterselected = 'None';
+let nextPageUrl = '#';
+let prevPageUrl = '#';
+let hasNext = false;
+let hasPrev = false;
 $(document).ready(function () {
-
-
+// Get subforum data to show in combobox
     getSubforumList();
+// Start search automatically when starting from other page
+    queryInit = $('#queryHolder').attr('query-data');
+    // When reset page the query-data will be None so we won't search with that value
+    if (queryInit !== 'None') {
+        $('#inputSearch').val(queryInit);
+        searchThread(queryInit);
+    }
+// Hide Paginator firest
+    $('#paginator').hide();
 
+// Init data for 2 combobox
     $(".btn-select").each(function (e) {
         let value = $(this).find("ul li.selected").html();
         if (value !== undefined) {
@@ -11,12 +30,32 @@ $(document).ready(function () {
             $(this).find(".btn-select-value").html(value);
         }
     });
-
+// Submit event for search bar when user hit enter or click search button
     $('#searchBar').submit(function (event) {
         event.preventDefault();
         query = $('#inputSearch').val();
-        searchThread(query)
-    })
+        searchThread(query);
+    });
+});
+
+// Next Button in paginator
+$('#btnNext').click(function (event) {
+    event.preventDefault();
+    if (hasNext) {
+        query = $('#inputSearch').val();
+        searchThread(query, nextPageUrl);
+        updatePageCount(++currentPage);
+    }
+});
+
+// Previous button in paginator
+$('#btnPrev').click(function (event) {
+    event.preventDefault();
+    if (hasPrev) {
+        query = $('#inputSearch').val();
+        searchThread(query, prevPageUrl);
+        updatePageCount(--currentPage);
+    }
 });
 
 
@@ -31,17 +70,18 @@ function getSubforumList() {
             }
         },
         error: function (data) {
-
         }
     });
 }
 
-function searchThread(query) {
-    let threadSearchUrl = '/api/thread/search';
+function searchThread(query, url = SEARCH_URL) {
+    let threadSearchUrl = url;
+    let paginator = $('#paginator');
     let resultsContainer = $('#resultContainer');
     resultsContainer.html('');
-    let delay = 50;
-    let loader = ` <div id="loader" class="loader"></div>`;
+    let delay = 500;
+    let loader = `<div id="loader" class="loader"></div>`;
+    let resultCounter = $('#resultCounter');
 
     $.ajax({
         url: threadSearchUrl,
@@ -49,7 +89,8 @@ function searchThread(query) {
         dataType: 'json',
         data: {
             'query': query,
-            'subforum': subformSeleted
+            'subforum': subformSeleted,
+            'filter': filterselected
         },
         beforeSend: function () {
             resultsContainer.append(loader);
@@ -57,9 +98,41 @@ function searchThread(query) {
         success: function (data) {
             console.log('success');
             setTimeout(function () {
+                resultCounter.html(`${data.count} threads found`);
                 resultsContainer.html('');
                 if (data.results.length === 0) {
+                    resultCounter.html('');
                     resultsContainer.append(`<h1>No results</h1>`);
+                }
+                totalPage = Math.ceil(data.count / RESULT_PER_PAGE);
+                console.log('totalPage', totalPage);
+                if (data.count > 7) {
+                    paginator.show();
+                } else {
+                    paginator.hide();
+                    resultCounter.html('');
+                }
+                if (data.next) {
+                    nextPageUrl = data.next;
+                    $('#btnNext').attr('class', '');
+                    hasNext = true;
+                } else {
+                    nextPageUrl = '#';
+                    $('#btnNext').attr('class', 'disabled');
+                    hasNext = false;
+                }
+                if (data.previous) {
+                    prevPageUrl = data.previous;
+                    $('#btnPrev').attr('class', '');
+                    hasPrev = true;
+                } else {
+                    prevPageUrl = '#';
+                    $('#btnPrev').attr('class', 'disabled');
+                    hasPrev = false;
+                }
+                if (url === SEARCH_URL) {
+                    console.log('here', data.count);
+                    initPageCount();
                 }
                 for (let key in data.results) {
                     resultsContainer.append(genThreadItem(data.results[key]));
@@ -81,14 +154,22 @@ $(document).on('click', '.btn-select', function (e) {
         if (ul.find("li").is(e.target)) {
             let target = $(e.target);
             let value = target.html();
+            let id = $(this).attr('id');
             if (value !== '') {
                 target.addClass("selected").siblings().removeClass("selected");
                 $(this).find(".btn-select-input").val(value);
                 $(this).find(".btn-select-value").html(value);
-                subformSeleted = value;
-                query = $('#inputSearch').val();
-                searchThread(query);
+                switch (id) {
+                    case 'subForumSelect':
+                        subformSeleted = value;
+                        break;
+                    case 'filterSelect':
+                        filterselected = value;
+                        break;
+                }
             }
+            let query = $('#inputSearch').val();
+            searchThread(query);
         }
         ul.hide();
         $(this).removeClass("active");
@@ -109,9 +190,19 @@ $(document).on('click', function (e) {
     }
 });
 
+function updatePageCount(pageNum) {
+    $('#pageCounter').html(`${pageNum}/${totalPage}`);
+}
+
+function initPageCount() {
+    currentPage = 1;
+    $('#pageCounter').html(`${currentPage}/${totalPage}`);
+    console.log('totalPage', totalPage)
+}
+
 function genThreadItem(threadValue) {
     let item = ` <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <article>
+                            <article class="card">
                                 <div class="row">
                                     <div class="col-sm-4 col-md-2">
                                         <figure>

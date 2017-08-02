@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^api/subforum/', include(
         'subforums.api.urls', namespace='subforum-api')),
     url(r'^api/thread/', include('threads.api.urls', namespace='thread-apis')),
+    url(r'user/$', views.user_page_demo, name='user'),
 ]
 
 if settings.DEBUG:

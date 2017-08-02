@@ -5,6 +5,11 @@
     {{ thread.title }}
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/thread.css' %}">
+    <link rel="stylesheet" href="{% static 'css/thread_images.css' %}">
+{% endblock %}
+
 {% block content %}
     {% include 'threads/thread_detail_header.html' with thread=thread %}
 
@@ -17,7 +22,7 @@
                          class="comment-list">
                     <!-- First Comment -->
                     {% for comment in comment_list %}
-                        <article class="row">
+                        <article class="row card">
                             <div class="col-md-2 col-sm-2 hidden-xs">
                                 <figure class="thumbnail">
                                     <img class="img-responsive"

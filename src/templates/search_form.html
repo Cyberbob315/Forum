@@ -1,11 +1,10 @@
-<form id="searchBar"
-      class="navbar-left navbar-form"
-      method="get"
+<form id="searchBar" class="navbar-form navbar-left" method="get"
       action="{% url 'search' %}">
-    <div class="input-append span12">
-        <input id="inputSearch" type="text" class="search-query" placeholder="Search">
-        <button type="submit" class="btn"><i
-            class="glyphicon glyphicon-search"></i>
-        </button>
+    <div class="form-group">
+        <input id="inputSearch" name="query" class="text-info form-control"
+               type="text"
+               placeholder="Search"
+               value="{{ request.GET.search }}">
+        <input class="btn btn-default" type="submit" value="Search">
     </div>
 </form>

@@ -6,11 +6,10 @@ $('#user-edit-form').submit(function (event) {
     this_ = $(this);
     deleteUrl = this_.attr('data-href');
     redirectUrl = this_.attr('data');
-    var address = $('#input-address').val();
-    var phone = $('#input-phone').val();
-    var email = $('#input-email').val();
-    var csrfToken = $("[name=csrfmiddlewaretoken]").val();
-    console.log(image);
+    let address = $('#input-address').val();
+    let phone = $('#input-phone').val();
+    let email = $('#input-email').val();
+    let csrfToken = $("[name=csrfmiddlewaretoken]").val();
 
     $.ajax({
         url: deleteUrl,
@@ -43,10 +42,10 @@ $('#form-image').submit(function (event) {
     this_ = $(this);
     deleteUrl = this_.attr('data-href');
     redirectUrl = this_.attr('data');
-    var image = $('#input-image')[0].files[0];
-    var data = new FormData();
+    let image = $('#input-image')[0].files[0];
+    let data = new FormData();
     data.append('profile_pic',image);
-    var csrfToken = $("[name=csrfmiddlewaretoken]").val();
+    let csrfToken = $("[name=csrfmiddlewaretoken]").val();
     $.ajax({
         url: deleteUrl,
         type: 'POST',
