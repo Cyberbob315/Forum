@@ -1,7 +1,6 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
-
 from django.conf import settings
 from . import views
 
@@ -15,7 +14,9 @@ urlpatterns = [
     url(r'^api/subforum/', include(
         'subforums.api.urls', namespace='subforum-api')),
     url(r'^api/thread/', include('threads.api.urls', namespace='thread-apis')),
-    url(r'user/$', views.user_page_demo, name='user'),
+    url(r'^api/comment/', include('comments.api.urls', namespace='comment-apis')),
+    url(r'^user/$', views.user_page_demo, name='user'),
+    url(r'^student/', include('subjects.urls', namespace='student')),
 ]
 
 if settings.DEBUG:

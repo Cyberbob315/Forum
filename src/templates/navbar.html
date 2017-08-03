@@ -8,7 +8,8 @@
             </li>
             {% if user.is_authenticated %}
                 <li><a class="navbar-link"
-                       href="{% url 'home' %}">Transcript</a></li>
+                       href="{% url 'student:transcript' %}">Transcript</a>
+                </li>
             {% endif %}
         </ul>
         <!-- Collect the nav links, forms, and other content for toggling -->

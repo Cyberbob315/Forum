@@ -84,6 +84,12 @@ class StudentProfile(AbstractBaseUser, PermissionsMixin):
         return reverse('accounts:profile',
                        kwargs={'student_id': self.student_id})
 
+    def get_thread_list_api(self):
+        return reverse('thread-apis:user_thread')
+
+    def get_comment_list_api(self):
+        return reverse('comment-apis:user_comment')
+
     def get_activity_link(self):
         return reverse('accounts:activity',
                        kwargs={'student_id': self.student_id})

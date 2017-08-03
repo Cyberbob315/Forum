@@ -105,7 +105,6 @@ function searchThread(query, url = SEARCH_URL) {
                     resultsContainer.append(`<h1>No results</h1>`);
                 }
                 totalPage = Math.ceil(data.count / RESULT_PER_PAGE);
-                console.log('totalPage', totalPage);
                 if (data.count > 7) {
                     paginator.show();
                 } else {
@@ -197,7 +196,6 @@ function updatePageCount(pageNum) {
 function initPageCount() {
     currentPage = 1;
     $('#pageCounter').html(`${currentPage}/${totalPage}`);
-    console.log('totalPage', totalPage)
 }
 
 function genThreadItem(threadValue) {

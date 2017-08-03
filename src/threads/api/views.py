@@ -1,10 +1,11 @@
 from enum import Enum
 from django.db.models import Q
 from django.db.models.aggregates import Count
+from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
 from rest_framework import generics
 from .serializers import ThreadModelSerializer
-from .pagination import StandardResultsPagination
+from .pagination import StandardResultsPagination, UserThreadCommentPagination
 from threads.models import Thread
 
 SUBFORUM_ALL_SELECT = 'All'
@@ -21,11 +22,6 @@ class SearchFilter(Enum):
 class ThreadSearchView(generics.ListAPIView):
     serializer_class = ThreadModelSerializer
     pagination_class = StandardResultsPagination
-
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context['request'] = self.request
-        return context
 
     def get_queryset(self):
         query = self.request.GET.get('query', '')
@@ -48,4 +44,14 @@ class ThreadSearchView(generics.ListAPIView):
         if filter_key == SearchFilter.like_increase.value:
             queryset = queryset.annotate(total_like=Count('likes')).order_by(
                 'total_like')
+        return queryset
+
+
+class UserThreadAPIView(generics.ListAPIView):
+    serializer_class = ThreadModelSerializer
+    pagination_class = UserThreadCommentPagination
+
+    def get_queryset(self):
+        student_id = self.request.GET.get('student_id', '')
+        queryset = Thread.objects.filter(author__student_id=student_id)
         return queryset

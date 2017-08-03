@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    Transcript
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/transcript.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3>Student transcripts</h3>
+        <hr>
+        <div class="row">
+            <div class="panel panel-primary filterable">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Users</h3>
+                    <div class="pull-right">
+                        <button class="btn btn-default btn-xs btn-filter"><span
+                            class="glyphicon glyphicon-filter"></span> Filter
+                        </button>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="filters">
+                            <th><input type="text" class="form-control text-center"
+                                       placeholder="Year" disabled></th>
+                            <th><input type="text" class="form-control text-center"
+                                       placeholder="Subject ID" disabled></th>
+                            <th><input type="text" class="form-control text-center"
+                                       placeholder="Subject name" disabled>
+                            </th>
+                            <th><input type="text" class="form-control text-center"
+                                       placeholder="Credit" disabled></th>
+                            <th><input type="text" class="form-control text-center"
+                                       placeholder="Mid-term mark" disabled>
+                            </th>
+                            <th><input type="text" class="form-control text-center"
+                                       placeholder="Final mark" disabled></th>
+                            <th><input type="text" class="form-control text-center"
+                                       placeholder="Average mark" disabled>
+                            </th>
+                            <th><input type="text" class="form-control text-center"
+                                       placeholder="Status" disabled>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mark in mark_list %}
+                            <tr>
+                                <td>{{ mark.year }}</td>
+                                <td>{{ mark.subject.subject_id }}</td>
+                                <td>{{ mark.subject.title }}</td>
+                                <td>{{ mark.subject.credit }}</td>
+                                <td>{{ mark.mid_term_mark }}</td>
+                                <td>{{ mark.final_mark }}</td>
+                                <td>{{ mark.avg_mark }}</td>
+                                <td>{{ mark.get_status_display }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/transcript.js' %}"></script>
+{% endblock %}

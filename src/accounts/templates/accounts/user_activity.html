@@ -2,7 +2,8 @@
 {% load staticfiles %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/user_page.css' %}">
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/user_activity.css' %}">
 {% endblock %}
 
 {% block title %}
@@ -10,12 +11,59 @@
 {% endblock %}
 
 {% block user_content %}
+    <input id="dataHolder" type="hidden"
+           student-id="{{ student.student_id }}"
+           thread-url="{{ student.get_thread_list_api }}"
+           comment-url="{{ student.get_comment_list_api }}">
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">Activity</h3>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" style="min-height: 500px">
+            <div class="tab col-md-12">
+                <div class="row">
+                    <button id="defaultOpen" class="tablinks"
+                            onclick="openCity(event, 'Threads')">
+                        Threads
+                    </button>
+                    <button class="tablinks"
+                            onclick="openCity(event, 'Comments')">
+                        Comment
+                    </button>
+                </div>
+                <div id="Threads" class="tabcontent">
+                    <br/>
+                    <strong>Threads created by {{ student.name }}</strong><br/>
+                    <ul id="threadPaginator" class="pagination list-inline">
+                        <li id="btnPrevThread"><span>&laquo;</span></li>
+                        <li class="disabledThread"><span
+                            id="pageCounterThread">Pagecount</span>
+                        </li>
+                        <li id="btnNextThread"><span>&raquo;</span></li>
+                    </ul>
+                    <div id="userThreadsContainer">
+                    </div>
+                </div>
+                <div id="Comments" class="tabcontent">
+                    <br/>
+                    <strong>Comments posted by {{ student.name }}</strong><br/>
+                    <ul id="commentPaginator" class="pagination list-inline">
+                        <li id="btnPrevComment"><span>&laquo;</span></li>
+                        <li class="disabled"><span
+                            id="pageCounterComment">Pagecount</span>
+                        </li>
+                        <li id="btnNextComment"><span>&raquo;</span></li>
+                    </ul>
+                    <div id="userCommentsContainer">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    {{ block.super }}
+    <script src="{% static 'js/user_activity.js' %}"></script>
 {% endblock %}
 

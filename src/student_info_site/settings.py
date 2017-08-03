@@ -39,12 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'el_pagination',
+    'bleach',
     'accounts',
     'subforums',
-    'subjects',
     'comments',
     'bootstrap3',
     'threads',
+    'subjects',
 ]
 
 MIDDLEWARE = [
@@ -138,6 +140,18 @@ MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'accounts.StudentProfile'
 
-
 # Redirect
 LOGOUT_REDIRECT_URL = 'home'
+
+# bleach valid
+BLEACH_VALID_TAGS = ['p', 'b', 'i', 'strike', 'ul', 'li', 'ol', 'br',
+                     'span', 'blockquote', 'hr', 'a', 'img']
+BLEACH_VALID_ATTRS = {
+    'span': ['style', ],
+    'p': ['align', ],
+    'a': ['href', 'rel'],
+    'img': ['src', 'alt', 'style'],
+}
+BLEACH_VALID_STYLES = ['color', 'cursor', 'float', 'margin']
+
+#
