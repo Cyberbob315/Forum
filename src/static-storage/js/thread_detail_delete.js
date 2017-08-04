@@ -1,9 +1,13 @@
 $(document).ready(function () {
     console.log('working');
-    var totalComment = $('#commentSection').attr('total-comment');
-    console.log('totalComment:' + totalComment);
-    for (i = 1; i <= totalComment; i++) {
-        var btnId = '#btnDeleteComment-' + i;
+
+    $('img').each(function () {
+       $(this).addClass('img-responsive');
+    });
+
+    let totalComment = $('#commentSection').attr('total-comment');
+    for (let i = 1; i <= totalComment; i++) {
+        let btnId = '#btnDeleteComment-' + i;
         $(btnId).click({'btnId': btnId}, commentDelete)
     }
 });
@@ -11,8 +15,8 @@ $(document).ready(function () {
 function commentDelete(event) {
     event.preventDefault();
     btnDeleteId = event.data.btnId;
-    var deleteModal = $('#deleteModal');
-    var deleteBtn = $('#btnDelete');
+    let deleteModal = $('#deleteModal');
+    let deleteBtn = $('#btnDelete');
     deleteModal.modal({});
     deleteBtn.click(function (event) {
         event.preventDefault();
@@ -25,7 +29,6 @@ function commentDelete(event) {
             headers: {
                 'X-CSRFToken': csrfToken
             },
-            data: {},
             success: function (data) {
                 console.log('success');
                 console.log(data);

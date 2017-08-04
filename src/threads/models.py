@@ -39,16 +39,16 @@ class Thread(models.Model):
         return 'thread_images/{}-{}'.format(slug, filename)
 
     def get_publish_url(self):
-        return reverse('threads:publish', kwargs={'pk': self.pk})
+        return reverse('thread-apis:publish', kwargs={'pk': self.pk})
 
     def get_like_url(self):
-        return reverse('threads:like', kwargs={'pk': self.pk})
+        return reverse('thread-apis:like-toggle', kwargs={'pk': self.pk})
 
     def get_delete_api_url(self):
-        return reverse('threads:delete-api', kwargs={'pk': self.pk})
+        return reverse('thread-apis:delete', kwargs={'pk': self.pk})
 
     def get_check_like_url(self):
-        return reverse('threads:check-like', kwargs={'pk': self.pk})
+        return reverse('thread-apis:check-like', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title

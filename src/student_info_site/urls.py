@@ -15,7 +15,6 @@ urlpatterns = [
         'subforums.api.urls', namespace='subforum-api')),
     url(r'^api/thread/', include('threads.api.urls', namespace='thread-apis')),
     url(r'^api/comment/', include('comments.api.urls', namespace='comment-apis')),
-    url(r'^user/$', views.user_page_demo, name='user'),
     url(r'^student/', include('subjects.urls', namespace='student')),
 ]
 

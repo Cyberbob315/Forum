@@ -3,7 +3,9 @@ const COMMENT_API_BASE_URL = $('#dataHolder').attr('comment-url');
 const TYPE_THREAD = 1;
 const TYPE_COMMENT = 2;
 const RESULT_PER_PAGE = 5;
+const DELAY_TIME = 500;
 let studentId = $('#dataHolder').attr('student-id');
+let loader = `<div id="loader" class="loader"></div>`;
 let threadPaginator = $('#threadPaginator');
 let commentPaginator = $('#commentPaginator');
 let btnNextThread = $('#btnNextThread');
@@ -22,8 +24,17 @@ let totalCommentPage;
 $(document).ready(function () {
     getUserThreads();
     getUserComments();
-    document.getElementById("defaultOpen").click();
+});
 
+$('.tabs .tab-links a').on('click', function (e) {
+    let currentAttrValue = jQuery(this).attr('href');
+
+    // Show/Hide Tabs
+    jQuery('.tabs ' + currentAttrValue).slideDown(600).siblings().slideUp(600);
+    // Change/remove current tab to active
+    $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+    e.preventDefault();
 });
 
 btnPrevThread.click({'type': TYPE_THREAD}, prevPage);
@@ -76,10 +87,12 @@ function getUserThreads(isInit = true, url = THREAD_API_BASE_URL) {
         data: {
             'student_id': studentId
         },
+        beforeSend: function () {
+            threadContainer.append(loader);
+        },
         success: function (data) {
             nextThreadUrl = data.next;
             prevThreadUrl = data.previous;
-            threadContainer.html('');
             totalThreadPage = Math.ceil(data.count / RESULT_PER_PAGE);
 
             if (data.count <= RESULT_PER_PAGE)
@@ -100,9 +113,14 @@ function getUserThreads(isInit = true, url = THREAD_API_BASE_URL) {
             if (isInit)
                 initPageCount();
 
-            for (let key in data.results) {
-                threadContainer.append(genThreadItem(data.results[key]));
-            }
+            setTimeout(function () {
+                threadContainer.html('');
+                for (let key in data.results) {
+                    newItem = $(genThreadItem(data.results[key])).hide();
+                    threadContainer.append(newItem.show('fast'));
+                }
+            }, DELAY_TIME);
+
         },
         error: function (data) {
             console.log('thread error');
@@ -119,10 +137,14 @@ function getUserComments(isInit = true, url = COMMENT_API_BASE_URL) {
         data: {
             'student_id': studentId
         },
+        beforeSend: function () {
+            console.log('before send');
+            commentContainer.append(loader);
+        },
         success: function (data) {
             nextCommentUrl = data.next;
             prevCommentUrl = data.previous;
-            commentContainer.html('');
+
             totalCommentPage = Math.ceil(data.count / RESULT_PER_PAGE);
             if (data.count <= RESULT_PER_PAGE)
                 commentPaginator.hide();
@@ -141,9 +163,14 @@ function getUserComments(isInit = true, url = COMMENT_API_BASE_URL) {
 
             if (isInit)
                 initPageCount();
-            for (let key in data.results) {
-                commentContainer.append(genCommentItem(data.results[key]));
-            }
+            setTimeout(function () {
+                commentContainer.html('');
+                for (let key in data.results) {
+                    newItem = $(genCommentItem(data.results[key])).hide();
+                    commentContainer.append(newItem.slideDown());
+                }
+            }, DELAY_TIME);
+
         },
         error: function (data) {
             console.log('comment error');
@@ -217,10 +244,9 @@ function genCommentItem(commentValue) {
                     </strong>
                 </div>
                 <div class="row">
-                    <div class="col-md-2 col-sm-2 hidden-xs">
+                    <div class="col-md-1 col-sm-1 hidden-xs">
                         <figure>
                             <img class="img-responsive"
-                                 style="height: 100px;width: 100px;"
                                  src="${commentValue.author_pic_link}"/>
                             <figcaptionclass="text-center">
                                 ${commentValue.author_name}
@@ -246,22 +272,3 @@ function genCommentItem(commentValue) {
             </article>`
 }
 
-function openCity(evt, tabName) {
-    // Declare all letiables
-
-    // Get all elements with class="tabcontent" and hide them
-    let tabcontent = document.getElementsByClassName("tabcontent");
-    for (let i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-
-    // Get all elements with class="tablinks" and remove the class "active"
-    let tablinks = document.getElementsByClassName("tablinks");
-    for (let i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
-}

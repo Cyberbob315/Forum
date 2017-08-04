@@ -14,4 +14,4 @@ class Comment(models.Model):
         db_table = 'Comments'
 
     def get_delete_api_url(self):
-        return reverse('threads:comments:api-delete', kwargs={'pk': self.id})
+        return reverse('comment-apis:delete', kwargs={'pk': self.id})

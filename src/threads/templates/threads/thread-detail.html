@@ -36,13 +36,10 @@
                                 <div class="panel panel-default arrow left">
                                     <div class="panel-body">
                                         <header class="text-left">
-                                            <div class="comment-user"><i
-                                                class="fa fa-user"></i>
+                                            <div class="comment-user">
                                             </div>
                                             <time class="comment-date"
                                                   datetime="16-12-2014 01:05">
-                                                <i
-                                                    class="fa fa-clock-o"></i>
                                                 {{ comment.created_date }}
                                             </time>
                                             <hr/>
@@ -57,6 +54,7 @@
                                                 <p class="text-right">
                                                 <a
                                                     id="btnDeleteComment-{{ forloop.counter }}"
+                                                    comment-id="{{ comment.pk }}"
                                                     delete-url="{{ comment.get_delete_api_url }}"
                                                     csrf-token="{{ csrf_token }}"
                                                     href="#"

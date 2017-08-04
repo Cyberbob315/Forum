@@ -23,10 +23,14 @@ function showDeleteConfirm(event) {
         let deleteAreaId = `#delete-area-${counter}`;
         let deleteArea = $(deleteAreaId);
         let deleteUrl = $(deleteId).attr('delete-url');
+        let csrfToken = $(deleteId).attr('csrf-token');
         console.log(deleteUrl);
         $.ajax({
             url: deleteUrl,
-            method: 'GET',
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': csrfToken
+            },
             data: {},
             success: function (data) {
                 if (data.success) {
@@ -55,9 +59,13 @@ function publish(event) {
     let publishAreaId = '#publish-area-' + counter;
     let publishArea = $(publishAreaId);
     let publishUrl = $(this).attr('publish-url');
+    let csrfToken = $(this).attr('csrf-token');
     $.ajax({
         url: publishUrl,
-        method: 'GET',
+        method: 'PUT',
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
         data: {},
         success: function (data) {
             if (data.success) {

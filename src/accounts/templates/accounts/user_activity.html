@@ -20,41 +20,41 @@
             <h3 class="panel-title">Activity</h3>
         </div>
         <div class="panel-body" style="min-height: 500px">
-            <div class="tab col-md-12">
-                <div class="row">
-                    <button id="defaultOpen" class="tablinks"
-                            onclick="openCity(event, 'Threads')">
-                        Threads
-                    </button>
-                    <button class="tablinks"
-                            onclick="openCity(event, 'Comments')">
-                        Comment
-                    </button>
-                </div>
-                <div id="Threads" class="tabcontent">
-                    <br/>
-                    <strong>Threads created by {{ student.name }}</strong><br/>
-                    <ul id="threadPaginator" class="pagination list-inline">
-                        <li id="btnPrevThread"><span>&laquo;</span></li>
-                        <li class="disabledThread"><span
-                            id="pageCounterThread">Pagecount</span>
-                        </li>
-                        <li id="btnNextThread"><span>&raquo;</span></li>
-                    </ul>
-                    <div id="userThreadsContainer">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab1">Threads</a></li>
+                    <li><a href="#tab2">Comments</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab1" class="tab active">
+                        <br/>
+                        <strong>Threads created
+                            by {{ student.name }}</strong><br/>
+                        <ul id="threadPaginator"
+                            class="pagination list-inline">
+                            <li id="btnPrevThread"><span>&laquo;</span></li>
+                            <li class="disabledThread"><span
+                                id="pageCounterThread">Pagecount</span>
+                            </li>
+                            <li id="btnNextThread"><span>&raquo;</span></li>
+                        </ul>
+                        <div id="userThreadsContainer">
+                        </div>
                     </div>
-                </div>
-                <div id="Comments" class="tabcontent">
-                    <br/>
-                    <strong>Comments posted by {{ student.name }}</strong><br/>
-                    <ul id="commentPaginator" class="pagination list-inline">
-                        <li id="btnPrevComment"><span>&laquo;</span></li>
-                        <li class="disabled"><span
-                            id="pageCounterComment">Pagecount</span>
-                        </li>
-                        <li id="btnNextComment"><span>&raquo;</span></li>
-                    </ul>
-                    <div id="userCommentsContainer">
+                    <div id="tab2" class="tab">
+                        <br/>
+                        <strong>Comments posted
+                            by {{ student.name }}</strong><br/>
+                        <ul id="commentPaginator"
+                            class="pagination list-inline">
+                            <li id="btnPrevComment"><span>&laquo;</span></li>
+                            <li class="disabled"><span
+                                id="pageCounterComment">Pagecount</span>
+                            </li>
+                            <li id="btnNextComment"><span>&raquo;</span></li>
+                        </ul>
+                        <div id="userCommentsContainer">
+                        </div>
                     </div>
                 </div>
             </div>

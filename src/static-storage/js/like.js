@@ -8,14 +8,14 @@ function updateText(btn, newCount, verb) {
 }
 
 $(document).ready(function () {
-    var likeBtn = $('#like-btn');
-    var checkLikeUrl = likeBtn.attr('check-like-url');
+    let likeBtn = $('#like-btn');
+    let checkLikeUrl = likeBtn.attr('check-like-url');
     $.ajax({
         url: checkLikeUrl,
         method: 'GET',
         data: {},
         success: function (data) {
-            var likeCount = parseInt(data.like_count);
+            let likeCount = parseInt(data.like_count);
             if (data.is_liked) {
                 updateText(likeBtn, likeCount, 'Unlike');
                 likeBtn.removeClass('glyphicon-thumbs-up').addClass('glyphicon-thumbs-down');
@@ -32,14 +32,19 @@ $(document).ready(function () {
 
 $('#like-btn').click(function (event) {
     event.preventDefault();
-    var this_ = $(this);
-    var likeUrl = this_.attr('data-href');
+    let this_ = $(this);
+    let csrfToken = this_.attr('csrf-token');
+    let likeUrl = this_.attr('like-url');
     $.ajax({
         url: likeUrl,
-        method: 'GET',
+        method: 'PUT',
+        dataType: 'json',
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
         data: {},
         success: function (data) {
-            var likeCount = parseInt(data.like_count);
+            let likeCount = parseInt(data.like_count);
             if (data.liked) {
                 updateText(this_, likeCount, 'Unlike');
                 this_.removeClass('glyphicon-thumbs-up').addClass('glyphicon-thumbs-down');

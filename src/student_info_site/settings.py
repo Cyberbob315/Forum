@@ -143,14 +143,20 @@ AUTH_USER_MODEL = 'accounts.StudentProfile'
 LOGOUT_REDIRECT_URL = 'home'
 
 # bleach valid
-BLEACH_VALID_TAGS = ['p', 'b', 'i', 'strike', 'ul', 'li', 'ol', 'br',
+import bleach
+
+BLEACH_VALID_TAGS = ['h2', 'h3', 'u', 'strong', 'blockquote', 'p', 'b', 'i',
+                     'strike', 'ul', 'li', 'ol', 'br',
                      'span', 'blockquote', 'hr', 'a', 'img']
 BLEACH_VALID_ATTRS = {
+    '*': ['class'],
     'span': ['style', ],
     'p': ['align', ],
     'a': ['href', 'rel'],
     'img': ['src', 'alt', 'style'],
 }
 BLEACH_VALID_STYLES = ['color', 'cursor', 'float', 'margin']
+
+BLEACH_VALID_PROTOCOLS = bleach.ALLOWED_PROTOCOLS + ['data']
 
 #

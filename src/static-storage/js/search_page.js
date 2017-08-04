@@ -134,7 +134,7 @@ function searchThread(query, url = SEARCH_URL) {
                     initPageCount();
                 }
                 for (let key in data.results) {
-                    resultsContainer.append(genThreadItem(data.results[key]));
+                    resultsContainer.append(genThreadItem(data.results[key])).hide().show(400);
                 }
             }, delay);
 

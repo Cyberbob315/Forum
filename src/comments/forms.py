@@ -16,7 +16,9 @@ class CommentForm(forms.ModelForm):
 
     def clean_content(self):
         content = self.cleaned_data.get('content', '')
-        cleaned_content = bleach.clean(content, settings.BLEACH_VALID_TAGS,
-                                       settings.BLEACH_VALID_ATTRS,
-                                       settings.BLEACH_VALID_STYLES)
+        cleaned_content = bleach.clean(text=content,
+                                       tags=settings.BLEACH_VALID_TAGS,
+                                       attributes=settings.BLEACH_VALID_ATTRS,
+                                       styles=settings.BLEACH_VALID_STYLES,
+                                       protocols=bleach.ALLOWED_PROTOCOLS + ['data'])
         return cleaned_content

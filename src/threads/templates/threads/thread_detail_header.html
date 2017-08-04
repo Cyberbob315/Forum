@@ -21,9 +21,10 @@
                             id="like-counter">{{ thread.likes.count }}</span>
                         <button
                             class="btn btn-info glyphicon glyphicon-thumbs-up"
+                            csrf-token="{{ csrf_token }}"
                             id="like-btn"
                             check-like-url="{{ thread.get_check_like_url }}"
-                            data-href="{{ thread.get_like_url }}">
+                            like-url="{{ thread.get_like_url }}">
                             Like
                         </button>
                     </div>
