@@ -17,10 +17,11 @@ from .pagination import StandardResultsPagination, UserThreadCommentPagination
 from .serializers import ThreadModelSerializer
 
 SUBFORUM_ALL_SELECT = 'All'
-FILTER_SELECT_NONE = 'None'
 
 
 class SearchFilter(Enum):
+    none_selected = 'None'
+    top_comment = 'Most commented'
     view_increase = 'Total views ascending'
     view_decrease = 'Total views descending'
     like_increase = 'Total likes ascending'
@@ -34,14 +35,19 @@ class ThreadSearchView(generics.ListAPIView):
     def get_queryset(self):
         query = self.request.GET.get('query', '')
         subforum_key = self.request.GET.get('subforum', SUBFORUM_ALL_SELECT)
-        filter_key = self.request.GET.get('filter', FILTER_SELECT_NONE)
+        filter_key = self.request.GET.get('filter',
+                                          SearchFilter.none_selected.value)
         queryset = Thread.objects.filter(
             Q(content__icontains=query) |
             Q(title__icontains=query)
-        )
+        ).order_by('-created_date')
         if subforum_key != SUBFORUM_ALL_SELECT:
             subforum_key = slugify(subforum_key)
             queryset = queryset.filter(subforum__slug__iexact=subforum_key)
+        if filter_key == SearchFilter.top_comment.value:
+            queryset = queryset.annotate(
+                total_comment=Count('comments')
+            ).order_by('-total_comment')
         if filter_key == SearchFilter.view_decrease.value:
             queryset = queryset.order_by('-view_count')
         if filter_key == SearchFilter.view_increase.value:
@@ -91,6 +97,7 @@ class PostLikeToggleApi(APIView):
         }
         return Response(data, status=status.HTTP_200_OK)
 
+
 class CheckLikeApi(APIView):
     authentication_classes = (authentication.SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
@@ -108,6 +115,7 @@ class CheckLikeApi(APIView):
 
         return Response(data, status=status.HTTP_200_OK)
 
+
 class DeleteThreadApi(APIView):
     authentication_classes = (authentication.SessionAuthentication,)
     permission_classes = (
@@ -122,6 +130,7 @@ class DeleteThreadApi(APIView):
             'success': True
         }
         return Response(data, status=status.HTTP_200_OK)
+
 
 class PublishThreadApi(APIView):
     authentication_classes = (authentication.SessionAuthentication,)

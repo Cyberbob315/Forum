@@ -1,0 +1,62 @@
+{% extends 'admin_student/admin_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ subforum.title }}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+{% endblock %}
+
+{% block page_header %}
+    {{ subforum.title }}
+{% endblock %}
+
+{% block content %}
+    <input id="thread_counter" type="hidden"
+           data-href="{{ thread_list | length }}">
+    <div class="container-fluid">
+        {% for thread in thread_list %}
+            <div class="row">
+                {% include 'admin_student/thread_item.html' with thread=thread is_draft=is_draft %}
+            </div>
+        {% empty %}
+            <h4>There are no pending threads</h4>
+        {% endfor %}
+        <div class="row pull-right" style="margin-right: 24px;">
+            {% if thread_list.has_other_pages %}
+                <ul class="pagination">
+                    {% if thread_list.has_previous %}
+                        <li><a
+                            href="?page={{ thread_list.previous_page_number }}">&laquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in thread_list.paginator.page_range %}
+                        {% if thread_list.number == i %}
+                            <li class="active"><span>{{ i }} <span
+                                class="sr-only">(current)</span></span>
+                            </li>
+                        {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if thread_list.has_next %}
+                        <li><a
+                            href="?page={{ thread_list.next_page_number }}">&raquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+    {% include 'delete-confirm-modal.html' %}
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'admin_student/js/publish.js' %}"></script>
+{% endblock %}

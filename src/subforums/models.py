@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from subjects.models import Subject
 from accounts.models import StudentProfile
 from django.utils.text import slugify
+from comments import models as comment_models
 
 
 class Subforum(models.Model):
@@ -40,7 +41,6 @@ class Subforum(models.Model):
         )
         if thread_list.count() > 0:
             return thread_list[0]
-        return 'There is no thread in this subforum'
 
     def published_thread_count(self):
         return self.threads.filter(
@@ -53,7 +53,9 @@ class Subforum(models.Model):
         return self.threads.filter(published_date__isnull=False).count()
 
     def count_comments(self):
-        pass
+        return comment_models.Comment.objects.filter(
+            thread__subforum=self
+        ).count()
 
     def __str__(self):
         return self.title

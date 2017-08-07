@@ -88,7 +88,7 @@ function getUserThreads(isInit = true, url = THREAD_API_BASE_URL) {
             'student_id': studentId
         },
         beforeSend: function () {
-            threadContainer.append(loader);
+            threadContainer.prepend(loader);
         },
         success: function (data) {
             nextThreadUrl = data.next;
@@ -139,7 +139,7 @@ function getUserComments(isInit = true, url = COMMENT_API_BASE_URL) {
         },
         beforeSend: function () {
             console.log('before send');
-            commentContainer.append(loader);
+            commentContainer.prepend(loader);
         },
         success: function (data) {
             nextCommentUrl = data.next;
@@ -210,16 +210,22 @@ function genThreadItem(threadValue) {
                                     <div class="col-sm-8 col-md-10">
                                         <span
                                             class="label label-default pull-right">
-                                            <i class="glyphicon glyphicon-comment"></i>${threadValue.total_comment}
+                                            <i class="glyphicon glyphicon-comment icon-margin"></i>${threadValue.total_comment}
                                         </span>
-                                        <h4>${threadValue.title}</h4>
+                                        <h4>
+                                            <a
+                                                class="thread-title"
+                                                href="${threadValue.detail_link}">
+                                               ${threadValue.title}
+                                            </a>
+                                        </h4>
                                         <p>${threadValue.content}</p>
                                         <section>
-                                            <i class="glyphicon glyphicon-folder-open"></i>${threadValue.sub_forum}
-                                            <i class="glyphicon glyphicon-user"></i>${threadValue.author_name}
-                                            <i class="glyphicon glyphicon-calendar"></i>${threadValue.created_date}
-                                            <i class="glyphicon glyphicon-eye-open"></i>${threadValue.total_view}
-                                            <i class="glyphicon glyphicon-thumbs-up"></i>${threadValue.total_like}
+                                            <i class="glyphicon glyphicon-folder-open icon-margin"></i>${threadValue.sub_forum}
+                                            <i class="glyphicon glyphicon-user icon-margin"></i>${threadValue.author_name}
+                                            <i class="glyphicon glyphicon-calendar icon-margin"></i>${threadValue.created_date}
+                                            <i class="glyphicon glyphicon-eye-open icon-margin"></i>${threadValue.total_view}
+                                            <i class="glyphicon glyphicon-thumbs-up icon-margin"></i>${threadValue.total_like}
                                             <span class="pull-right">
                                                 <a href="${threadValue.detail_link}"
                                                    target="_blank"
@@ -248,7 +254,7 @@ function genCommentItem(commentValue) {
                         <figure>
                             <img class="img-responsive"
                                  src="${commentValue.author_pic_link}"/>
-                            <figcaptionclass="text-center">
+                            <figcaption class="text-center icon-margin">
                                 ${commentValue.author_name}
                             </figcaption>
                         </figure>

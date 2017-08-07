@@ -29,7 +29,7 @@
                         </button>
                     </div>
                     <hr>
-                    <p class="text-justify">{{ thread.content | linebreaksbr }}</p>
+                    <p class="text-justify">{{ thread.content |safe|linebreaksbr }}</p>
                 </div>
             </div>
         </div>
@@ -46,7 +46,8 @@
                         <a href="{% url 'threads:edit' pk=thread.pk %}"
                            class="btn btn-warning btn-option btn-sm">Edit</a>
                     {% endif %}
-                    <a id="btnQuickReply" class="btn btn-primary btn-option btn-sm">Quick
+                    <a id="btnQuickReply"
+                       class="btn btn-primary btn-option btn-sm">Quick
                         Reply</a>
                     <a href="{% url 'threads:comments:post-comment' pk=thread.pk %}"
                        class="btn btn-primary btn-option btn-sm">Reply</a>

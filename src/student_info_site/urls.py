@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
+from accounts.api.urls import router
 from . import views
 
 urlpatterns = [
@@ -14,8 +15,13 @@ urlpatterns = [
     url(r'^api/subforum/', include(
         'subforums.api.urls', namespace='subforum-api')),
     url(r'^api/thread/', include('threads.api.urls', namespace='thread-apis')),
-    url(r'^api/comment/', include('comments.api.urls', namespace='comment-apis')),
+    url(r'^api/comment/',
+        include('comments.api.urls', namespace='comment-apis')),
+    url(r'^api/account/',
+        include(router.urls, namespace='account-api')),
     url(r'^student/', include('subjects.urls', namespace='student')),
+    url(r'^student_admin/',
+        include('admin_student.urls', namespace='student_admin')),
 ]
 
 if settings.DEBUG:

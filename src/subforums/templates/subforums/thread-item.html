@@ -10,7 +10,7 @@
             </div>
             <div class="col-sm-9 col-md-11">
                                 <span class="label label-default pull-right">
-                                    <i class="glyphicon glyphicon-comment"></i>
+                                    <i class="glyphicon glyphicon-comment icon-margin"></i>
                                     {{ thread.comments.count }}
                                 </span>
                 {% if thread.is_pinned and not is_draft %}
@@ -18,14 +18,20 @@
                         class="pinned glyphicon glyphicon-pushpin pull-right">
                     </span>
                 {% endif %}
-                <h4>{{ thread.title }}</h4>
-                <p>{{ thread.content | truncatechars:30 }}</p>
+                <h4>
+                    <a
+                        class="thread-title"
+                        href="{{ thread.get_detail_link }}">
+                        {{ thread.title }}
+                    </a>
+                </h4>
+                <p>{{ thread.content | safe | truncatechars:30 }}</p>
                 <section>
-                    <i class="glyphicon glyphicon-folder-open"></i>
-                    <i class="glyphicon glyphicon-user"></i>{{ thread.author }}
-                    <i class="glyphicon glyphicon-calendar"></i>{{ thread.published_date }}
-                    <i class="glyphicon glyphicon-eye-open"></i>{{ thread.view_count }}
-                    <i class="glyphicon glyphicon-thumbs-up"></i>{{ thread.likes.count }}
+                    <i class="glyphicon glyphicon-folder-open icon-margin"></i>
+                    <i class="glyphicon glyphicon-user icon-margin"></i>{{ thread.author }}
+                    <i class="glyphicon glyphicon-calendar icon-margin"></i>{{ thread.published_date }}
+                    <i class="glyphicon glyphicon-eye-open icon-margin"></i>{{ thread.view_count }}
+                    <i class="glyphicon glyphicon-thumbs-up icon-margin"></i>{{ thread.likes.count }}
                     <span class="pull-right">
                         {% if is_draft %}
                             <span id="publish-area-{{ forloop.counter }}">

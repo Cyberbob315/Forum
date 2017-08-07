@@ -29,16 +29,24 @@
                         {% for subforum in subforum_list %}
                             <tr class="">
                                 <td class="td-forum-list first-column">
-                                    <strong><a href="{{ subforum.get_detail_link }}">{{ subforum.title }}
+                                    <strong><a
+                                        href="{{ subforum.get_detail_link }}">{{ subforum.title }}
                                     </a></strong>
                                 </td>
-                                <td class="td-forum-list">{{ subforum.get_last_post }}</td>
+                                <td class="td-forum-list">
+                                    {% if subforum.get_last_post %}
+                                        <a href="{{ subforum.get_last_post.get_detail_link }}">
+                                            {{ subforum.get_last_post }}
+                                        </a>
+                                    {% else %}
+                                        There is no thread in this subforum
+                                    {% endif %}
+                                </td>
                                 <td class="td-forum-list td-forum-text">{{ subforum.count_threads }}</td>
                                 {% if user.is_superuser %}
                                     <td class="td-forum-list td-forum-text">{{ subforum.count_drafts }}</td>
                                 {% endif %}
                                 <td class="td-forum-list td-forum-text">{{ subforum.count_comments }}</td>
-
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -46,4 +54,5 @@
             </div>
         </div>
     </div>
+
 {% endblock %}

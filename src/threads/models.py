@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.utils.text import slugify
-
 from subforums.models import Subforum
 from accounts.models import StudentProfile
 
