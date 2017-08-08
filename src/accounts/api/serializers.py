@@ -48,3 +48,4 @@ class StudentProfileSerializer(serializers.ModelSerializer):
     def get_status(self, obj):
         return obj.get_status_display()
 
+

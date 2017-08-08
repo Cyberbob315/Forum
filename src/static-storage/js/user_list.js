@@ -121,7 +121,7 @@ function deleteProfile(event) {
             location.reload();
         },
         error: function (data) {
-            console.log('error');
+            console.log(data.result);
         }
     });
 }

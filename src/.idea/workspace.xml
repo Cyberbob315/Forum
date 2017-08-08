@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="bc9d2478-ed20-4970-b899-ef718ff63e45" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/media/images/user-default.jpg" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/accounts/api/serializers.py" afterPath="$PROJECT_DIR$/accounts/api/serializers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/accounts/api/views.py" afterPath="$PROJECT_DIR$/accounts/api/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin_student/templates/admin_student/admin_base.html" afterPath="$PROJECT_DIR$/admin_student/templates/admin_student/admin_base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static-storage/js/user_list.js" afterPath="$PROJECT_DIR$/static-storage/js/user_list.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,54 +35,42 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="user_list.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/static-storage/js/user_list.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="91" column="52" lean-forward="true" selection-start-line="91" selection-start-column="52" selection-end-line="91" selection-end-column="52" />
-              <folding>
-                <element signature="n#!!block;n#showUserModal#0" expanded="false" />
-                <marker date="1502155746763" expanded="true" signature="99:406" ph="..." />
-                <marker date="1502155746763" expanded="true" signature="328:365" ph="..." />
-                <marker date="1502155746763" expanded="true" signature="328:366" ph="..." />
-                <marker date="1502155746763" expanded="true" signature="6497:6519" ph="..." />
-                <marker date="1502155746763" expanded="true" signature="6497:6568" ph="..." />
-                <marker date="1502155746763" expanded="true" signature="6497:6708" ph="..." />
-                <marker date="1502155746763" expanded="true" signature="6497:6867" ph="..." />
-                <marker date="1502155746763" expanded="true" signature="6655:6686" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/accounts/api/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="51" lean-forward="false" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
+            <state relative-caret-position="60">
+              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="serializers.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/accounts/api/serializers.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="509">
+              <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user_list.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static-storage/js/user_list.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="120" column="30" lean-forward="true" selection-start-line="120" selection-start-column="30" selection-end-line="120" selection-end-column="30" />
               <folding>
-                <element signature="e#0#35#0" expanded="true" />
+                <element signature="n#!!block;n#showUserModal#0" expanded="false" />
+                <marker date="1502157837567" expanded="true" signature="99:406" ph="..." />
+                <marker date="1502157837567" expanded="true" signature="328:365" ph="..." />
+                <marker date="1502157837567" expanded="true" signature="328:366" ph="..." />
+                <marker date="1502157837567" expanded="true" signature="6501:6523" ph="..." />
+                <marker date="1502157837567" expanded="true" signature="6501:6572" ph="..." />
+                <marker date="1502157837567" expanded="true" signature="6501:6712" ph="..." />
+                <marker date="1502157837567" expanded="true" signature="6501:6871" ph="..." />
+                <marker date="1502157837567" expanded="true" signature="6659:6690" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static-storage/css/login.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1276">
-              <caret line="7" column="26" lean-forward="false" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="master.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static-storage/css/master.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -222,7 +213,6 @@
         <option value="$PROJECT_DIR$/static-storage/jquery/inputmask.js" />
         <option value="$PROJECT_DIR$/admin_student/views.py" />
         <option value="$PROJECT_DIR$/admin_student/templates/admin_student/user_create.html" />
-        <option value="$PROJECT_DIR$/accounts/api/serializers.py" />
         <option value="$PROJECT_DIR$/accounts/templates/accounts/user_personal_info.html" />
         <option value="$PROJECT_DIR$/accounts/views.py" />
         <option value="$PROJECT_DIR$/admin_student/templates/admin_student/user-info-modal.html" />
@@ -235,10 +225,11 @@
         <option value="$PROJECT_DIR$/static-storage/css/master.css" />
         <option value="$PROJECT_DIR$/templates/home.html" />
         <option value="$PROJECT_DIR$/templates/navbar.html" />
-        <option value="$PROJECT_DIR$/static-storage/js/user_list.js" />
         <option value="$PROJECT_DIR$/static-storage/css/test.css" />
-        <option value="$PROJECT_DIR$/accounts/api/views.py" />
         <option value="$PROJECT_DIR$/admin_student/templates/admin_student/admin_base.html" />
+        <option value="$PROJECT_DIR$/accounts/api/serializers.py" />
+        <option value="$PROJECT_DIR$/accounts/api/views.py" />
+        <option value="$PROJECT_DIR$/static-storage/js/user_list.js" />
       </list>
     </option>
   </component>
@@ -337,7 +328,7 @@
               <item name="src" type="b2602c69:ProjectViewProjectNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="static-storage" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="src" type="b2602c69:ProjectViewProjectNode" />
@@ -763,14 +754,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../forum-evn/lib/python3.6/site-packages/rest_framework/mixins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="50" column="6" lean-forward="false" selection-start-line="50" selection-start-column="6" selection-end-line="50" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../../forum-evn/lib/python3.6/site-packages/rest_framework/viewsets.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
@@ -896,16 +879,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/api/serializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="40" lean-forward="true" selection-start-line="12" selection-start-column="40" selection-end-line="12" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#44#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static-storage/js/user_edit.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -954,16 +927,6 @@
         <state relative-caret-position="375">
           <caret line="106" column="47" lean-forward="false" selection-start-line="106" selection-start-column="47" selection-end-line="106" selection-end-column="65" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/api/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="16" lean-forward="false" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#32#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1049,16 +1012,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/api/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="51" lean-forward="false" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin_student/templates/admin_student/admin_base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
@@ -1067,21 +1020,53 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/api/serializers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="509">
+          <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/api/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="9" column="16" lean-forward="false" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../forum-evn/lib/python3.6/site-packages/rest_framework/mixins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="83" column="52" lean-forward="true" selection-start-line="83" selection-start-column="52" selection-end-line="83" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/static-storage/js/user_list.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="91" column="52" lean-forward="true" selection-start-line="91" selection-start-column="52" selection-end-line="91" selection-end-column="52" />
+        <state relative-caret-position="360">
+          <caret line="120" column="30" lean-forward="true" selection-start-line="120" selection-start-column="30" selection-end-line="120" selection-end-column="30" />
           <folding>
             <element signature="n#!!block;n#showUserModal#0" expanded="false" />
-            <marker date="1502155746763" expanded="true" signature="99:406" ph="..." />
-            <marker date="1502155746763" expanded="true" signature="328:365" ph="..." />
-            <marker date="1502155746763" expanded="true" signature="328:366" ph="..." />
-            <marker date="1502155746763" expanded="true" signature="6497:6519" ph="..." />
-            <marker date="1502155746763" expanded="true" signature="6497:6568" ph="..." />
-            <marker date="1502155746763" expanded="true" signature="6497:6708" ph="..." />
-            <marker date="1502155746763" expanded="true" signature="6497:6867" ph="..." />
-            <marker date="1502155746763" expanded="true" signature="6655:6686" ph="..." />
+            <marker date="1502157837567" expanded="true" signature="99:406" ph="..." />
+            <marker date="1502157837567" expanded="true" signature="328:365" ph="..." />
+            <marker date="1502157837567" expanded="true" signature="328:366" ph="..." />
+            <marker date="1502157837567" expanded="true" signature="6501:6523" ph="..." />
+            <marker date="1502157837567" expanded="true" signature="6501:6572" ph="..." />
+            <marker date="1502157837567" expanded="true" signature="6501:6712" ph="..." />
+            <marker date="1502157837567" expanded="true" signature="6501:6871" ph="..." />
+            <marker date="1502157837567" expanded="true" signature="6659:6690" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/api/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
