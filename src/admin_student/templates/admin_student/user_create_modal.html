@@ -1,0 +1,122 @@
+<div class="modal fade" id="user-create-modal">
+    <div class="modal-dialog" style="width: 80%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 id="user-modal-title" class="modal-title">Create new user</h4>
+            </div>
+            <div id="user-modal-body col-md-12" class="modal-body">
+                <form
+                    id="user-edit-form"
+                    csrf-token="{{ csrf_token }}"
+                    data="{{ user.get_absolute_url }}"
+                    data-href="{{ user.get_update_url }}">
+                    {% csrf_token %}
+                    <table
+                        class="table table-user-information">
+                        <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td><input
+                                    id="user-name-create"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Name">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td>
+                                    <select id="user-status-create" class="form-control">
+                                        <option>Studying</option>
+                                        <option>Administrator</option>
+                                        <option>Graduated</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Gender</td>
+                                <td>
+                                    <div class=" radio-inline">
+                                        <label>
+                                            <input
+                                                id="male-check-create"
+                                                type="radio"
+                                                checked="checked"
+                                                name="gender">Male
+                                        </label>
+                                    </div>
+                                    <div class=" radio-inline">
+                                        <label>
+                                            <input
+                                                id="female-check-create"
+                                                type="radio"
+                                                name="gender">Female
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Date of Birth</td>
+                                <td id="">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input
+                                            id="user-date-birth-create"
+                                            type="text"
+                                            class="form-control"
+                                            data-inputmask="'alias': 'mm/dd/yyyy'"
+                                            data-mask>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Home Address</td>
+                                <td><input
+                                    id="user-address-create"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Address">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Private Email</td>
+                                <td><input
+                                    id="user-private-email-create"
+                                    type="email"
+                                    class="form-control"
+                                    placeholder="Email">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Phone Number</td>
+                                <td>
+                                    <input
+                                        id="user-phone-create" type="text"
+                                        class="form-control"
+                                        data-inputmask='"mask": "(999) 999-9999"'
+                                        data-mask>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Profile picture</td>
+                                <td><input id="user-avatar-create" type="file"
+                                           accept="image/*">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-save-new" type="button" class="btn btn-primary">
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

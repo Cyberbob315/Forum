@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 THREADS_PER_PAGE = 7
 
-
+@login_required(login_url='/accounts/login-site/')
 def index(request):
     return render(request, 'admin_student/admin_base.html', {})
 
@@ -39,5 +39,9 @@ def subforum_draft_list(request, slug):
     }
     return render(request, 'admin_student/forum.html', context_dict)
 
+
+@login_required(login_url='/accounts/login-site/')
 def user_list(request):
-    return render(request, 'admin_student/user_list.html', {})
+    if request.user.is_superuser:
+        return render(request, 'admin_student/user_list.html', {})
+    return render(request, 'error.html', {})

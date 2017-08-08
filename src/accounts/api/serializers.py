@@ -28,7 +28,6 @@ class AuthTokenSerializer(serializers.Serializer):
 
 class StudentProfileSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
-    gender = serializers.SerializerMethodField()
 
     class Meta:
         model = StudentProfile
@@ -38,17 +37,14 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             'gender',
             'status',
             'email',
+            'joined_time',
             'private_email',
             'date_of_birth',
             'mobile_phone',
             'home_address',
+            'profile_pic',
         ]
 
     def get_status(self, obj):
         return obj.get_status_display()
 
-    def get_gender(self, obj):
-        return 'Male' if obj.gender else 'Female'
-
-    def update(self, instance, validated_data):
-        pass

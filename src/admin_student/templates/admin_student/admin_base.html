@@ -166,9 +166,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">HEADER</li>
                         <!-- Optionally, you can add icons to the links -->
-                        <li class="active"><a href="#"><i
-                            class="fa fa-link"></i> <span>Forum</span></a></li>
-                        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a>
+                        <li class="active"><a
+                            href="{% url 'student_admin:user-list' %}"><i
+                            class="fa fa-link"></i> <span>Users</span></a></li>
+                        <li><a href="#"><i class="fa fa-link"></i> <span>Subject</span></a>
                         </li>
                         <li class="treeview">
                             <a href="#"><i class="fa fa-link"></i> <span>Pending</span>
@@ -232,5 +233,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
              user experience. -->
     </body>
     <script src="{% static 'admin_student/js/forum_list.js' %}"></script>
+    <script
+        src="{% static 'admin_student/dist/js/inputmask/jquery.inputmask.js' %}"></script>
+    <script
+        src="{% static 'admin_student/dist/js/inputmask/jquery.inputmask.extensions.js' %}"></script>
+    <script
+        src="{% static 'admin_student/dist/js/inputmask/jquery.inputmask.date.extensions.js' %}"></script>
     {% block script %}{% endblock %}
 </html>

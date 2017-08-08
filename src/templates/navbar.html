@@ -16,6 +16,10 @@
         {% include 'search_form.html' %}
         <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                    <li><a href="{% url 'student_admin:user-list' %}">Admin</a>
+                    </li>
+                {% endif %}
                 <li>
                     <a href="{% url 'accounts:profile' student_id=user.student_id %}">
                         <img

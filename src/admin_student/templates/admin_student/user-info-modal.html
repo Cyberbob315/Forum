@@ -1,116 +1,127 @@
 <div class="modal fade" id="user-modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 80%">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                <h4 id="user-modal-title" class="modal-title">Default
-                    Modal</h4>
+                <h4 id="user-modal-title" class="modal-title">User Info</h4>
             </div>
-            <div id="user-modal-body" class="modal-body">
-                <form
-                    id="user-edit-form"
-                    csrf-token={{ csrf_token }}
+            <div id="user-modal-body col-md-12" class="modal-body">
+                <div class="col-md-4">
+                    <img id="userAvatar" class="img-responsive img-circle"
+                         src="">
+                    <input id="userAvatarUpload" type="file">
+                </div>
+                <div class="col-md-8">
+                    <form
+                        id="user-edit-form"
+                        csrf-token="{{ csrf_token }}"
                         data="{{ user.get_absolute_url }}"
-                    data-href="{{ user.get_update_url }}">
-                    <table
-                        class="table table-user-information">
-                        <tbody>
-                            <tr>
-                                <td>Name</td>
-                                <td id="user-name">Name</td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td id="user-id">Id</td>
-                            </tr>
-                            <tr>
-                                <td>Status</td>
-                                <td id="user-status">Status</td>
-                            </tr>
-                            <tr>
-                                <td>Joined date</td>
-                                <td id="user-joined-date">Joined date</td>
-                            </tr>
-                            <tr>
-                                <td>Gender</td>
-                                <td>
-                                    <div class=" radio-inline">
-                                        <label>
-                                            <input type="radio"
-                                                   name="gender">Male
-                                        </label>
-                                    </div>
-                                    <div class=" radio-inline">
-                                        <label>
-                                            <input type="radio"
-                                                   name="gender">Female
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Date of Birth</td>
-                                <td id="user-date-birth">Date of birth</td>
-                            </tr>
-                            <tr>
-                            <tr>
-                                <td>Gender</td>
-                                <td id="user-gender">Gender</td>
-                            </tr>
-                            <tr>
-                                <td>Home Address</td>
-                                <td><input
-                                    id="user-address"
-                                    type="text"
-                                    class="form-control"
-                                    value="Address">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Email</td>
-                                <td id="user-email"></td>
-                            </tr>
-                            <tr>
-                                <td>Private Email</td>
-                                <td><input
-                                    id="user-private-email"
-                                    type="text"
-                                    class="form-control"
-                                    value="Email">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Phone Number</td>
-                                <td><input
-                                    id="user-phone"
-                                    type="text"
-                                    class="form-control"
-                                    value="123214">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="col-lg-3 col-md-3"
-                         style="text-align: center">
-                        <button type="submit"
-                                class=" btn btn-primary">
-                            Save
-                        </button>
-                    </div>
-                </form>
+                        data-href="{{ user.get_update_url }}">
+                        {% csrf_token %}
+                        <table
+                            class="table table-user-information">
+                            <tbody>
+                                <tr>
+                                    <td>Name</td>
+                                    <td id="user-name">Name</td>
+                                </tr>
+                                <tr>
+                                    <td>Student Id</td>
+                                    <td id="user-id">Id</td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td id="user-status">Status</td>
+                                </tr>
+                                <tr>
+                                    <td>Joined date</td>
+                                    <td id="user-joined-date">Joined date</td>
+                                </tr>
+                                <tr>
+                                    <td>Gender</td>
+                                    <td>
+                                        <div class=" radio-inline">
+                                            <label>
+                                                <input
+                                                    id="male-check"
+                                                    type="radio"
+                                                    name="gender">Male
+                                            </label>
+                                        </div>
+                                        <div class=" radio-inline">
+                                            <label>
+                                                <input
+                                                    id="female-check"
+                                                    type="radio"
+                                                    name="gender">Female
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Date of Birth</td>
+                                    <td id="">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input
+                                                id="user-date-birth"
+                                                type="text"
+                                                class="form-control"
+                                                data-inputmask="'alias': 'mm/dd/yyyy'"
+                                                data-mask>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Home Address</td>
+                                    <td><input
+                                        id="user-address"
+                                        type="text"
+                                        class="form-control"
+                                        value="Address">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td id="user-email"></td>
+                                </tr>
+                                <tr>
+                                    <td>Private Email</td>
+                                    <td><input
+                                        id="user-private-email"
+                                        type="text"
+                                        class="form-control"
+                                        value="Email">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Phone Number</td>
+                                    <td>
+                                        <input
+                                            id="user-phone" type="text"
+                                            class="form-control"
+                                            data-inputmask='"mask": "(999) 999-9999"'
+                                            data-mask>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left"
-                        data-dismiss="modal">Close
+                <button id="btnDelete" type="button"
+                        class="btn btn-danger pull-left"
+                        data-dismiss="modal">Delete
                 </button>
-                <button type="button" class="btn btn-primary">Save
-                    changes
+                <button id="btnSave" type="button" class="btn btn-primary">
+                    Save
                 </button>
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
