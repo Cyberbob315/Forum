@@ -7,7 +7,7 @@ from subforums import models as forum_models
 class Subject(models.Model):
     title = models.CharField(max_length=255)
     credit = models.IntegerField()
-    subject_id = models.CharField(max_length=8)
+    subject_id = models.CharField(max_length=8, unique=True)
     short_name = models.CharField(max_length=20)
 
     def save(self, *args, **kwargs):
@@ -41,7 +41,7 @@ class Mark(models.Model):
     year = models.IntegerField(choices=YEAR_CHOICES,
                                default=datetime.datetime.now().year)
     mid_term_mark = models.FloatField()
-    final_mark = models.FloatField(null=True)
+    final_mark = models.FloatField()
     status = models.CharField(max_length=2, choices=MARK_STATUS,
                               default=NOT_PASS)
     avg_mark = models.FloatField()
@@ -51,6 +51,9 @@ class Mark(models.Model):
 
     def save(self, *args, **kwargs):
         self.avg_mark = (self.mid_term_mark + self.final_mark) / 2
+        self.status = self.PASS
+        if self.mid_term_mark < 3 or self.final_mark < 3 or self.avg_mark < 4:
+            self.status = self.NOT_PASS
         super().save(*args, **kwargs)
 
     def __str__(self):

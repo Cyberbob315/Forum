@@ -1,0 +1,61 @@
+<div class="modal fade" id="subject-create-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 id="user-modal-title" class="modal-title">Subject Info</h4>
+            </div>
+            <div id="user-modal-body col-md-12" class="modal-body">
+                <form
+                    id="subject-create-form"
+                    csrf-token="{{ csrf_token }}"
+                    data="{{ user.get_absolute_url }}"
+                    data-href="{{ user.get_update_url }}">
+                    {% csrf_token %}
+                    <table
+                        class="table table-user-information">
+                        <tbody>
+                            <tr>
+                                <td>ID</td>
+                                <td>
+                                    <input id="subject-id-create"
+                                           class="form-control"
+                                           placeholder="ID">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Title</td>
+                                <td><input id="subject-name-create"
+                                           class="form-control"
+                                           placeholder="Name"></td>
+                            </tr>
+                            <tr>
+                                <td>Credit</td>
+                                <td><input id="subject-credit-create"
+                                           type="number"
+                                           min="0"
+                                           class="form-control"
+                                           placeholder="Credit"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+                <div  class="text-center alert-danger">
+                    <strong id="createErr"></strong>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancelCreateSubject" type="button"
+                        class="btn btn-default pull-left"
+                        data-dismiss="modal">Cancel
+                </button>
+                <button id="btnCreateSubject" type="button"
+                        class="btn btn-primary">
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,7 +5,8 @@
                 <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                <h4 id="user-modal-title" class="modal-title">Create new user</h4>
+                <h4 id="user-modal-title" class="modal-title">Create new
+                    user</h4>
             </div>
             <div id="user-modal-body col-md-12" class="modal-body">
                 <form
@@ -29,7 +30,8 @@
                             <tr>
                                 <td>Status</td>
                                 <td>
-                                    <select id="user-status-create" class="form-control">
+                                    <select id="user-status-create"
+                                            class="form-control">
                                         <option>Studying</option>
                                         <option>Administrator</option>
                                         <option>Graduated</option>
@@ -111,9 +113,13 @@
                         </tbody>
                     </table>
                 </form>
+                <div class="text-center alert-danger">
+                    <strong id="userCreateErr"></strong>
+                </div>
             </div>
             <div class="modal-footer">
-                <button id="btn-save-new" type="button" class="btn btn-primary">
+                <button id="btn-save-new" type="button"
+                        class="btn btn-primary">
                     Create
                 </button>
             </div>

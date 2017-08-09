@@ -13,10 +13,11 @@
                     <h3 class="box-title">Student list</h3>
                     <div class="box-tools">
                         <form id="user-search"
+                              action="{% url 'student_admin:user-list' %}"
                               class="input-group input-group-sm"
                               style="width: 150px;">
                             <input id="searchInput" type="text"
-                                   name="table_search"
+                                   name="search"
                                    class="form-control pull-right"
                                    placeholder="Search">
                             <div class="input-group-btn">
@@ -38,8 +39,51 @@
                             <th>Email</th>
                             <th>Mobile phone
                             <th>Status</th>
+                            <th>Transcript</th>
                         </tr>
+                        {% for student in student_list %}
+                            <tr student-id="{{ student.student_id }}"
+                                class="infoRow">
+                                <td>{{ student.student_id }}</td>
+                                <td> {{ student.name }}</td>
+                                <td>{{ student.get_gender }}</td>
+                                <td>{{ student.date_of_birth }}</td>
+                                <td>{{ student.private_email }}</td>
+                                <td>{{ student.mobile_phone }}</td>
+                                <td>{{ student.get_status_display }}</td>
+                            </tr>
+                        {% endfor %}
                     </table>
+                </div>
+                <div class="row pull-right" style="margin-right: 24px;">
+                    {% if subject_list.has_other_pages %}
+                        <ul class="pagination">
+                            {% if subject_list.has_previous %}
+                                <li><a
+                                    href="?page={{ subject_list.previous_page_number }}">&laquo;</a>
+                                </li>
+                            {% else %}
+                                <li class="disabled"><span>&laquo;</span></li>
+                            {% endif %}
+                            {% for i in subject_list.paginator.page_range %}
+                                {% if subject_list.number == i %}
+                                    <li class="active"><span>{{ i }} <span
+                                        class="sr-only">(current)</span></span>
+                                    </li>
+                                {% else %}
+                                    <li><a href="?page={{ i }}">{{ i }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if subject_list.has_next %}
+                                <li><a
+                                    href="?page={{ subject_list.next_page_number }}">&raquo;</a>
+                                </li>
+                            {% else %}
+                                <li class="disabled"><span>&raquo;</span></li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -55,5 +99,5 @@
 
 {% block script %}
     {{ block.super }}
-    <script src="{% static 'js/user_list.js' %}"></script>
+    <script src="{% static 'js/users.js' %}"></script>
 {% endblock %}

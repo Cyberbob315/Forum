@@ -1,0 +1,70 @@
+<div class="modal fade" id="mark-create-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 id="user-modal-title" class="modal-title">Add mark for {{ student_name }}</h4>
+            </div>
+            <div id="user-modal-body col-md-12" class="modal-body">
+                <form
+                    id="mark-create-form"
+                    csrf-token="{{ csrf_token }}">
+                    {% csrf_token %}
+                    <table
+                        class="table table-user-information">
+                        <tbody>
+                            <tr>
+                                <td>Subject</td>
+                                <td>
+                                    <select id="subject-select-create"
+                                            class="form-control">
+                                        {% for subject in subject_list %}
+                                            <option
+                                                value="{{ subject.id }}">
+                                                {{ subject.title }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Title</td>
+                                <td><input id="mid-term-mark-create"
+                                           class="form-control"
+                                           type="number"
+                                           step="0.1"
+                                           min="0"
+                                           max="10"
+                                           placeholder="Mid-term mark">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Credit</td>
+                                <td><input id="final-mark-create"
+                                           class="form-control"
+                                           type="number"
+                                           step="0.1"
+                                           min="0"
+                                           max="10"
+                                           placeholder="Final mark">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+                <div class="text-center alert-danger">
+                    <strong id="markCreateErr"></strong>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCreateMark" type="button"
+                        class="btn btn-primary">
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
