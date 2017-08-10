@@ -43,6 +43,9 @@
                     </div>
                 {% endif %}
             </form><!-- /form -->
+            <a href="{% url 'accounts:reset_password' %}" class="forgot-password">
+                Forgot the password?
+            </a>
         </div><!-- /card-container -->
     </div>
 {% endblock %}

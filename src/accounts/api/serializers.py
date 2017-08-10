@@ -29,7 +29,6 @@ class AuthTokenSerializer(serializers.Serializer):
 
 
 class StudentProfileSerializer(serializers.ModelSerializer):
-    status = serializers.SerializerMethodField()
     transcript_link = serializers.SerializerMethodField()
 
     class Meta:
@@ -49,8 +48,6 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             'transcript_link',
         ]
 
-    def get_status(self, obj):
-        return obj.get_status_display()
 
     def get_transcript_link(self, obj):
         return reverse('student_admin:transcript',
@@ -60,7 +57,31 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         if re.search('[a-zA-Z]', value):
             raise serializers.ValidationError(
                 'Mobile phone number can not contain letters from alphabet')
-        if len(value) != 10 or len(value) !=11:
+        if len(value) != 0 and (len(value) != 10 or len(value) != 11):
+            raise serializers.ValidationError(
+                'Mobile phone number must be 10 or 11 characters')
+        return value
+
+
+class StudentProfileCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentProfile
+        fields = [
+            'name',
+            'password',
+            'private_email',
+            'status',
+            'date_of_birth',
+            'profile_pic',
+            'mobile_phone',
+            'home_address',
+        ]
+
+    def validate_mobile_phone(self, value):
+        if re.search('[a-zA-Z]', value):
+            raise serializers.ValidationError(
+                'Mobile phone number can not contain letters from alphabet')
+        if len(value) != 0 and (len(value) != 10 or len(value) != 11):
             raise serializers.ValidationError(
                 'Mobile phone number must be 10 or 11 characters')
         return value

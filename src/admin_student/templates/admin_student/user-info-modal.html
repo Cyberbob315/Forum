@@ -33,7 +33,18 @@
                                 </tr>
                                 <tr>
                                     <td>Status</td>
-                                    <td id="user-status">Status</td>
+                                    <td>
+                                        <select
+                                            id="user-status-edit"
+                                            class="form-control">
+                                            <option value="ST">Studying
+                                            </option>
+                                            <option value="AD">Administrator
+                                            </option>
+                                            <option value="GT">Graduated
+                                            </option>
+                                        </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Joined date</td>
@@ -112,10 +123,9 @@
                         </table>
                     </form>
                     <div class="text-center alert-danger">
-                    <strong id="userUpdateErr"></strong>
+                        <strong id="userUpdateErr"></strong>
+                    </div>
                 </div>
-                </div>
-
             </div>
             <div class="modal-footer">
                 <button id="btnDelete" type="button"

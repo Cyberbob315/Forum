@@ -6,9 +6,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.http.response import (
     JsonResponse,
     HttpResponseRedirect,
-    HttpResponse
 )
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
 from django.core.urlresolvers import reverse, reverse_lazy
 from rest_framework import status
@@ -19,7 +18,7 @@ from . import models
 @login_required(login_url=reverse_lazy('accounts:login'))
 def change_password(request, student_id):
     if request.user.student_id != student_id:
-        return render(request, 'error.html')
+        return render(request, 'error_403.html')
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -39,21 +38,32 @@ def change_password(request, student_id):
 
 @login_required(login_url=reverse_lazy('accounts:login'))
 def user_activity(request, student_id):
-    student = get_object_or_404(models.StudentProfile, student_id=student_id)
+    try:
+        student = models.StudentProfile.objects.get(student_id=student_id)
+    except:
+        return render(request, 'error_404.html')
     return render(request, 'accounts/user_activity.html',
                   {'student': student, 'is_edit': False, 'is_info': False})
 
 
 @login_required(login_url=reverse_lazy('accounts:login'))
 def user_profile(request, student_id):
-    student = get_object_or_404(models.StudentProfile, student_id=student_id)
+    try:
+        student = models.StudentProfile.objects.get(student_id=student_id)
+    except:
+        return render(request, 'error_404.html')
     return render(request, 'accounts/user_personal_info.html',
                   {'student': student, 'is_edit': False, 'is_info': True})
 
 
 @login_required(login_url=reverse_lazy('accounts:login'))
 def user_profile_edit(request, student_id):
-    student = get_object_or_404(models.StudentProfile, student_id=student_id)
+    if request.user.student_id != student_id:
+        return render(request, 'error_403.html')
+    try:
+        student = models.StudentProfile.objects.get(student_id=student_id)
+    except:
+        return render(request, 'error_404.html')
     return render(request, 'accounts/user_personal_info.html',
                   {'student': student, 'is_edit': True, 'is_info': True})
 
@@ -77,8 +87,9 @@ def user_login(request):
 @require_http_methods(['POST'])
 def update_profile(request, student_id):
     user = request.user
-    if not user.is_superuser or user.student_id != student_id:
-        return HttpResponse('You dont have permission to do this')
+    if user.student_id != student_id:
+        return render(request, 'error_403.html')
+    print('test' + request.POST['email'])
     validate_form = forms.StudentUpdateForm(request.POST)
     if not validate_form.is_valid():
         return JsonResponse({'success': False, 'email': False},
@@ -92,14 +103,3 @@ def update_profile(request, student_id):
     return JsonResponse({'success': True, 'email': True},
                         status=status.HTTP_200_OK)
 
-
-@require_http_methods(['POST'])
-def update_image(request, student_id):
-    user = request.user
-    if user.student_id != student_id:
-        return render(request, 'error.html', {})
-    if 'profile_pic' in request.FILES:
-        user.profile_pic.delete(save=True)
-        user.profile_pic = request.FILES.get('profile_pic')
-        user.save()
-    return JsonResponse({'success': True}, status=status.HTTP_200_OK)

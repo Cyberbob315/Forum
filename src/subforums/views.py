@@ -17,8 +17,11 @@ class SubforumListView(ListView):
 @login_required(login_url=reverse_lazy('accounts:login'))
 def subforum_draft_list(request, slug):
     if not request.user.is_superuser:
-        return render(request, 'error.html')
-    subforum = get_object_or_404(Subforum, slug=slug)
+        return render(request, 'error_403.html')
+    try:
+        subforum = Subforum.objects.get(slug=slug)
+    except:
+        return render(request, 'error_404.html')
     thread_list = subforum.threads.filter(
         published_date__isnull=True
     ).order_by(
@@ -41,7 +44,10 @@ def subforum_draft_list(request, slug):
 
 
 def subforum_detail(request, slug):
-    subforum = get_object_or_404(Subforum, slug=slug)
+    try:
+        subforum = Subforum.objects.get(slug=slug)
+    except:
+        return render(request, 'error_404.html')
     thread_list = subforum.threads.filter(
         published_date__isnull=False
     ).order_by(

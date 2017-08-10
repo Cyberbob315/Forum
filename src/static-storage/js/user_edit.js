@@ -10,18 +10,21 @@ $('#user-edit-form').submit(function (event) {
     let phone = $('#input-phone').val();
     let email = $('#input-email').val();
     let csrfToken = $("[name=csrfmiddlewaretoken]").val();
-
+    let image = $('#input-image')[0].files[0];
+    let data = new FormData();
+    data.append('profile_pic', image);
+    data.append('address', address);
+    data.append('phone', phone);
+    data.append('email', email);
     $.ajax({
         url: deleteUrl,
         method: 'POST',
         headers: {
             'X-CSRFToken': csrfToken
         },
-        data: {
-            'address': address,
-            'phone': phone,
-            'email': email
-        },
+        processData: false,
+        contentType: false,
+        data: data,
         success: function (data) {
             if (data.success) {
                 alert('Update successfully');
@@ -34,37 +37,5 @@ $('#user-edit-form').submit(function (event) {
             alert('Email is not valid,please enter right email')
         }
     })
-
 });
 
-$('#form-image').submit(function (event) {
-    event.preventDefault();
-    this_ = $(this);
-    deleteUrl = this_.attr('data-href');
-    redirectUrl = this_.attr('data');
-    let image = $('#input-image')[0].files[0];
-    let data = new FormData();
-    data.append('profile_pic',image);
-    let csrfToken = $("[name=csrfmiddlewaretoken]").val();
-    $.ajax({
-        url: deleteUrl,
-        type: 'POST',
-        headers: {
-            'X-CSRFToken': csrfToken
-        },
-        data: data,
-        processData: false,
-        contentType: false,
-        success: function (data) {
-            if (data.success) {
-                alert('Update successfully');
-            } else {
-                alert('Update failed')
-            }
-            window.location.href = redirectUrl;
-        },
-        error: function (data) {
-
-        }
-    });
-});

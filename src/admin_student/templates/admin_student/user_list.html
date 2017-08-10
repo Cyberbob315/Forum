@@ -39,7 +39,6 @@
                             <th>Email</th>
                             <th>Mobile phone
                             <th>Status</th>
-                            <th>Transcript</th>
                         </tr>
                         {% for student in student_list %}
                             <tr student-id="{{ student.student_id }}"
@@ -99,5 +98,6 @@
 
 {% block script %}
     {{ block.super }}
+    <script src="{% static 'js/waiting_dialog.js' %}"></script>
     <script src="{% static 'js/users.js' %}"></script>
 {% endblock %}

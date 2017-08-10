@@ -164,9 +164,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- /.search form -->
                     <!-- Sidebar Menu -->
                     <ul class="sidebar-menu" data-widget="tree">
-                        <li class="header">HEADER</li>
+                        <li class="header">Management</li>
                         <!-- Optionally, you can add icons to the links -->
-                        <li class="active"><a
+                        <li class=""><a
                             href="{% url 'student_admin:user-list' %}"><i
                             class="fa fa-link"></i> <span>Users</span></a></li>
                         <li><a href="{% url 'student_admin:subject-list' %}"><i
@@ -195,11 +195,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <small>
                             {% block page_header_description %}{% endblock %}</small>
                     </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i>
-                            Level</a></li>
-                        <li class="active">Here</li>
-                    </ol>
                 </section>
                 <!-- Main content -->
                 <section class="content container-fluid">

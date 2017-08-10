@@ -41,6 +41,14 @@
                 <div class="pull-right">
                     {% if user.is_superuser %}
                         <a class="btn btn-danger btn-option btn-sm">Delete</a>
+                        <a href="{% url 'threads:pin' thread_id=thread.pk %}"
+                           class="btn btn-info btn-option btn-sm">
+                            {% if thread.is_pinned %}
+                                Unpin
+                            {% else %}
+                                Pin
+                            {% endif %}
+                        </a>
                     {% endif %}
                     {% if user == thread.author %}
                         <a href="{% url 'threads:edit' pk=thread.pk %}"

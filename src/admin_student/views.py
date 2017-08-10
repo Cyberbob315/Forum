@@ -1,11 +1,10 @@
 from braces.views._access import SuperuserRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.db.models import Q
-
 from accounts.models import StudentProfile
 from subjects.models import Subject, Mark
 from subforums.models import Subforum
@@ -68,9 +67,9 @@ class MarkListView(SuperuserRequiredMixin, ListView):
         return super().get_context_data(**kwargs)
 
 
-class UserListView(SuperuserRequiredMixin, ListView):
+class UserListView(ListView):
     template_name = 'admin_student/user_list.html'
-    login_url = 'accounts/login-site'
+    login_url = '/accounts/login-site'
     model = StudentProfile
     context_object_name = 'student_list'
 
@@ -94,11 +93,18 @@ class UserListView(SuperuserRequiredMixin, ListView):
             users = paginator.num_pages(paginator.num_pages)
         return users
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse_lazy('accounts:login'))
+        if not request.user.is_superuser:
+            return render(request, 'error_403.html')
+        return super().dispatch(request, *args, **kwargs)
+
 
 @login_required(login_url=reverse_lazy('accounts:login'))
 def subforum_draft_list(request, slug):
     if not request.user.is_superuser:
-        return render(request, 'error.html')
+        return render(request, 'error_403.html')
     subforum = get_object_or_404(Subforum, slug=slug)
     thread_list = subforum.threads.filter(
         published_date__isnull=True
@@ -125,4 +131,4 @@ def subforum_draft_list(request, slug):
 def user_list(request):
     if request.user.is_superuser:
         return render(request, 'admin_student/user_list.html', {})
-    return render(request, 'error.html', {})
+    return render(request, 'error_403.html', {})

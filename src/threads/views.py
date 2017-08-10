@@ -1,13 +1,13 @@
 from braces.views._access import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http.response import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView, CreateView, UpdateView
 from django.core.urlresolvers import reverse
-from .models import Thread, ThreadImages
+from django.http.response import HttpResponseRedirect
+from django.shortcuts import render
+from django.views.generic import DetailView, CreateView, UpdateView
 from . import forms
 from . import mixins
+from .models import Thread, ThreadImages
 
 
 class ThreadDetailView(DetailView):
@@ -36,9 +36,23 @@ class ThreadUpdateView(LoginRequiredMixin, mixins.UserOwnerMixin, UpdateView):
         return reverse('threads:detail', kwargs={'pk': self.object.pk})
 
 
+@login_required(login_url='/accounts/login-site/')
+def pin_thread(request, thread_id):
+    try:
+        thread = Thread.objects.get(pk=thread_id)
+    except:
+        return render(request, 'error_404.html')
+    thread.is_pinned = False if thread.is_pinned else True
+    thread.save()
+    return HttpResponseRedirect(
+        reverse('threads:detail', kwargs={'pk': thread_id}))
+
 
 def thread_detail_view(request, pk):
-    thread = get_object_or_404(Thread, pk=pk)
+    try:
+        thread = Thread.objects.get(pk=pk)
+    except:
+        return render(request, 'error_404.html')
     thread.increase_view()
     comment_list = thread.comments.all()
     page = request.GET.get('page', 1)

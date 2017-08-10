@@ -98,10 +98,6 @@ class StudentProfile(AbstractBaseUser, PermissionsMixin):
         return reverse('accounts:profile-update',
                        kwargs={'student_id': self.student_id})
 
-    def get_image_upload_url(self):
-        return reverse('accounts:image-update',
-                       kwargs={'student_id': self.student_id})
-
     def get_full_name(self):
         return self.name
 

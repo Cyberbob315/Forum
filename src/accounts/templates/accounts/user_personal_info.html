@@ -16,36 +16,27 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-4 col-lg-4" align="center">
-                    <img
-                        alt="User Pic"
-                        src="{{ user.profile_pic.url }}"
-                        class="img-circle img-responsive">
-                    {% if is_edit %}
-                        <form
-                            id="form-image"
-                            enctype="multipart/form-data"
-                            data="{{ user.get_absolute_url }}"
-                            data-href="{{ user.get_image_upload_url }}">
-                            {% csrf_token %}
+                <form
+                    id="user-edit-form"
+                    enctype="multipart/form-data"
+                    data="{{ user.get_absolute_url }}"
+                    data-href="{{ user.get_update_url }}">
+                    {% csrf_token %}
+                    <div class="col-md-4 col-lg-4" align="center">
+                        <img
+                            alt="User Pic"
+                            src="{{ user.profile_pic.url }}"
+                            class="img-circle img-responsive">
+                        {% if is_edit %}
                             <input
                                 id="input-image"
                                 type="file"
                                 class="file btn btn-info"
                                 data-show-preview="false"
                                 style="margin-top: 20px;width: 150px">
-                            <button class="btn btn-primary"
-                                    style="margin-top: 20px"
-                                    type="submit">Upload
-                            </button>
-                        </form>
-                    {% endif %}
-                </div>
-                <div class=" col-md-8 col-lg-8 ">
-                    <form
-                        id="user-edit-form"
-                        data="{{ user.get_absolute_url }}"
-                        data-href="{{ user.get_update_url }}">
+                        {% endif %}
+                    </div>
+                    <div class=" col-md-8 col-lg-8 ">
                         <table
                             class="table table-user-information">
                             {% csrf_token %}
@@ -129,8 +120,8 @@
                                 </button>
                             {% endif %}
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="panel-footer">

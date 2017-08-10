@@ -160,4 +160,12 @@ BLEACH_VALID_STYLES = ['color', 'cursor', 'float', 'margin']
 
 BLEACH_VALID_PROTOCOLS = bleach.ALLOWED_PROTOCOLS + ['data']
 
-#
+#Email for reset password
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'aloblo315@gmail.com'
+SERVER_EMAIL = 'aloblo315@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'aloblo315@gmail.com'
+EMAIL_HOST_PASSWORD = 'nhan1412'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

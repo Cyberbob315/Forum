@@ -1,3 +1,4 @@
+
 const USER_API_URL = '/api/account/';
 const DEFAULT_STUDENT_ID = '20170000';
 let tableHeader = `<tr>
@@ -14,6 +15,8 @@ $(document).ready(function () {
     initInputMask();
     initEvents();
 });
+
+
 
 function initEvents() {
     $('.infoRow').on('click', onRowClick);
@@ -37,15 +40,19 @@ function createNewUser(event) {
     let mobileNumer = $('#user-phone-create').val();
     let address = $('#user-address-create').val();
     let csrfToken = $('#user-edit-form').attr('csrf-token');
+    let status = $('#user-status-create').val();
     let image = $('#user-avatar-create')[0].files[0];
+    let password = $('#user-password-create').val();
     let data = new FormData();
     data.append('student_id', DEFAULT_STUDENT_ID);
     data.append('name', name);
     data.append('gender', gender);
     data.append('date_of_birth', birthDay);
+    data.append('status', status);
     data.append('private_email', privateEmail);
     data.append('mobile_phone', mobileNumer);
     data.append('home_address', address);
+    data.append('password', password);
     if (image)
         data.append('profile_pic', image);
 
@@ -108,6 +115,7 @@ function updateProfile(event) {
     let birthDay = $('#user-date-birth').val();
     let privateEmail = $('#user-private-email').val();
     let mobileNumer = $('#user-phone').val();
+    let status = $('#user-status-edit').val();
     let address = $('#user-address').val();
     let gender = $('#male-check').is(':checked');
     let csrfToken = $('#user-edit-form').attr('csrf-token');
@@ -116,6 +124,7 @@ function updateProfile(event) {
     data.append('student_id', studentId);
     data.append('name', name);
     data.append('gender', gender);
+    data.append('status', status);
     data.append('date_of_birth', birthDay);
     data.append('private_email', privateEmail);
     data.append('mobile_phone', mobileNumer);
@@ -128,15 +137,20 @@ function updateProfile(event) {
         headers: {
             'X-CSRFToken': csrfToken
         },
+        beforeSend:function () {
+            waitingDialog.show();
+        },
         processData: false,
         contentType: false,
         data: data,
         success: function (data) {
             alert('Success!');
+            waitingDialog.hide();
             location.reload();
         },
 
         error: function (data) {
+            waitingDialog.hide();
             let msg = '';
             if (data.responseJSON.private_email)
                 msg += ` Private email : ${data.responseJSON.private_email[0]}<br/>`;
@@ -159,11 +173,15 @@ function onRowClick(event) {
         method: 'GET',
         dataType: 'json',
         data: {},
+        beforeSend:function () {
+          waitingDialog.show();
+        },
         success: function (data) {
+            waitingDialog.hide();
             showUserModal(data);
         },
         error: function (data) {
-
+            waitingDialog.hide();
         }
     })
 }
@@ -175,7 +193,7 @@ function showUserModal(userInfo) {
         $('#user-name').text(userInfo.name);
         $('#userAvatar').attr('src', userInfo.profile_pic);
         $('#user-id').text(userInfo.student_id);
-        $('#user-status').text(userInfo.status);
+        $('#user-status-edit').val(userInfo.status);
         $('#user-date-birth').val(userInfo.date_of_birth);
         $('#user-email').text(userInfo.email);
         $('#user-joined-date').text(userInfo.joined_time);
