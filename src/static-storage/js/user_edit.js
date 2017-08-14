@@ -25,6 +25,14 @@ $('#user-edit-form').submit(function (event) {
         processData: false,
         contentType: false,
         data: data,
+        statusCode: {
+            403: function () {
+                location.href = '/403/';
+            },
+            404: function () {
+                location.href = '/404/'
+            }
+        },
         success: function (data) {
             if (data.success) {
                 alert('Update successfully');

@@ -1,4 +1,3 @@
-
 const USER_API_URL = '/api/account/';
 const DEFAULT_STUDENT_ID = '20170000';
 let tableHeader = `<tr>
@@ -15,7 +14,6 @@ $(document).ready(function () {
     initInputMask();
     initEvents();
 });
-
 
 
 function initEvents() {
@@ -69,6 +67,14 @@ function createNewUser(event) {
             alert('Create successfully');
             location.reload();
         },
+        statusCode: {
+            403: function () {
+                location.href = '/403/';
+            },
+            404: function () {
+                location.href = '/404/'
+            }
+        },
         error: function (data) {
             let msg = '';
             if (data.responseJSON.private_email)
@@ -94,6 +100,14 @@ function deleteProfile(event) {
         method: 'DELETE',
         headers: {
             'X-CSRFToken': csrfToken
+        },
+        statusCode: {
+            403: function () {
+                location.href = '/403/';
+            },
+            404: function () {
+                location.href = '/404/'
+            }
         },
         dataType: 'json',
         data: {},
@@ -137,8 +151,16 @@ function updateProfile(event) {
         headers: {
             'X-CSRFToken': csrfToken
         },
-        beforeSend:function () {
+        beforeSend: function () {
             waitingDialog.show();
+        },
+        statusCode: {
+            403: function () {
+                location.href = '/403/';
+            },
+            404: function () {
+                location.href = '/404/'
+            }
         },
         processData: false,
         contentType: false,
@@ -173,8 +195,8 @@ function onRowClick(event) {
         method: 'GET',
         dataType: 'json',
         data: {},
-        beforeSend:function () {
-          waitingDialog.show();
+        beforeSend: function () {
+            waitingDialog.show();
         },
         success: function (data) {
             waitingDialog.hide();

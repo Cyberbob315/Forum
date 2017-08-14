@@ -1,3 +1,13 @@
+
+.thumbnail {
+    border-color: white;
+}
+
+.thumb {
+    width: 200px;
+    height: 100px;
+}
+
 .thumb-contenido {
     margin-bottom: 1%;
     margin-left: 0px;
@@ -19,4 +29,13 @@
 .img-user {
     width: 50px !important;
     height: 50px !important;
+}
+
+.img-comment {
+    width: 100px;
+    height: 100px;
+}
+
+.btn-comment {
+    min-width: 60px;
 }

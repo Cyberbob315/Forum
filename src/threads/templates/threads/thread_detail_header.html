@@ -10,7 +10,9 @@
                     <div class="text-center">
                         <small>{{ thread.created_date }}</small>
                         <br>
-                        <small><strong>{{ thread.author }}</strong></small>
+                        <small><strong><a
+                            href="{{ thread.author.get_activity_link }}">{{ thread.author }}</a>
+                        </strong></small>
                     </div>
                 </div>
                 <div>
@@ -40,7 +42,10 @@
             <div class="row">
                 <div class="pull-right">
                     {% if user.is_superuser %}
-                        <a class="btn btn-danger btn-option btn-sm">Delete</a>
+                        <a id="btnDeleteThread"
+                           thread-id="{{ thread.pk }}"
+                           csrf-token="{{ csrf_token }}"
+                           class="btn btn-danger btn-option btn-sm">Delete</a>
                         <a href="{% url 'threads:pin' thread_id=thread.pk %}"
                            class="btn btn-info btn-option btn-sm">
                             {% if thread.is_pinned %}

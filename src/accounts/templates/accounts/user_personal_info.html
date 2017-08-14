@@ -127,7 +127,7 @@
         <div class="panel-footer">
             {% if user.student_id == student.student_id and not is_edit %}
                 <a
-                    href="{% url 'accounts:password-change' student_id=student.student_id %}"
+                    href="{% url 'accounts:password-change' %}"
                     data-original-title="Broadcast Message"
                     data-toggle="tooltip" type="button"
                     class="btn btn-sm btn-primary"><i

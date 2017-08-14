@@ -8,6 +8,8 @@ from .views import (
     PublishThreadApi
 )
 
+app_name = 'threads'
+
 urlpatterns = [
     url(r'^search$', ThreadSearchView.as_view(), name='search'),
     url(r'^user$', UserThreadAPIView.as_view(), name='user_thread'),

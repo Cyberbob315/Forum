@@ -14,3 +14,6 @@ class Comment(models.Model):
 
     def get_delete_api_url(self):
         return reverse('comment-apis:delete', kwargs={'pk': self.id})
+
+    def __str__(self):
+        return '{} by {}'.format(self.thread, self.author)

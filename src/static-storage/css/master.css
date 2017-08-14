@@ -1,5 +1,14 @@
 body {
-    background-color: #becfea !important;
+}
+
+.navbar-inverse {
+    background-color: #222 !important;
+    border-color: #080808 !important;
+}
+
+ul.nav a:hover {
+    color: black !important;
+    background-color: white !important;
 }
 
 .card {
@@ -35,3 +44,6 @@ body {
     font-weight: bold;
 }
 
+.comment {
+    margin: 15px;
+}

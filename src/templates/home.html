@@ -10,75 +10,70 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container body-content card">
-        <div class="row">
-            <!-- left section -->
-            <div class="col-md-8">
-                <div class="page-header">
-                </div>
-                <span class="alert alert-info" role="alert">
-					Welcome to Hanoi University of Science and Technology Page
-					</span>
-                <h4 class="plain-text" style="margin-top:24px;">This
-                    forum is
-                    useful for the beginners to get information related to
-                    various topics. There is a centralized database in which
-                    all the information is managed. The administrator acts as
-                    the highest authority and has the rights to update the
-                    database. There are also connected user who acts as an
-                    intermediate user who can also answer the questions of the
-                    end-user if they know it. The intermediate user can also
-                    cache the information provided by the administrator to the
-                    end-user. This cached information is useful when the same
-                    question is repeated some another user , then the
-                    intermediate user can get the information from cache memory
-                    and reply to the end-user. This reduces the response time.
-                    Whenever a question is asked by the end-user to get
-                    information ,it is received by the administrator who
-                    fetches the information from the database and reply to the
-                    end-user. Whenever the new information is arrived it is
-                    updated by the end-user. The end-user is provided with the
-                    access rights which is managed by the administrator. The
-                    access to the database is provided to the end-user
-                    according to these rights only.
-                </h4>
+    <div class="container">
+        <!-- left section -->
+        <div class="col-md-8">
+            <div class="page-header">
+                <h1><strong>Welcome</strong></h1>
             </div>
-            <!-- right section -->
-            <div class="col-md-4">
-                <!-- Featured panel -->
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h4>Featured Forums</h4>
-                    </div>
-                    <div class="panel-body">
-                        <div class="single category">
-                            <ul class="list-unstyled">
-                                {% for subforum in subforum_list %}
-                                    <li>
-                                        <a
-                                            href="{{ subforum.get_detail_link }}"
-                                            title="">{{ subforum.title }}
-                                            <span class="pull-right">
+            <h4 class="plain-text" style="margin-top:24px;">This
+                forum is
+                useful for the beginners to get information related to
+                various topics. There is a centralized database in which
+                all the information is managed. The administrator acts as
+                the highest authority and has the rights to update the
+                database. There are also connected user who acts as an
+                intermediate user who can also answer the questions of the
+                end-user if they know it. The intermediate user can also
+                cache the information provided by the administrator to the
+                end-user. This cached information is useful when the same
+                question is repeated some another user , then the
+                intermediate user can get the information from cache memory
+                and reply to the end-user. This reduces the response time.
+                Whenever a question is asked by the end-user to get
+                information ,it is received by the administrator who
+                fetches the information from the database and reply to the
+                end-user. Whenever the new information is arrived it is
+                updated by the end-user. The end-user is provided with the
+                access rights which is managed by the administrator. The
+                access to the database is provided to the end-user
+                according to these rights only.
+            </h4>
+        </div>
+        <!-- right section -->
+        <div class="col-md-4">
+            <!-- Featured panel -->
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4>Featured Forums</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="single category">
+                        <ul class="list-unstyled">
+                            {% for subforum in subforum_list %}
+                                <li>
+                                    <a
+                                        href="{{ subforum.get_detail_link }}"
+                                        title="">{{ subforum.title }}
+                                        <span class="pull-right">
                                                 {{ subforum.published_thread_count }}
                                             </span>
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
-                <!-- Newsletter panel -->
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h4>Newsletter</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>Use your student account to log in</p>
-                    </div>
+            </div>
+            <!-- Newsletter panel -->
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h4>Newsletter</h4>
                 </div>
-            </div>            <!-- /right section -->
-        </div>            <!-- /row -->
-    </div>
-
+                <div class="panel-body">
+                    <p>Use your student account to log in</p>
+                </div>
+            </div>
+        </div>            <!-- /right section -->
+    </div>            <!-- /row -->
 {% endblock %}

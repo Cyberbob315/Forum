@@ -39,6 +39,14 @@ function createSubject(event) {
             'title': subjectTitle,
             'credit': subjectCredit
         },
+        statusCode: {
+            403: function () {
+                location.href = '/403/';
+            },
+            404: function () {
+                location.href = '/404/'
+            }
+        },
         success: function (data, textstatus, xhr) {
             alert('Successfully Created!');
             $('#createErr').hide();

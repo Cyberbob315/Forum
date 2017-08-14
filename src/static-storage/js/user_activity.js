@@ -1,5 +1,5 @@
 const THREAD_API_BASE_URL = $('#dataHolder').attr('thread-url');
-const COMMENT_API_BASE_URL = $('#dataHolder').attr('comment-url');
+const COMMENT_API_BASE_URL = '/api/comment/';
 const TYPE_THREAD = 1;
 const TYPE_COMMENT = 2;
 const RESULT_PER_PAGE = 5;
@@ -240,7 +240,7 @@ function genThreadItem(threadValue) {
 }
 
 function genCommentItem(commentValue) {
-    return `<article class="card">
+    return `<article class="card comment"> 
                 <div class="row col-md-12 col-sm-12">
                     <strong>Reply to thread 
                         "<a target="_blank" 

@@ -1,8 +1,7 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
-from django.urls.base import reverse_lazy
-from django.views.generic import ListView, DetailView
+from django.shortcuts import render
+from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from subforums.utils import calculate_thread_rank
 from .models import Subforum
 
 THREADS_PER_PAGE = 7
@@ -14,33 +13,12 @@ class SubforumListView(ListView):
     context_object_name = 'subforum_list'
 
 
-@login_required(login_url=reverse_lazy('accounts:login'))
-def subforum_draft_list(request, slug):
-    if not request.user.is_superuser:
-        return render(request, 'error_403.html')
-    try:
-        subforum = Subforum.objects.get(slug=slug)
-    except:
-        return render(request, 'error_404.html')
-    thread_list = subforum.threads.filter(
-        published_date__isnull=True
-    ).order_by(
-        '-created_date'
-    )
-    page = request.GET.get('page', 1)
-    paginator = Paginator(thread_list, THREADS_PER_PAGE)
-    try:
-        threads = paginator.page(page)
-    except PageNotAnInteger:
-        threads = paginator.page(1)
-    except EmptyPage:
-        threads = paginator.num_pages(paginator.num_pages)
-    context_dict = {
-        'subforum': subforum,
-        'thread_list': threads,
-        'is_draft': True
-    }
-    return render(request, 'subforums/subforum-detail.html', context_dict)
+def sort_thread_list(thread_queryset):
+    new_list = [
+        (thread, calculate_thread_rank(thread)) for thread in thread_queryset
+    ]
+    new_list.sort(key=lambda x: float(x[1]), reverse=True)
+    return [thread[0] for thread in new_list]
 
 
 def subforum_detail(request, slug):
@@ -50,10 +28,8 @@ def subforum_detail(request, slug):
         return render(request, 'error_404.html')
     thread_list = subforum.threads.filter(
         published_date__isnull=False
-    ).order_by(
-        '-is_pinned',
-        '-created_date'
     )
+    thread_list = sort_thread_list(thread_list)
     page = request.GET.get('page', 1)
     paginator = Paginator(thread_list, THREADS_PER_PAGE)
     try:

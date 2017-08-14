@@ -1,3 +1,4 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
 from django.core.urlresolvers import reverse
@@ -5,6 +6,26 @@ from braces.views._access import LoginRequiredMixin
 from .models import Comment
 from . import forms
 from threads.models import Thread
+from threads.mixins import UserOwnerMixin
+
+
+class CommentEdit(LoginRequiredMixin, UserOwnerMixin, generic.UpdateView):
+    template_name = 'comments/comment-edit.html'
+    model = Comment
+    form_class = forms.CommentForm
+    context_object_name = 'comment'
+    login_url = 'accounts/login-site'
+
+    def get_success_url(self):
+        return reverse('threads:detail', kwargs={'pk': self.object.thread.pk})
+
+    def get_context_data(self, **kwargs):
+        try:
+            thread = Thread.objects.get(pk=self.object.thread.pk)
+        except:
+            return render(self.request, 'error_404.html')
+        kwargs['thread'] = thread
+        return super().get_context_data(**kwargs)
 
 
 class CommentCreate(LoginRequiredMixin, generic.CreateView):

@@ -14,6 +14,14 @@ $(document).ready(function () {
         url: checkLikeUrl,
         method: 'GET',
         data: {},
+        statusCode: {
+            403: function () {
+                location.href = '/403/';
+            },
+            404: function () {
+                location.href = '/404/'
+            }
+        },
         success: function (data) {
             let likeCount = parseInt(data.like_count);
             if (data.is_liked) {
@@ -41,6 +49,14 @@ $('#like-btn').click(function (event) {
         dataType: 'json',
         headers: {
             'X-CSRFToken': csrfToken
+        },
+        statusCode: {
+            403: function () {
+                location.href = '/403/';
+            },
+            404: function () {
+                location.href = '/404/'
+            }
         },
         data: {},
         success: function (data) {

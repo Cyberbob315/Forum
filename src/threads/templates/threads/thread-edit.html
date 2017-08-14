@@ -11,36 +11,36 @@
 {% endblock %}
 
 {% block content %}
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-8 col-md-offset-2 jumbotron">
         <div class="page-header">
-            <h1>Edit</h1>
+            <h3>Edit</h3>
         </div>
-        <br/>
         <form method="post" class="form-group" enctype="multipart/form-data">
             {% csrf_token %}
-            {% bootstrap_form form %}
+            {{ form.as_p }}
             <strong>Select images to upload</strong>
-            <input type="file" multiple name="new-images" class="text-info">
+            <input type="file" multiple name="new-images" class="text-info"
+                   accept="image/*">
             <hr/>
             <strong>Delete images</strong>
             <div class="row">
-                {% for thread_image in thread.images.all %}
-                    <div class="col-md-2">
-                        <input
-                            class="checkbox"
-                            type="checkbox" name="image-to-delete"
-                            value="{{ thread_image.pk }}">
-                        <img src="{{ thread_image.image.url }}"
-                             width="100px"
-                             height="100px">
-                    </div>
-                {% endfor %}
-            </div>
-            <button type="submit"
-                    class="btn btn-info btn-upload col-md-2 col-md-offset-5">
-                Submit
-            </button>
-        </form>
+            {% for thread_image in thread.images.all %}
+                <div class="col-md-2">
+                    <input
+                        class="checkbox"
+                        type="checkbox" name="image-to-delete"
+                        value="{{ thread_image.pk }}">
+                    <img src="{{ thread_image.image.url }}"
+                         width="100px"
+                         height="100px">
+                </div>
+            {% endfor %}
+    </div>
+    <button type="submit"
+            class="btn btn-info btn-upload col-md-2 col-md-offset-5">
+        Submit
+    </button>
+    </form>
     </div>
 {% endblock %}
 {% block script %}

@@ -38,6 +38,14 @@ function showDeleteConfirm(event) {
                     deleteModal.modal('hide');
                 }
             },
+            statusCode: {
+                403: function () {
+                    location.href = '/403/';
+                },
+                404: function () {
+                    location.href = '/404/'
+                }
+            },
             error: function (data) {
                 deleteArea.html(failText);
             }
@@ -67,6 +75,14 @@ function publish(event) {
             'X-CSRFToken': csrfToken
         },
         data: {},
+        statusCode: {
+            403: function () {
+                location.href = '/403/';
+            },
+            404: function () {
+                location.href = '/404/'
+            }
+        },
         success: function (data) {
             if (data.success) {
                 publishArea.html(successText);

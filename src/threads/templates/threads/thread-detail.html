@@ -8,6 +8,7 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/thread.css' %}">
     <link rel="stylesheet" href="{% static 'css/thread_images.css' %}">
+    <link rel="stylesheet" href="{% static 'css/comment.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -22,13 +23,17 @@
                          class="comment-list">
                     <!-- First Comment -->
                     {% for comment in comment_list %}
-                        <article class="row card">
+                        <article class="row comment">
                             <div class="col-md-2 col-sm-2 hidden-xs">
                                 <figure class="thumbnail">
-                                    <img class="img-responsive"
-                                         src="{{ comment.author.profile_pic.url }}"/>
-                                    <figcaption
-                                        class="text-center">{{ comment.author }}
+                                    <img
+                                        class="img-responsive img-comment img-circle"
+                                        src="{{ comment.author.profile_pic.url }}"/>
+                                    <figcaption class="text-center"
+                                                style="margin-top: 10px">
+                                        <a href="{{ comment.author.get_activity_link }}">
+                                            {{ comment.author }}
+                                        </a>
                                     </figcaption>
                                 </figure>
                             </div>
@@ -36,8 +41,6 @@
                                 <div class="panel panel-default arrow left">
                                     <div class="panel-body">
                                         <header class="text-left">
-                                            <div class="comment-user">
-                                            </div>
                                             <time class="comment-date"
                                                   datetime="16-12-2014 01:05">
                                                 {{ comment.created_date }}
@@ -45,31 +48,39 @@
                                             <hr/>
                                         </header>
                                         <div class="comment-post">
-                                            <p>
+                                            <div id="comment-{{ comment.pk }}">
                                                 {{ comment.content|safe |linebreaksbr }}
-                                            </p>
+                                            </div>
                                         </div>
-                                        {% if user.is_superuser %}
-                                            {% if user.is_superuser or comment.author == user %}
-                                                <p class="text-right">
-                                                <a
-                                                    id="btnDeleteComment-{{ forloop.counter }}"
-                                                    comment-id="{{ comment.pk }}"
-                                                    delete-url="{{ comment.get_delete_api_url }}"
-                                                    csrf-token="{{ csrf_token }}"
-                                                    href="#"
-                                                    class="btn btn-danger btn-sm">
-                                                    Delete
-                                                </a>
-                                            {% endif %}
+                                    </div>
+                                    <div class="comment-option">
+                                        {% if user.is_superuser or comment.author == user %}
+                                            <p class="text-right">
+                                            <a
+                                                class="btn btn-info btn-sm btn-comment"
+                                                id="btnEditComment-{{ forloop.counter }}"
+                                                href="{% url 'threads:comments:edit-comment' pk=comment.pk %}"
+                                                comment-id="{{ comment.pk }}"
+                                                csrf-token="{{ csrf_token }}">
+                                                Edit
+                                            </a>
+                                            <a
+                                                id="btnDeleteComment-{{ forloop.counter }}"
+                                                comment-id="{{ comment.pk }}"
+                                                csrf-token="{{ csrf_token }}"
+                                                href="#"
+                                                class="btn btn-danger btn-sm btn-comment">
+                                                Delete
+                                            </a>
                                         {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </article>
-                        </section>
+                        <hr/>
                     {% empty %}
                     {% endfor %}
+                </section>
                 <div class="row pull-right" style="margin-right: 24px;">
                     {% if comment_list.has_other_pages %}
                         <ul class="pagination">

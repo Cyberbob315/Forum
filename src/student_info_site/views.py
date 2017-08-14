@@ -1,7 +1,5 @@
 from django.shortcuts import render
 from subforums.models import Subforum
-from threads.models import Thread
-from django.views.generic import ListView
 
 
 def home_page(request):
@@ -9,12 +7,18 @@ def home_page(request):
     return render(request, 'home.html', {'subforum_list': featured_subforums})
 
 
-class SearchView(ListView):
-    model = Thread
-    template_name = 'search_page.html'
-
-
 def search(request):
     return render(request, 'search_page.html',
                   {'query': request.GET.get('query')})
 
+
+def error_404(request):
+    return render(request, 'error_404.html')
+
+
+def error_403(request):
+    return render(request, 'error_403.html')
+
+
+def error_400(request):
+    return render(request, 'error_400.html')

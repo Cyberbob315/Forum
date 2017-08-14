@@ -26,7 +26,8 @@ class StudentProfileManager(BaseUserManager):
 
 
 def convert_student_id(id):
-    # student_id first part is current year,last part is user id with 4 number formatted
+    # student_id first part is current year,
+    # last part is user id with 4 number formatted
     student_id_first_part = datetime.datetime.now().year
     student_id_last_part = '{0:0{width}}'.format(int(id), width=4)
     return '{}{}'.format(student_id_first_part, student_id_last_part)
@@ -96,6 +97,10 @@ class StudentProfile(AbstractBaseUser, PermissionsMixin):
 
     def get_update_url(self):
         return reverse('accounts:profile-update',
+                       kwargs={'student_id': self.student_id})
+
+    def get_avtivity_link(self):
+        return reverse('accounts:activity',
                        kwargs={'student_id': self.student_id})
 
     def get_full_name(self):

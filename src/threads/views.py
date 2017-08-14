@@ -10,20 +10,15 @@ from . import mixins
 from .models import Thread, ThreadImages
 
 
-class ThreadDetailView(DetailView):
-    model = Thread
-    context_object_name = 'thread'
-    template_name = 'threads/thread-detail.html'
-
-
 class ThreadUpdateView(LoginRequiredMixin, mixins.UserOwnerMixin, UpdateView):
     model = Thread
     template_name = 'threads/thread-edit.html'
     context_object_name = 'thread'
     form_class = forms.ThreadForm
+    login_url = 'accounts/login-site'
 
     def form_valid(self, form):
-        if 'images' in self.request.FILES:
+        if 'new-images' in self.request.FILES:
             images = self.request.FILES.getlist('new-images')
             threads = [ThreadImages(thread=self.object, image=image) for image
                        in images]

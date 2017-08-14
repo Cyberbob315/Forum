@@ -199,7 +199,7 @@ function initPageCount() {
 }
 
 function genThreadItem(threadValue) {
-    let item = ` <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    let item = ` <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin: 15px">
                             <article class="card">
                                 <div class="row">
                                     <div class="col-sm-4 col-md-2">

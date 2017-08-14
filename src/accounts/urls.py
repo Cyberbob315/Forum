@@ -15,8 +15,7 @@ app_name = 'accounts'
 urlpatterns = [
     url(r'^login-site/', user_login, name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
-    url(r'^(?P<student_id>\d+)/password-change/$', change_password,
-        name='password-change'),
+    url(r'^password-change/$', change_password, name='password-change'),
     url(r'^(?P<student_id>\d+)/profile/$', user_profile, name='profile'),
     url(r'^(?P<student_id>\d+)/activity/$', user_activity, name='activity'),
     url(r'^(?P<student_id>\d+)/profile/edit/$', user_profile_edit,

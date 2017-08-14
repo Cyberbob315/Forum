@@ -1,7 +1,6 @@
-from django.conf.urls import url
-from .views import UserCommentAPIView, DeleteCommentAPIView
+from .views import CommentViewSet
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = [
-    url(r'^user$', UserCommentAPIView.as_view(), name='user_comment'),
-    url(r'^(?P<pk>\d+)/delete$', DeleteCommentAPIView.as_view(), name='delete'),
-]
+router = DefaultRouter()
+router.register('', CommentViewSet, base_name='comment')
+

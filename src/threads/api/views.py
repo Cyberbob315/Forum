@@ -3,6 +3,7 @@ from enum import Enum
 from django.db.models import Q
 from django.db.models.aggregates import Count
 from django.shortcuts import get_object_or_404
+from django.urls.base import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 from rest_framework import authentication, permissions
@@ -125,9 +126,12 @@ class DeleteThreadApi(APIView):
 
     def delete(self, request, pk):
         thread = get_object_or_404(Thread, pk=pk)
+        subforum_slug = thread.subforum.slug
+        redirect_link = reverse('forum:detail', kwargs={'slug': subforum_slug})
         thread.delete()
         data = {
-            'success': True
+            'success': True,
+            'redirect_link': redirect_link,
         }
         return Response(data, status=status.HTTP_200_OK)
 

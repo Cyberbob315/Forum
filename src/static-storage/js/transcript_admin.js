@@ -38,6 +38,14 @@ function updateMark(event) {
             'mid_term_mark': midTermMark,
             'final_mark': finalMark
         },
+        statusCode: {
+            403: function () {
+                location.href = '/403/';
+            },
+            404: function () {
+                location.href = '/404/'
+            }
+        },
         success: function (data) {
             alert('Updated successfully!');
             location.reload();
@@ -92,6 +100,14 @@ function addMark(event) {
             'student': studentId,
             'mid_term_mark': midTermMark,
             'final_mark': finalMark
+        },
+        statusCode: {
+            403: function () {
+                location.href = '/403/';
+            },
+            404: function () {
+                location.href = '/404/'
+            }
         },
         success: function (data) {
             alert('Created successfully!');

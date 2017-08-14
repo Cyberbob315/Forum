@@ -21,7 +21,10 @@
                 <h4>
                     <a
                         class="thread-title"
-                        href="{{ thread.get_detail_link }}">
+                        href="{{ thread.get_detail_link }}"
+                        {% if not thread.is_pinned %}
+                            style="color:blue;"
+                        {% endif %}>
                         {{ thread.title }}
                     </a>
                 </h4>
@@ -33,28 +36,6 @@
                     <i class="glyphicon glyphicon-eye-open icon-margin"></i>{{ thread.view_count }}
                     <i class="glyphicon glyphicon-thumbs-up icon-margin"></i>{{ thread.likes.count }}
                     <span class="pull-right">
-                        {% if is_draft %}
-                            <span id="publish-area-{{ forloop.counter }}">
-                                <a
-                                    id="btn-publish-{{ forloop.counter }}"
-                                    csrf-token="{{ csrf_token }}"
-                                    publish-url="{{ thread.get_publish_url }}"
-                                    href="#"
-                                    class="btn btn-info btn-sm btn-publish">
-                                    Publish
-                                </a>
-                            </span>
-                            <span id="delete-area-{{ forloop.counter }}">
-                                <a
-                                    id="btn-delete-{{ forloop.counter }}"
-                                    csrf-token="{{ csrf_token }}"
-                                    delete-url="{{ thread.get_delete_api_url }}"
-                                    href="#"
-                                    class="btn btn-warning btn-sm btn-publish">
-                                    Delete
-                                </a>
-                            </span>
-                        {% endif %}
                         <a href="{{ thread.get_detail_link }}"
                            class="btn btn-default btn-sm">More
                         ... </a>

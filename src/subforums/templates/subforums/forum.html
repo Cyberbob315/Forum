@@ -15,38 +15,43 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <table class="table table-bordered card">
                     <thead>
-                        <tr>
-                            <th>Subforum</th>
-                            <th>Last Post</th>
-                            <th>Threads</th>
-                            {% if user.is_superuser %}
-                                <th>Drafts</th>
-                            {% endif %}
-                            <th>Comments</th>
+                        <tr class="forum-category">
+                            <th class="column">Forum</th>
+                            <th class="column">Last Post</th>
+                            <th class="column">Threads</th>
+                            <th class="column">Comments</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for subforum in subforum_list %}
-                            <tr class="">
-                                <td class="td-forum-list first-column">
-                                    <strong><a
-                                        href="{{ subforum.get_detail_link }}">{{ subforum.title }}
+                            <tr class="forum-topic" style="height: 70px;">
+                                <td class="column row" style="font-size: 16px">
+                                    <span
+                                        class="glyphicon glyphicon-folder-open col-md-1"></span>
+                                    <strong><a style="color: red"
+                                               href="{{ subforum.get_detail_link }}">{{ subforum.title }}
                                     </a></strong>
                                 </td>
-                                <td class="td-forum-list">
+                                <td class="column"
+                                    style="vertical-align: middle">
                                     {% if subforum.get_last_post %}
                                         <a href="{{ subforum.get_last_post.get_detail_link }}">
                                             {{ subforum.get_last_post }}
                                         </a>
+                                        <span
+                                            class="last-commnet-info">By
+                                            <a href="{{ subforum.get_last_post.author.get_activity_link }}">
+                                                {{ subforum.get_last_post.author }}
+                                            </a>
+                                        </span>
+                                        <span
+                                            class="last-commnet-info">{{ subforum.get_last_post.created_date }}</span>
                                     {% else %}
-                                        There is no thread in this subforum
+                                        <span style="font-size: 14px">There is no thread in this forum</span>
                                     {% endif %}
                                 </td>
-                                <td class="td-forum-list td-forum-text">{{ subforum.count_threads }}</td>
-                                {% if user.is_superuser %}
-                                    <td class="td-forum-list td-forum-text">{{ subforum.count_drafts }}</td>
-                                {% endif %}
-                                <td class="td-forum-list td-forum-text">{{ subforum.count_comments }}</td>
+                                <td class="column">{{ subforum.count_threads }}</td>
+                                <td class="column">{{ subforum.count_comments }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

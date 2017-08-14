@@ -6,13 +6,18 @@ from . import models
 
 
 class CommentForm(forms.ModelForm):
-    content = forms.Textarea()
-
     class Meta:
         model = models.Comment
         fields = [
             'content',
         ]
+        widgets = {
+            'content': forms.Textarea(
+                attrs={
+                    'style': 'min-height:500px;background-color:white;padding:15px',
+                    'class': 'editable medium-editor-textarea'}
+            )
+        }
 
     def clean_content(self):
         content = self.cleaned_data.get('content', '')
@@ -20,5 +25,6 @@ class CommentForm(forms.ModelForm):
                                        tags=settings.BLEACH_VALID_TAGS,
                                        attributes=settings.BLEACH_VALID_ATTRS,
                                        styles=settings.BLEACH_VALID_STYLES,
-                                       protocols=bleach.ALLOWED_PROTOCOLS + ['data'])
+                                       protocols=bleach.ALLOWED_PROTOCOLS + [
+                                           'data'])
         return cleaned_content

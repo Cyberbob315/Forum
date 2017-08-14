@@ -25,9 +25,10 @@ class CommentSerializer(serializers.ModelSerializer):
         return obj.created_date.strftime("%b %d %I:%M %p")
 
     def get_content(self, obj):
-        if len(obj.content)>30:
+        if len(obj.content) > 30:
             return '{}...'.format(obj.content[:30])
         return obj.content
+
     def get_author_pic_link(self, obj):
         return obj.author.profile_pic.url
 
@@ -39,3 +40,11 @@ class CommentSerializer(serializers.ModelSerializer):
 
     def get_thread_link(self, obj):
         return obj.thread.get_detail_link()
+
+
+class CommentEditDeleteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = [
+            'content'
+        ]

@@ -16,9 +16,7 @@ from . import models
 
 
 @login_required(login_url=reverse_lazy('accounts:login'))
-def change_password(request, student_id):
-    if request.user.student_id != student_id:
-        return render(request, 'error_403.html')
+def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -89,7 +87,6 @@ def update_profile(request, student_id):
     user = request.user
     if user.student_id != student_id:
         return render(request, 'error_403.html')
-    print('test' + request.POST['email'])
     validate_form = forms.StudentUpdateForm(request.POST)
     if not validate_form.is_valid():
         return JsonResponse({'success': False, 'email': False},

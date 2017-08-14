@@ -19,25 +19,17 @@
                     </strong>
                 </div>
                 <div class="pull-right" style="margin-right: 15px">
-                    {% if subforum.count_drafts and user.is_superuser and not is_draft %}
-                        <a class="btn btn-default"
-                           href="{{ subforum.get_draft_list_link }}">
-                            Drafts list
-                        </a>
-                    {% endif %}
-                    {% if not is_draft %}
-                        <a class="btn btn-info"
-                           href="{% url 'threads:create' %}">
-                            Create new
-                        </a>
-                    {% endif %}
+                    <a class="btn btn-info"
+                       href="{% url 'threads:create' %}">
+                        Create new
+                    </a>
                 </div>
             </div>
         </div>
         <a id="thread_counter" data-href="{{ thread_list | length }}"></a>
         {% for thread in thread_list %}
             <div class="row">
-                {% include 'subforums/thread-item.html' with thread=thread is_draft=is_draft %}
+                {% include 'subforums/thread-item.html' with thread=thread %}
             </div>
         {% empty %}
             <h4>There are no thread</h4>

@@ -1,41 +1,96 @@
 <nav class="navbar navbar-inverse navbar-fixed-top " style="height: 60px">
-    <div class="container">
+    <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
-        <ul class="nav navbar-nav">
-            <li><a class="navbar-brand" href="{% url 'home' %}">Homepage</a>
-            </li>
-            <li><a class="navbar-link" href="{% url 'forum:list' %}">Forum</a>
-            </li>
-            {% if user.is_authenticated %}
-                <li><a class="navbar-link"
-                       href="{% url 'student:transcript' %}">Transcript</a>
-                </li>
-            {% endif %}
-        </ul>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        {% include 'search_form.html' %}
-        <ul class="nav navbar-nav navbar-right">
-            {% if user.is_authenticated %}
-                {% if user.is_superuser %}
-                    <li><a href="{% url 'student_admin:user-list' %}">Admin</a>
-                    </li>
-                {% endif %}
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"
+               href="{% url 'home' %}">
+                <span class="glyphicon glyphicon-home"></span>
+                Homepage
+            </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse"
+             style="background-color: #222;padding-top: 4px">
+            <ul class="nav navbar-nav">
                 <li>
-                    <a href="{% url 'accounts:profile' student_id=user.student_id %}">
-                        <img
-                            width="25px" height="25px"
-                            class="img-responsive img-circle"
-                            src="{{ user.profile_pic.url }}">
+                    <a class="navbar-link"
+                       href="{% url 'forum:list' %}">
+                        <span class="glyphicon glyphicon-comment"></span>
+                        Forum
                     </a>
                 </li>
-                <li>
-                    <a href="{% url 'accounts:profile' student_id=user.student_id %}">{{ user.name }}</a>
-                </li>
-                <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
-            {% else %}
-                <li><a href="{% url 'accounts:login' %}">Login</a></li>
-            {% endif %}
-        </ul>
+                {% if user.is_authenticated %}
+                    <li>
+                        <a class="navbar-link"
+                           href="{% url 'student:transcript' %}">
+                            <span class="glyphicon glyphicon-book"></span>
+                            Transcript
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+            <form id="searchBar" class="navbar-form navbar-left" method="get"
+                  action="{% url 'search' %}">
+                <div class="form-group form-group-sm">
+                    <input id="inputSearch" name="query"
+                           class="text-info search-query form-control"
+                           type="text"
+                           placeholder="Search"
+                           value="{{ request.GET.search }}">
+                    <button class="btn btn-info btn-sm" type="submit">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </div>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                        <li>
+                            <a
+                                href="{% url 'student_admin:user-list' %}">
+                                <span class="glyphicon glyphicon-user"></span>
+                                Admin
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{% url 'accounts:profile' student_id=user.student_id %}">
+                            <img
+                                width="25px" height="25px"
+                                class="img-responsive img-circle"
+                                src="{{ user.profile_pic.url }}">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'accounts:profile' student_id=user.student_id %}">
+                            <span
+                                style="background-image: url('{{ user.profile_pic.url }}');"></span>
+                            {{ user.name }}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'accounts:logout' %}">
+                            <span class="glyphicon glyphicon-log-out"></span>
+                            Log out
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'accounts:login' %}">
+                            <span class="glyphicon glyphicon-log-in"></span>
+                            Login
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
     </div><!-- /.container-fluid -->
 </nav>
 

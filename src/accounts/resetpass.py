@@ -1,11 +1,8 @@
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import render
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import  urlsafe_base64_decode
 from django.contrib import messages
-from django.template import loader
-from django.core.mail import send_mail
-from django.conf import settings
+from .utils import send_reset_password_email
 from django.views.generic import FormView
 from .forms import PasswordResetRequestForm, SetPasswordForm
 from .models import StudentProfile
@@ -38,26 +35,10 @@ class ResetPasswordRequestView(FormView):
         if not user.private_email:
             messages.error(request,
                            """This user hasn't register any private email
-                           ,please contact Administrator to reset your password""")
+                           ,please contact 
+                           Administrator to reset your password""")
             return self.form_invalid(form)
-        content = {
-            'email': user.private_email,
-            'domain': 'http://127.0.0.1:8000',
-            'site_name': 'SIS',
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'user': user,
-            'token': default_token_generator.make_token(user),
-            'protocol': 'http',
-        }
-        subject_template_name = 'accounts/password_reset_subject.html'
-        email_template_name = 'accounts/password_reset_email.html'
-        subject = loader.render_to_string(subject_template_name, content)
-        # Email subject *must not* contain newlines
-        subject = ''.join(subject.splitlines())
-        email = loader.render_to_string(email_template_name, content)
-        send_mail(subject, email, settings.DEFAULT_FROM_EMAIL,
-                  [user.private_email],
-                  fail_silently=False)
+        send_reset_password_email(receiver=user)
         messages.success(request,
                          """Email has been sent to {}'s email address.
                           Please check its inbox to 
@@ -75,7 +56,7 @@ class PasswordResetConfirmView(FormView):
         assert uidb64 is not None and token is not None
         try:
             uid = urlsafe_base64_decode(uidb64)
-            user = StudentProfile._default_manager.get(pk=uid)
+            user = StudentProfile.objects.get(pk=uid)
         except (
                 TypeError, ValueError, OverflowError,
                 StudentProfile.DoesNotExist):
