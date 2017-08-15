@@ -55,11 +55,11 @@
                         <li>
                             <a
                                 href="{% url 'student_admin:user-list' %}">
-                                <span class="glyphicon glyphicon-user"></span>
                                 Admin
                             </a>
                         </li>
                     {% endif %}
+                    <li><a href="{% url 'threads:draft' %}">Drafts</a></li>
                     <li>
                         <a href="{% url 'accounts:profile' student_id=user.student_id %}">
                             <img
