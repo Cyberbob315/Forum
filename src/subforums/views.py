@@ -13,6 +13,8 @@ class SubforumListView(ListView):
     context_object_name = 'subforum_list'
 
 
+
+
 def sort_thread_list(thread_queryset):
     new_list = [
         (thread, calculate_thread_rank(thread)) for thread in thread_queryset

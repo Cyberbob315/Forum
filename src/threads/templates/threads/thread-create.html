@@ -8,6 +8,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/thread.css' %}">
+    <link rel="stylesheet" href="{% static 'css/thread_create.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -16,11 +17,10 @@
             <h1>Create a new thread</h1>
         </div>
         <br/>
-        <form method="post" class="form-group" enctype="multipart/form-data"
-              ">
+        <form method="post" class="form-group" enctype="multipart/form-data">
             {% csrf_token %}
-            {% bootstrap_form thread_form %}
-            <input type="file" multiple name="images" accept="image/* class="text-info">
+            {{ thread_form.as_p }}
+            <input type="file" multiple name="images" accept="image/*" class="text-info">
             <button type="submit"
                     class="btn btn-info btn-upload col-md-2 col-md-offset-5">
                 Create

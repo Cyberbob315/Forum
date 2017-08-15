@@ -4,10 +4,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import DetailView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView
 from . import forms
 from . import mixins
 from .models import Thread, ThreadImages
+
+THREADS_PER_PAGE = 7
 
 
 class ThreadUpdateView(LoginRequiredMixin, mixins.UserOwnerMixin, UpdateView):
@@ -82,6 +84,26 @@ class ThreadCreateView(LoginRequiredMixin, CreateView):
         return reverse('threads:detail', kwargs={'pk': self.object.pk})
 
 
+class UserThreadDraftList(ListView):
+    model = Thread
+    template_name = 'threads/draft_list.html'
+    context_object_name = 'thread_list'
+
+    def get_queryset(self):
+        draft_list = Thread.objects.filter(published_date__isnull=True,
+                                           author=self.request.user
+                                           ).order_by('-created_date')
+        page = self.request.GET.get('page', 1)
+        paginator = Paginator(draft_list, THREADS_PER_PAGE)
+        try:
+            threads = paginator.page(page)
+        except PageNotAnInteger:
+            threads = paginator.page(1)
+        except EmptyPage:
+            threads = paginator.num_pages(paginator.num_pages)
+        return threads
+
+
 @login_required(login_url='/accounts/login-site/')
 def post_thread(request):
     thread_form = forms.ThreadForm()
@@ -97,6 +119,6 @@ def post_thread(request):
                 threads = [ThreadImages(thread=thread, image=image) for image
                            in images]
                 ThreadImages.objects.bulk_create(threads)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('threads:draft'))
     return render(request, 'threads/thread-create.html',
                   {'thread_form': thread_form, })
