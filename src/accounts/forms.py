@@ -9,6 +9,7 @@ class StudentUpdateForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['phone'].required = False
+        self.fields['email'].required = False
 
     class Meta:
         fields = ['email', 'phone', ]

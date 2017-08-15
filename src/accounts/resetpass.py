@@ -34,6 +34,8 @@ class ResetPasswordRequestView(FormView):
             return self.form_invalid(form)
         user = users[0]
         if not user.private_email:
+            messages.error(request,
+                           'This user did not register any private email')
             return self.form_invalid(form)
         send_reset_password_email(receiver=user)
         return render(request, 'accounts/email_sended.html',

@@ -5,6 +5,10 @@
     {{ block.super }}
 {% endblock %}
 
+{% block title %}
+    {{ student.name }}'s profile
+{% endblock %}
+
 {% block script %}
     <script src="{% static 'js/user_edit.js' %}"></script>
 {% endblock %}

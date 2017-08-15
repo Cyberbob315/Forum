@@ -22,6 +22,8 @@ urlpatterns = [
     url(r'^api/thread/', include('threads.api.urls', namespace='thread-apis')),
     url(r'^api/account/',
         include(account_router.urls, namespace='account-api')),
+    url(r'^api/accounts/',
+        include('accounts.api.urls', namespace='accounts-api')),
     url(r'^student/', include('subjects.urls', namespace='student')),
     url(r'^student_admin/',
         include('admin_student.urls', namespace='student_admin')),

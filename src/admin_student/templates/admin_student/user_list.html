@@ -55,17 +55,17 @@
                     </table>
                 </div>
                 <div class="row pull-right" style="margin-right: 24px;">
-                    {% if subject_list.has_other_pages %}
+                    {% if student_list.has_other_pages %}
                         <ul class="pagination">
-                            {% if subject_list.has_previous %}
+                            {% if student_list.has_previous %}
                                 <li><a
-                                    href="?page={{ subject_list.previous_page_number }}">&laquo;</a>
+                                    href="?page={{ student_list.previous_page_number }}">&laquo;</a>
                                 </li>
                             {% else %}
                                 <li class="disabled"><span>&laquo;</span></li>
                             {% endif %}
-                            {% for i in subject_list.paginator.page_range %}
-                                {% if subject_list.number == i %}
+                            {% for i in student_list.paginator.page_range %}
+                                {% if student_list.number == i %}
                                     <li class="active"><span>{{ i }} <span
                                         class="sr-only">(current)</span></span>
                                     </li>
@@ -74,9 +74,9 @@
                                     </li>
                                 {% endif %}
                             {% endfor %}
-                            {% if subject_list.has_next %}
+                            {% if student_list.has_next %}
                                 <li><a
-                                    href="?page={{ subject_list.next_page_number }}">&raquo;</a>
+                                    href="?page={{ student_list.next_page_number }}">&raquo;</a>
                                 </li>
                             {% else %}
                                 <li class="disabled"><span>&raquo;</span></li>

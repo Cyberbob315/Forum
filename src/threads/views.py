@@ -50,6 +50,9 @@ def thread_detail_view(request, pk):
         thread = Thread.objects.get(pk=pk)
     except:
         return render(request, 'error_404.html')
+    if not thread.published_date:
+        if not request.user.is_superuser and not request.user == thread.author:
+            return render(request, 'error_403.html')
     thread.increase_view()
     comment_list = thread.comments.all()
     page = request.GET.get('page', 1)

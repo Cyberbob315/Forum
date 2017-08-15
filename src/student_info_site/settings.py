@@ -163,7 +163,7 @@ BLEACH_VALID_STYLES = ['color', 'cursor', 'float', 'margin']
 BLEACH_VALID_PROTOCOLS = bleach.ALLOWED_PROTOCOLS + ['data']
 
 
-DOMAIN = 'http://nhannt.pythonanywhere.com'
+DOMAIN = 'http://127.0.0.1:8000'
 
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 

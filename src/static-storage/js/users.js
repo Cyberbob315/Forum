@@ -25,6 +25,37 @@ function initEvents() {
         $('#user-create-modal').modal({});
     });
     $('#btn-save-new').click(createNewUser);
+    $('#btnResetPass').click(resetPassword);
+}
+
+function resetPassword(event) {
+    let studentId = $('#user-id').text();
+    let url = '/api/accounts/reset_pass/';
+    let csrfToken = $('#user-edit-form').attr('csrf-token');
+    $.ajax({
+        url: url,
+        method: 'PUT',
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        data: {
+            'student_id': studentId
+        },
+        statusCode: {
+            404: function () {
+                location.href = '/404/'
+            },
+            403: function () {
+                location.href = '/403/'
+            }
+        },
+        success: function (data) {
+            alert('Password has been reseted to default');
+        },
+        error: function (data) {
+
+        }
+    })
 }
 
 function createNewUser(event) {
@@ -132,6 +163,7 @@ function updateProfile(event) {
     let status = $('#user-status-edit').val();
     let address = $('#user-address').val();
     let gender = $('#male-check').is(':checked');
+    let password = $('#user-password-edit')
     let csrfToken = $('#user-edit-form').attr('csrf-token');
     let image = $('#userAvatarUpload')[0].files[0];
     let data = new FormData();
@@ -143,6 +175,8 @@ function updateProfile(event) {
     data.append('private_email', privateEmail);
     data.append('mobile_phone', mobileNumer);
     data.append('home_address', address);
+    if (password)
+        data.append('password', password)
     if (image)
         data.append('profile_pic', image);
     $.ajax({

@@ -8,4 +8,3 @@ EMAIL_HOST_USER = 'cyborg31596@gmail.com'
 EMAIL_HOST_PASSWORD = 'nishino169'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-

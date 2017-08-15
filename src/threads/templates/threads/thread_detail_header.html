@@ -56,7 +56,7 @@
                             {% endif %}
                         </a>
                     {% endif %}
-                    {% if user == thread.author %}
+                    {% if user == thread.author or user.is_superuser %}
                         <a href="{% url 'threads:edit' pk=thread.pk %}"
                            class="btn btn-warning btn-option btn-sm">Edit</a>
                     {% endif %}

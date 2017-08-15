@@ -79,10 +79,10 @@ def user_login(request):
 
     user = authenticate(username=student_id, password=password)
     if user is None:
-        # return render(request, 'accounts/login.html',
-        #               {'is_error': True, 'next': next_url})
-        return HttpResponseRedirect(
-            reverse('accounts:login') + '?next=' + next_url, status=404)
+        return render(request, 'accounts/login.html',
+                      {'is_error': True, 'next': next_url})
+        # return HttpResponseRedirect(
+        #     reverse('accounts:login') + '?next=' + next_url, status=404)
     login(request, user)
     return HttpResponseRedirect(request.POST.get('next', reverse('home')))
 
@@ -96,7 +96,7 @@ def update_profile(request, student_id):
     if not validate_form.is_valid():
         return JsonResponse(
             {'success': False, 'email': validate_form.errors.get('email', ''),
-             'phone': validate_form.errors['phone']},
+             'phone': validate_form.errors.get('phone','')},
             status=status.HTTP_400_BAD_REQUEST)
     user.private_email = request.POST['email']
     user.mobile_phone = request.POST['phone']
