@@ -101,12 +101,14 @@ class PostLikeToggleApi(APIView):
 
 class CheckLikeApi(APIView):
     authentication_classes = (authentication.SessionAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, pk, format=None):
         thread = get_object_or_404(Thread, pk=pk)
-        has_liked = thread.likes.filter(
-            student_id=request.user.student_id).exists()
+        if request.user.is_authenticated:
+            has_liked = thread.likes.filter(
+                student_id=request.user.student_id).exists()
+        else:
+            has_liked = False
         like_count = thread.likes.count()
 
         data = {

@@ -7,70 +7,71 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/comment-create.css' %}">
+    <link rel="stylesheet" href="{% static 'css/thread_create.css' %}">
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="panel-heading">
-                <span class="glyphicon glyphicon-comment"></span>
-                <h3 class="panel-title">
-                    Reply</h3>
-            </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-xs-2 col-md-1">
-                                <img src="{{ thread.author.profile_pic.url }}"
-                                     width="80px"
-                                     height="80x"
-                                     class="img-circle img-responsive"
-                                     alt=""/></div>
-                            <div class="col-xs-10 col-md-11">
-                                <div>
-                                    <a href="#">
-                                        {{ thread.title }}</a>
-                                    <div class="mic-info">
-                                        By: <a href="#">{{ thread.author }}</a>
-                                        on {{ thread.created_date }}
-                                    </div>
-                                </div>
-                                <div class="comment-text">
-                                    {{ thread.summarize_content }}
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-comment"></span>
+                        Reply</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-2 col-md-1">
+                            <img
+                                src="{{ thread.author.profile_pic.url }}"
+                                width="80px"
+                                height="80x"
+                                class="img-circle img-responsive"
+                                alt=""/></div>
+                        <div class="col-xs-10 col-md-11">
+                            <div>
+                                <a href="#">
+                                    {{ thread.title }}</a>
+                                <div class="mic-info">
+                                    By: <a
+                                    href="#">{{ thread.author }}</a>
+                                    on {{ thread.created_date }}
                                 </div>
                             </div>
+                            <div class="comment-text">
+                                {{ thread.summarize_content | safe }}
+                            </div>
                         </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="col">
-                <div class="panel-body">
-                    <form
-                        id="comment-form"
-                        method="post"
-                        action="{% url 'threads:comments:post-comment' pk=thread.pk %}"
-                        role="form">
-                        {% csrf_token %}
-                        <fieldset>
-                            <div class="form-group">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="panel-body">
+                        <form
+                            id="comment-form"
+                            method="post"
+                            action="{% url 'threads:comments:post-comment' pk=thread.pk %}"
+                            role="form">
+                            {% csrf_token %}
+                            <fieldset>
+                                <div class="form-group">
                                     <textarea
                                         class="editable medium-editor-textarea"
                                         style="background-color: white;
-                                        min-height: 400px;
+                                        min-height: 200px;
                                         padding: 20px"
                                         rows="30"
                                         placeholder="Enter text here"
                                         name="content"
                                         autofocus="autofocus">
                                     </textarea>
-                            </div>
-                            <button type="submit"
-                                    class="[ btn btn-success ]"
-                                    data-loading-text="Loading...">Submit
-                            </button>
-                        </fieldset>
-                    </form>
+                                </div>
+                                <button type="submit"
+                                        class="[ btn btn-success ]"
+                                        data-loading-text="Loading...">Submit
+                                </button>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

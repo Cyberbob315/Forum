@@ -24,7 +24,8 @@ def change_password(request):
             update_session_auth_hash(request, user)  # Important!
             messages.success(request,
                              'Your password was successfully updated!')
-            return redirect('accounts:password-change')
+            return HttpResponseRedirect(reverse('accounts:profile', kwargs={
+                'student_id': request.user.student_id}))
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -67,6 +68,7 @@ def user_profile_edit(request, student_id):
 
 
 def user_login(request):
+    next_url = request.POST.get('next')
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('home'))
     if request.method != 'POST':
@@ -77,7 +79,10 @@ def user_login(request):
 
     user = authenticate(username=student_id, password=password)
     if user is None:
-        return render(request, 'accounts/login.html', {'is_error': True})
+        # return render(request, 'accounts/login.html',
+        #               {'is_error': True, 'next': next_url})
+        return HttpResponseRedirect(
+            reverse('accounts:login') + '?next=' + next_url, status=404)
     login(request, user)
     return HttpResponseRedirect(request.POST.get('next', reverse('home')))
 
@@ -89,8 +94,10 @@ def update_profile(request, student_id):
         return render(request, 'error_403.html')
     validate_form = forms.StudentUpdateForm(request.POST)
     if not validate_form.is_valid():
-        return JsonResponse({'success': False, 'email': False},
-                            status=status.HTTP_400_BAD_REQUEST)
+        return JsonResponse(
+            {'success': False, 'email': validate_form.errors.get('email', ''),
+             'phone': validate_form.errors['phone']},
+            status=status.HTTP_400_BAD_REQUEST)
     user.private_email = request.POST['email']
     user.mobile_phone = request.POST['phone']
     user.home_address = request.POST['address']
@@ -99,4 +106,3 @@ def update_profile(request, student_id):
     user.save()
     return JsonResponse({'success': True, 'email': True},
                         status=status.HTTP_200_OK)
-

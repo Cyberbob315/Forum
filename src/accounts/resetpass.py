@@ -1,6 +1,6 @@
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import render
-from django.utils.http import  urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_decode
 from django.contrib import messages
 from .utils import send_reset_password_email
 from django.views.generic import FormView
@@ -21,6 +21,7 @@ class ResetPasswordRequestView(FormView):
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return render(request, 'error_404.html')
+        messages.error(request, '')
         form = self.form_class(request.POST)
         if not form.is_valid():
             messages.error(request, 'Invalid Input')
@@ -33,16 +34,10 @@ class ResetPasswordRequestView(FormView):
             return self.form_invalid(form)
         user = users[0]
         if not user.private_email:
-            messages.error(request,
-                           """This user hasn't register any private email
-                           ,please contact 
-                           Administrator to reset your password""")
             return self.form_invalid(form)
         send_reset_password_email(receiver=user)
-        messages.success(request,
-                         """Email has been sent to {}'s email address.
-                          Please check its inbox to 
-                          continue reseting password.""".format(user.name))
+        return render(request, 'accounts/email_sended.html',
+                      {'email': user.private_email})
         return self.form_valid(form)
 
 

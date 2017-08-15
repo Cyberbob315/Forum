@@ -25,6 +25,9 @@ $('#user-edit-form').submit(function (event) {
         processData: false,
         contentType: false,
         data: data,
+        beforeSend: function () {
+            waitingDialog.show();
+        },
         statusCode: {
             403: function () {
                 location.href = '/403/';
@@ -34,6 +37,7 @@ $('#user-edit-form').submit(function (event) {
             }
         },
         success: function (data) {
+            waitingDialog.hide()
             if (data.success) {
                 alert('Update successfully');
             } else {
@@ -42,7 +46,13 @@ $('#user-edit-form').submit(function (event) {
             window.location.href = redirectUrl;
         },
         error: function (data) {
-            alert('Email is not valid,please enter right email')
+            waitingDialog.hide();
+            msg = ``;
+            if (data.responseJSON.email)
+                msg+=`Email:${data.responseJSON.email}\n`;
+            if (data.responseJSON.phone)
+                msg+=`Phone number:${data.responseJSON.phone}`;
+            alert(msg);
         }
     })
 });

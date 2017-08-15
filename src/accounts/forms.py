@@ -1,15 +1,33 @@
+import re
 from django import forms
 
 
 class StudentUpdateForm(forms.Form):
     email = forms.EmailField(max_length=250)
+    phone = forms.CharField()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['phone'].required = False
 
     class Meta:
-        fields = ['email']
+        fields = ['email', 'phone', ]
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        if not phone:
+            return phone
+        if not re.search('[0-9]', phone):
+            raise forms.ValidationError(
+                'Mobile phone number can not contain letters from alphabet')
+        if len(phone) not in (10, 11):
+            raise forms.ValidationError(
+                'Mobile phone number must be 10 or 11 characters')
+        return phone
 
 
 class PasswordResetRequestForm(forms.Form):
-    student_id = forms.CharField(label=('Student ID'),
+    student_id = forms.CharField(label='Student ID',
                                  max_length=8,
                                  min_length=8)
 

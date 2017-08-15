@@ -10,7 +10,7 @@ class ThreadForm(forms.ModelForm):
         fields = ('title', 'subforum', 'content',)
         widgets = {
             'content': forms.Textarea(attrs={
-                'style': 'min-height:500px;background-color:white;padding:10px',
+                'style': '',
                 'class': 'editable medium-editor-textarea'}),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'subforum': forms.Select(attrs={'class': 'form-control'}),

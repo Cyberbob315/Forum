@@ -43,6 +43,7 @@ $('#like-btn').click(function (event) {
     let this_ = $(this);
     let csrfToken = this_.attr('csrf-token');
     let likeUrl = this_.attr('like-url');
+    let threadId = this_.attr('thread-id');
     $.ajax({
         url: likeUrl,
         method: 'PUT',
@@ -52,7 +53,7 @@ $('#like-btn').click(function (event) {
         },
         statusCode: {
             403: function () {
-                location.href = '/403/';
+                location.href = `/accounts/login-site/?next=/threads/show/${threadId}`;
             },
             404: function () {
                 location.href = '/404/'

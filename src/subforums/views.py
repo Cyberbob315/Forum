@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from subforums.utils import calculate_thread_rank
 from .models import Subforum
 
-THREADS_PER_PAGE = 7
+THREADS_PER_PAGE = 10
 
 
 class SubforumListView(ListView):
