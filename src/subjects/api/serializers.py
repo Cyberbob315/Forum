@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from subjects.models import Subject, Mark
+import re
 
 
 class SubjectSerializer(serializers.ModelSerializer):
@@ -12,8 +13,9 @@ class SubjectSerializer(serializers.ModelSerializer):
         ]
 
     def validate_credit(self, value):
-        if value < 0 or value>5:
-            return serializers.ValidationError('Credit number need to be in range from 0 to 5')
+        if value < 0 or value > 5:
+            raise serializers.ValidationError(
+                'Credit number need to be in range from 0 to 5')
         return value
 
 

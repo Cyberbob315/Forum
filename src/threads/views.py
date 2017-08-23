@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView
+from django.utils import timezone
 from . import forms
 from . import mixins
 from .models import Thread, ThreadImages
@@ -87,8 +88,9 @@ class ThreadCreateView(LoginRequiredMixin, CreateView):
         return reverse('threads:detail', kwargs={'pk': self.object.pk})
 
 
-class UserThreadDraftList(ListView):
+class UserThreadDraftList(LoginRequiredMixin, ListView):
     model = Thread
+    login_url = '/accounts/login-site'
     template_name = 'threads/draft_list.html'
     context_object_name = 'thread_list'
 
@@ -115,6 +117,8 @@ def post_thread(request):
         if thread_form.is_valid():
             thread = thread_form.save(commit=False)
             thread.author = request.user
+            if request.user.is_superuser:
+                thread.published_date = timezone.now()
             thread_form.save()
 
             if 'images' in request.FILES:
@@ -122,6 +126,9 @@ def post_thread(request):
                 threads = [ThreadImages(thread=thread, image=image) for image
                            in images]
                 ThreadImages.objects.bulk_create(threads)
+            if request.user.is_superuser:
+                return HttpResponseRedirect(reverse('threads:detail',
+                                                    kwargs={'pk': thread.pk}))
             return HttpResponseRedirect(reverse('threads:draft'))
     return render(request, 'threads/thread-create.html',
                   {'thread_form': thread_form, })

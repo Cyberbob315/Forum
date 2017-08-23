@@ -68,7 +68,8 @@ class UserThreadAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         student_id = self.request.GET.get('student_id', '')
-        queryset = Thread.objects.filter(author__student_id=student_id)
+        queryset = Thread.objects.filter(published_date__isnull=False,
+                                         author__student_id=student_id)
         return queryset
 
 

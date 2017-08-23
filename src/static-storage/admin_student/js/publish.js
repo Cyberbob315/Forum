@@ -2,6 +2,7 @@ let successText = `<span class="alert alert-success btn-sm"><strong>Published</s
 let failText = `<span class="alert alert-warning btn-sm"><strong>Error Occured!</strong></span>`;
 let deleteSuccess = `<span class="alert alert-success btn-sm"><strong>Deleted</strong></span>`;
 let totalThread = 0;
+let reloadUrl = $('#thread_counter').attr('reload-url');
 $(document).ready(function () {
     totalThread = parseInt($('#thread_counter').attr('data-href'));
     for (let i = 1; i <= totalThread; i++) {
@@ -35,6 +36,8 @@ function showDeleteConfirm(event) {
             success: function (data) {
                 if (data.success) {
                     deleteArea.html(deleteSuccess);
+                    location.href = reloadUrl;
+                    console.log('reload');
                     deleteModal.modal('hide');
                 }
             },
@@ -66,6 +69,7 @@ function publish(event) {
         success: function (data) {
             if (data.success) {
                 publishArea.html(successText);
+                location.href = reloadUrl;
             }
         },
         error: function (data) {

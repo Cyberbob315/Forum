@@ -55,12 +55,12 @@ class StudentProfileSerializer(serializers.ModelSerializer):
     def validate_mobile_phone(self, value):
         if not value:
             return value
-        if not re.search('[0-9]', value):
+        if not re.search('^[0-9]$', value):
             raise serializers.ValidationError(
                 'Mobile phone number can only contain number characters')
-            if len(value) not in (10, 11):
-                raise serializers.ValidationError(
-                    'Mobile phone number must be 10 or 11 characters')
+        if len(value) not in (10, 11):
+            raise serializers.ValidationError(
+                'Mobile phone number must be 10 or 11 characters')
         return value
 
 
@@ -79,6 +79,8 @@ class StudentProfileCreateSerializer(serializers.ModelSerializer):
         ]
 
     def validate_mobile_phone(self, value):
+        if not value:
+            return value
         if re.search('[a-zA-Z]', value):
             raise serializers.ValidationError(
                 'Mobile phone number can not contain letters from alphabet')

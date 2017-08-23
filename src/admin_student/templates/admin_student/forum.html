@@ -15,7 +15,8 @@
 
 {% block content %}
     <input id="thread_counter" type="hidden"
-           data-href="{{ thread_list | length }}">
+           reload-url={% url 'student_admin:drafts' slug=subforum.slug %}
+               data-href="{{ thread_list | length }}">
     <div class="container-fluid">
         {% for thread in thread_list %}
             <div class="row">
